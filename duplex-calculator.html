@@ -1,0 +1,2394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minneapolis Property Cost Estimator</title>
+  <style>
+    :root {
+      --bg: #f5f6f8;
+      --surface: #ffffff;
+      --surface-2: #f9fafb;
+      --border: #e2e6ea;
+      --text: #1a1d23;
+      --text-muted: #6b7280;
+      --text-xs: #9ca3af;
+      --accent: #2563eb;
+      --accent-light: #eff6ff;
+      --green: #16a34a;
+      --green-bg: #dcfce7;
+      --green-border: #86efac;
+      --yellow: #b45309;
+      --yellow-bg: #fef3c7;
+      --yellow-border: #fcd34d;
+      --red: #dc2626;
+      --red-bg: #fee2e2;
+      --red-border: #fca5a5;
+      --neutral: #4b5563;
+      --neutral-bg: #f3f4f6;
+      --neutral-border: #d1d5db;
+      --radius-sm: 6px;
+      --radius: 10px;
+      --radius-lg: 14px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 24px;
+    }
+    .header-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    header h1 {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+    header .subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .header-badge {
+      margin-left: auto;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-light);
+      border: 1px solid #bfdbfe;
+      border-radius: 20px;
+      padding: 2px 10px;
+    }
+
+    /* ── Page layout ── */
+    .page-content {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+    }
+
+    .calculator-shell {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    @media (max-width: 780px) {
+      .calculator-shell { grid-template-columns: 1fr; }
+    }
+
+    /* ── Inputs panel ── */
+    .inputs-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    fieldset {
+      border: none;
+      padding: 0 20px 6px;
+    }
+    fieldset + fieldset {
+      border-top: 1px solid var(--border);
+      padding-top: 0;
+    }
+    legend {
+      display: block;
+      width: calc(100% + 40px);
+      margin-left: -20px;
+      padding: 14px 20px 10px;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 13px;
+    }
+    .field label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .field-note {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin-top: 1px;
+    }
+
+    /* Input with prefix/suffix */
+    .input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .input-prefix, .input-suffix {
+      position: absolute;
+      font-size: 13px;
+      color: var(--text-muted);
+      pointer-events: none;
+      user-select: none;
+    }
+    .input-prefix { left: 10px; }
+    .input-suffix { right: 10px; }
+
+    input[type="number"] {
+      width: 100%;
+      height: 40px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 14px;
+      font-family: inherit;
+      padding: 0 10px;
+      appearance: none;
+      -moz-appearance: textfield;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+    input[type="number"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+    }
+    .has-prefix input[type="number"] { padding-left: 22px; }
+    .has-suffix input[type="number"] { padding-right: 28px; }
+
+    /* Down payment row */
+    .dp-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+    }
+    .dp-pct {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+      white-space: nowrap;
+      min-width: 52px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Toggle */
+    .toggle-group {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .toggle-btn {
+      flex: 1;
+      height: 40px;
+      border: none;
+      background: var(--surface);
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s, color 0.15s;
+    }
+    .toggle-btn + .toggle-btn { border-left: 1px solid var(--border); }
+    .toggle-btn.active {
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* Rate presets */
+    .rate-presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 6px;
+      align-items: center;
+    }
+    .preset-label-text {
+      font-size: 11px;
+      color: var(--text-xs);
+    }
+    .preset-btn {
+      height: 28px;
+      padding: 0 10px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--surface);
+      color: var(--text-muted);
+      font-size: 11.5px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      font-family: inherit;
+      transition: border-color 0.12s, color 0.12s, background 0.12s;
+    }
+    .preset-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .preset-btn.active {
+      border-color: var(--accent);
+      background: var(--accent-light);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* Tip chip */
+    .tip-chip {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      background: var(--accent-light);
+      border: 1px solid #bfdbfe;
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+      font-size: 11.5px;
+      color: #1e40af;
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+    .tip-icon { flex-shrink: 0; font-style: normal; }
+
+    /* ── Outputs panel ── */
+    .outputs-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .out-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .card-header {
+      padding: 12px 18px 0;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .card-body { padding: 10px 18px 16px; }
+
+    /* Line items */
+    .line-items { display: flex; flex-direction: column; }
+    .line-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--bg);
+    }
+    .line-item:last-child { border-bottom: none; }
+    .line-item.subtotal {
+      border-top: 1px solid var(--border);
+      border-bottom: none;
+      padding-top: 9px;
+      margin-top: 2px;
+    }
+    .ll { font-size: 13px; color: var(--text-muted); }
+    .ll.strong { color: var(--text); font-weight: 600; }
+    .lv {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+      font-family: 'SF Mono', 'Fira Code', Menlo, monospace;
+    }
+    .lv.green { color: var(--green); }
+    .lv.dim { color: var(--text-muted); font-weight: 400; }
+
+    /* Section gap separator within line items */
+    .line-item.section-gap {
+      border-top: 1px solid var(--border);
+      padding-top: 9px;
+      margin-top: 2px;
+    }
+
+    /* Inline rent adjuster */
+    .rent-adjuster {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 7px 10px;
+    }
+    .ra-label {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .ra-input-wrap {
+      flex: 1;
+      min-width: 0;
+    }
+    .ra-input-wrap input[type="number"] {
+      height: 32px;
+      font-size: 13px;
+    }
+    .ra-occ {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Reserve row */
+    .reserve-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 0 0;
+      border-top: 1px solid var(--border);
+      margin-top: 6px;
+    }
+    .reserve-lbl { font-size: 13px; color: var(--text-muted); }
+    .badge {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .badge-met     { background: var(--green-bg);   color: var(--green); border: 1px solid var(--green-border); }
+    .badge-unmet   { background: var(--red-bg);     color: var(--red);   border: 1px solid var(--red-border); }
+    .badge-neutral { background: var(--neutral-bg); color: var(--neutral); border: 1px solid var(--neutral-border); }
+
+    /* Net effective cost */
+    .net-cost-box {
+      margin-top: 12px;
+      padding: 14px 16px;
+      border-radius: var(--radius);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+    }
+    .nc-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .nc-value {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      font-family: 'SF Mono', 'Fira Code', Menlo, monospace;
+      color: var(--text);
+      line-height: 1.1;
+    }
+    .nc-value.good { color: var(--green); }
+    .nc-value.warn { color: var(--yellow); }
+    .nc-value.bad  { color: var(--red); }
+    .nc-sub {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Break-even */
+    .breakeven-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 12px;
+    }
+    .be-label { font-size: 13px; color: var(--text-muted); }
+    .be-value {
+      font-size: 18px;
+      font-weight: 700;
+      font-family: 'SF Mono', 'Fira Code', Menlo, monospace;
+      color: var(--text);
+    }
+
+    /* Score badge */
+    .score-badge {
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      text-align: center;
+      border: 1px solid transparent;
+    }
+    .score-badge.s-green  { background: var(--green-bg);  border-color: var(--green-border); }
+    .score-badge.s-yellow { background: var(--yellow-bg); border-color: var(--yellow-border); }
+    .score-badge.s-red    { background: var(--red-bg);    border-color: var(--red-border); }
+    .score-badge.s-neutral{ background: var(--neutral-bg);border-color: var(--neutral-border); }
+    .score-lbl {
+      font-size: 12.5px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    .s-green  .score-lbl { color: var(--green); }
+    .s-yellow .score-lbl { color: var(--yellow); }
+    .s-red    .score-lbl { color: var(--red); }
+    .s-neutral .score-lbl { color: var(--neutral); }
+    .score-desc {
+      font-size: 12.5px;
+      line-height: 1.45;
+    }
+    .s-green  .score-desc { color: #166534; }
+    .s-yellow .score-desc { color: #92400e; }
+    .s-red    .score-desc { color: #991b1b; }
+    .s-neutral .score-desc { color: var(--text-muted); }
+
+    /* ── Minneapolis resources ── */
+    .mpls-section {
+      margin-top: 24px;
+    }
+    .mpls-outer {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .mpls-summary {
+      padding: 15px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      user-select: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s;
+    }
+    .mpls-summary::-webkit-details-marker { display: none; }
+    details[open] .mpls-summary { border-bottom-color: var(--border); }
+    .mpls-summary .arrow {
+      margin-left: auto;
+      font-size: 10px;
+      color: var(--text-muted);
+      transition: transform 0.2s;
+    }
+    details[open] .mpls-summary .arrow { transform: rotate(180deg); }
+
+    .mpls-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+    @media (max-width: 780px) { .mpls-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .mpls-grid { grid-template-columns: 1fr; } }
+
+    .mpls-card {
+      background: var(--surface);
+      padding: 16px 18px;
+    }
+    .mpls-card > details > summary {
+      list-style: none;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+    }
+    .mpls-card > details > summary::-webkit-details-marker { display: none; }
+    .mc-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .mc-text { flex: 1; }
+    .mc-title { font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.35; }
+    .mc-hook  { font-size: 11.5px; color: var(--text-muted); margin-top: 1px; line-height: 1.4; }
+    .mc-arrow {
+      font-size: 10px;
+      color: var(--text-xs);
+      flex-shrink: 0;
+      margin-top: 4px;
+      transition: transform 0.15s;
+    }
+    .mpls-card > details[open] .mc-arrow { transform: rotate(180deg); }
+    .mc-body {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--bg);
+    }
+    .mc-body p + p { margin-top: 5px; }
+
+    .mpls-disclaimer {
+      padding: 11px 20px;
+      font-size: 11px;
+      color: var(--text-xs);
+      border-top: 1px solid var(--border);
+      line-height: 1.5;
+    }
+
+    /* ── Dollar display under % inputs ── */
+    .pct-dollar {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+    .pct-dollar strong { color: var(--text); font-weight: 600; }
+
+    /* ── Upfront costs table ── */
+    .upfront-table { display: flex; flex-direction: column; margin-top: 6px; }
+    .upfront-cat {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+      color: var(--text-xs);
+      padding: 10px 0 5px;
+      border-top: 1px solid var(--border);
+      margin-top: 4px;
+    }
+    .upfront-cat:first-child { border-top: none; margin-top: 0; padding-top: 2px; }
+    .upfront-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 3px 0;
+    }
+    .upfront-lbl {
+      flex: 1;
+      font-size: 12.5px;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .upfront-iw {
+      width: 108px;
+      flex-shrink: 0;
+    }
+    .upfront-iw input[type="number"] { height: 32px; font-size: 13px; }
+    .upfront-hint {
+      font-size: 10.5px;
+      color: var(--text-xs);
+      padding: 1px 0 4px;
+      line-height: 1.4;
+    }
+    .upfront-earnest-note {
+      font-size: 11px;
+      color: var(--text-muted);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 6px 9px;
+      margin: 4px 0 2px;
+      line-height: 1.4;
+    }
+    .upfront-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 2px solid var(--border);
+      margin-top: 8px;
+      padding-top: 9px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .upfront-total-val {
+      font-family: 'SF Mono', 'Fira Code', Menlo, monospace;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    /* ── Property type panes ── */
+    .prop-type-panes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 2px solid var(--border);
+    }
+    .prop-pane {
+      padding: 16px 20px 14px;
+      cursor: pointer;
+      background: var(--surface-2);
+      border: none;
+      font-family: inherit;
+      text-align: left;
+      transition: background 0.15s;
+      border-right: 1px solid var(--border);
+      user-select: none;
+    }
+    .prop-pane:last-child { border-right: none; }
+    .prop-pane:hover { background: #eef2ff; }
+    .prop-pane.active {
+      background: var(--surface);
+      border-bottom: 2px solid var(--accent);
+      margin-bottom: -2px;
+    }
+    .prop-pane-icon { font-size: 18px; display: block; margin-bottom: 4px; }
+    .prop-pane-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      display: block;
+    }
+    .prop-pane-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: block;
+      margin-top: 1px;
+    }
+    .prop-pane.active .prop-pane-title { color: var(--accent); }
+
+    /* ── Bedroom rows (house mode) ── */
+    .bedroom-list { display: flex; flex-direction: column; gap: 9px; margin-top: 6px; }
+    .bedroom-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+    .bedroom-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent);
+      cursor: pointer;
+      flex-shrink: 0;
+      margin: 0;
+    }
+    .bedroom-row .br-label {
+      font-size: 13px;
+      color: var(--text);
+      cursor: pointer;
+      flex: 1;
+    }
+    .bedroom-row .br-label.muted { color: var(--text-muted); }
+    .bedroom-row .input-wrap {
+      width: 120px;
+      flex-shrink: 0;
+    }
+    .bedroom-row input[type="number"]:disabled {
+      opacity: 0.38;
+      background: var(--surface-2);
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 11px;
+      color: var(--text-xs);
+    }
+
+    /* ── Loan type note ── */
+    .loan-type-note {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-top: 6px;
+    }
+
+    /* ── Compare bar ── */
+    .compare-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .save-btn {
+      height: 36px;
+      padding: 0 14px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s;
+    }
+    .save-btn:hover { background: #1d4ed8; }
+    .compare-btn {
+      height: 36px;
+      padding: 0 14px;
+      background: var(--surface);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s;
+    }
+    .compare-btn:hover { background: var(--surface-2); }
+    .compare-section { margin-top: 16px; }
+    .compare-table-wrap { overflow-x: auto; }
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+    }
+    .compare-table th {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 10px 14px;
+      text-align: left;
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .compare-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-del {
+      border: none;
+      background: none;
+      color: var(--red);
+      cursor: pointer;
+      font-size: 14px;
+      padding: 2px 6px;
+      border-radius: var(--radius-sm);
+    }
+    .compare-del:hover { background: var(--red-bg); }
+    .compare-empty {
+      padding: 24px 20px;
+      color: var(--text-muted);
+      font-size: 13px;
+      text-align: center;
+    }
+    .td-num { font-variant-numeric: tabular-nums; font-family: 'SF Mono','Fira Code',Menlo,monospace; white-space: nowrap; }
+    .td-good { color: var(--green); font-weight: 600; }
+    .td-warn { color: var(--yellow); font-weight: 600; }
+    .td-bad  { color: var(--red);   font-weight: 600; }
+    .td-addr a { display: block; font-size: 11px; color: var(--accent); margin-top: 2px; }
+
+    /* ── Modal ── */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal-backdrop.hidden { display: none; }
+    .modal-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      padding: 24px;
+      width: 420px;
+      max-width: 96vw;
+    }
+    .modal-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .modal-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 12px;
+    }
+    .modal-field label { font-size: 12.5px; font-weight: 500; color: var(--text-muted); }
+    .modal-field input[type="text"], .modal-field input[type="url"], .modal-field input[type="number"] {
+      height: 38px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 13.5px;
+      font-family: inherit;
+      padding: 0 10px;
+      outline: none;
+    }
+    .modal-field input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,0.12); }
+    .modal-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+    .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; }
+    .modal-cancel {
+      height: 36px;
+      padding: 0 16px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .modal-save {
+      height: 36px;
+      padding: 0 16px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .modal-save:hover { background: #1d4ed8; }
+
+    /* ── ROI table ── */
+    .roi-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+    .roi-table th {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 6px 8px;
+      text-align: left;
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--border);
+    }
+    .roi-table td { padding: 6px 8px; border-bottom: 1px solid var(--bg); font-size: 12px; }
+    .roi-table tr:last-child td { border-bottom: none; }
+    .roi-num { text-align: right; font-variant-numeric: tabular-nums; font-family: 'SF Mono','Fira Code',Menlo,monospace; }
+    .roi-verdict {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .roi-verdict.green-bg { background: var(--green-bg); border: 1px solid var(--green-border); color: #166534; }
+    .roi-verdict.yellow-bg { background: var(--yellow-bg); border: 1px solid var(--yellow-border); color: #92400e; }
+    .roi-verdict.red-bg { background: var(--red-bg); border: 1px solid var(--red-border); color: #991b1b; }
+
+    /* ── Closing costs itemized table ── */
+    .cc-table { display: flex; flex-direction: column; margin-top: 6px; }
+    .cc-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 0;
+    }
+    .cc-lbl { flex: 1; font-size: 12.5px; color: var(--text); }
+    .cc-iw { width: 120px; flex-shrink: 0; }
+    .cc-iw input[type="number"] { height: 32px; font-size: 13px; }
+    .cc-iw-readonly {
+      width: 120px;
+      flex-shrink: 0;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      font-family: 'SF Mono','Fira Code',Menlo,monospace;
+      padding-right: 4px;
+    }
+    .cc-hint {
+      font-size: 10.5px;
+      color: var(--text-xs);
+      padding: 0 0 4px;
+      line-height: 1.4;
+    }
+    .cc-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 2px solid var(--border);
+      margin-top: 6px;
+      padding-top: 8px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .cc-total-val {
+      font-family: 'SF Mono','Fira Code',Menlo,monospace;
+      font-size: 14px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <h1>Minneapolis Property Cost Estimator</h1>
+  </div>
+</header>
+
+<div class="page-content">
+  <div class="calculator-shell">
+
+    <!-- ═══════════════════════════════════════════════
+         INPUTS
+    ════════════════════════════════════════════════ -->
+    <div class="inputs-panel">
+
+      <!-- Property type panes -->
+      <div class="prop-type-panes">
+        <button class="prop-pane active" id="btn-duplex">
+          <span class="prop-pane-icon">🏘</span>
+          <span class="prop-pane-title">Duplex</span>
+          <span class="prop-pane-sub">Owner-occupied · rent one unit</span>
+        </button>
+        <button class="prop-pane" id="btn-house">
+          <span class="prop-pane-icon">🏠</span>
+          <span class="prop-pane-title">Single-Family</span>
+          <span class="prop-pane-sub">Owner-occupied · rent bedrooms</span>
+        </button>
+      </div>
+
+      <!-- Purchase Details -->
+      <fieldset>
+        <legend>Purchase Details</legend>
+
+        <div class="field">
+          <label for="purchase-price">Purchase Price</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="purchase-price" value="300000" min="0" step="1000">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="down-payment">Down Payment</label>
+          <div class="dp-row">
+            <div class="input-wrap has-prefix">
+              <span class="input-prefix">$</span>
+              <input type="number" id="down-payment" value="60000" min="0" step="1000">
+            </div>
+            <span class="dp-pct" id="dp-pct">20.0%</span>
+          </div>
+          <div class="field-note">Min 3.5% FHA · 5% conventional · 20% avoids PMI</div>
+        </div>
+
+        <div class="field">
+          <label>Loan Term</label>
+          <div class="toggle-group">
+            <button class="toggle-btn active" id="btn-30">30 Year</button>
+            <button class="toggle-btn" id="btn-15">15 Year</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Loan Type</label>
+          <div class="toggle-group">
+            <button class="toggle-btn active" id="btn-conv">Conventional</button>
+            <button class="toggle-btn" id="btn-fha">FHA</button>
+          </div>
+          <div class="loan-type-note" id="loan-type-note">
+            <strong>Conventional:</strong> PMI required if &lt;20% down; cancels when you reach 20% equity. Min 5% down (3% some programs). No upfront MIP.
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="interest-rate">Interest Rate</label>
+          <div class="input-wrap has-suffix">
+            <input type="number" id="interest-rate" value="6.9" min="0" max="20" step="0.05">
+            <span class="input-suffix">%</span>
+          </div>
+          <div class="rate-presets">
+            <span class="preset-label-text">Presets:</span>
+            <button class="preset-btn active" data-rate="6.9" data-term="30">Bank · 30yr ~6.9%</button>
+            <button class="preset-btn" data-rate="6.3" data-term="15">Bank · 15yr ~6.3%</button>
+            <button class="preset-btn" data-rate="6.5" data-term="30">Credit Union · 30yr ~6.5%</button>
+            <button class="preset-btn" data-rate="5.9" data-term="15">Credit Union · 15yr ~5.9%</button>
+          </div>
+          <div class="field-note">Credit unions (Affinity Plus, Blaze, Veridian) typically offer lower rates than banks</div>
+        </div>
+
+        <div class="field">
+          <label>Closing Costs</label>
+          <div class="cc-table">
+            <div class="cc-row">
+              <span class="cc-lbl">Appraisal</span>
+              <div class="input-wrap has-prefix cc-iw"><span class="input-prefix">$</span><input type="number" id="cc-appraisal" value="650" min="0" step="50"></div>
+            </div>
+            <div class="cc-hint">Avg Minneapolis duplex ~$600–$700</div>
+            <div class="cc-row">
+              <span class="cc-lbl">Title insurance</span>
+              <div class="input-wrap has-prefix cc-iw"><span class="input-prefix">$</span><input type="number" id="cc-title" value="1500" min="0" step="50"></div>
+            </div>
+            <div class="cc-hint">Owner's title policy ~$1,200–$1,800</div>
+            <div class="cc-row">
+              <span class="cc-lbl">Lender fees</span>
+              <div class="input-wrap has-prefix cc-iw"><span class="input-prefix">$</span><input type="number" id="cc-lender" value="1500" min="0" step="50"></div>
+            </div>
+            <div class="cc-hint">Origination + underwriting · Minneapolis avg ~$1,200–$1,800</div>
+            <div class="cc-row">
+              <span class="cc-lbl">MN Mortgage Registry Tax</span>
+              <div class="cc-iw-readonly" id="cc-mrt-display">—</div>
+            </div>
+            <div class="cc-hint">0.23% × loan amount · auto-calculated</div>
+            <div class="cc-total">
+              <span>Total Closing Costs</span>
+              <span class="cc-total-val" id="cc-total-display">—</span>
+            </div>
+            <div class="pct-dollar" id="closing-dollar" style="margin-top:4px;">—</div>
+          </div>
+        </div>
+
+        <div class="field" style="padding-bottom:16px;">
+          <label for="buyer-agent-pct">Buyer Agent Commission</label>
+          <div class="input-wrap has-suffix">
+            <input type="number" id="buyer-agent-pct" value="0" min="0" max="10" step="0.25">
+            <span class="input-suffix">%</span>
+          </div>
+          <div class="pct-dollar" id="agent-dollar">—</div>
+          <div class="field-note">Post-NAR settlement (Aug 2024): buyer pays their agent directly if not negotiated into the sale · Typical: 2–3% · Default 0% if seller covers</div>
+        </div>
+      </fieldset>
+
+      <!-- Cash Position -->
+      <fieldset>
+        <legend>Cash Position</legend>
+
+        <div class="field">
+          <label for="total-cash">Total Available Cash</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="total-cash" value="150000" min="0" step="1000">
+          </div>
+          <div class="field-note">All cash you have available — savings, gifts, DPA funds</div>
+        </div>
+
+        <div class="field">
+          <label for="cash-used">Total Cash Used for This Purchase</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="cash-used" value="75000" min="0" step="1000">
+          </div>
+          <div class="field-note">Amount you're willing to deploy — down payment + closing + other costs must fit within this</div>
+        </div>
+
+        <div class="tip-chip">
+          <i class="tip-icon">ℹ</i>
+          <span>MN Housing Start Up: up to <strong>$18,000</strong> deferred 0% DPA &nbsp;·&nbsp; Minneapolis Homes Access: up to <strong>$20,000</strong> &nbsp;·&nbsp; First-Gen Homebuyer Loan: up to <strong>$35,000</strong> (forgivable)</span>
+        </div>
+
+        <div class="field">
+          <label>Other Upfront Costs</label>
+          <div class="field-note" style="margin-bottom:6px;">Items outside your down payment and closing costs %. Appraisal, title insurance, and lender fees are already covered by the closing costs % above — don't double-count them here.</div>
+
+          <div class="upfront-table">
+
+            <div class="upfront-cat">Pre-Offer</div>
+            <div class="upfront-row">
+              <span class="upfront-lbl">Homebuyer education course</span>
+              <div class="input-wrap has-prefix upfront-iw"><span class="input-prefix">$</span><input type="number" id="uc-education" value="0" min="0" step="25"></div>
+            </div>
+            <div class="upfront-hint">Often free · Required for most MN DPA programs (MN Homeownership Center)</div>
+
+            <div class="upfront-earnest-note">ℹ Earnest money (typically 1–2% of purchase price) is due here but goes toward your down payment at closing — it's already captured above, not a separate cost.</div>
+
+            <div class="upfront-cat">Under Contract</div>
+            <div class="upfront-row">
+              <span class="upfront-lbl">Home inspection</span>
+              <div class="input-wrap has-prefix upfront-iw"><span class="input-prefix">$</span><input type="number" id="uc-inspection" value="500" min="0" step="50"></div>
+            </div>
+            <div class="upfront-hint">$400–600 for a duplex</div>
+            <div class="upfront-row">
+              <span class="upfront-lbl">Radon testing</span>
+              <div class="input-wrap has-prefix upfront-iw"><span class="input-prefix">$</span><input type="number" id="uc-radon" value="150" min="0" step="25"></div>
+            </div>
+            <div class="upfront-hint">$100–200</div>
+            <div class="upfront-row">
+              <span class="upfront-lbl">Sewer scope</span>
+              <div class="input-wrap has-prefix upfront-iw"><span class="input-prefix">$</span><input type="number" id="uc-sewer" value="200" min="0" step="25"></div>
+            </div>
+            <div class="upfront-hint">$150–300 · Recommended on older Minneapolis stock</div>
+            <div class="upfront-row">
+              <span class="upfront-lbl">Mold / asbestos testing</span>
+              <div class="input-wrap has-prefix upfront-iw"><span class="input-prefix">$</span><input type="number" id="uc-mold" value="0" min="0" step="50"></div>
+            </div>
+            <div class="upfront-hint">If flagged during inspection</div>
+            <div class="upfront-row">
+              <span class="upfront-lbl">TISH required repairs</span>
+              <div class="input-wrap has-prefix upfront-iw"><span class="input-prefix">$</span><input type="number" id="uc-tish" value="0" min="0" step="100"></div>
+            </div>
+            <div class="upfront-hint">Minneapolis requires seller-provided Truth in Sale of Housing report · Buyer must fix any "Required Repairs" within 90 days of closing</div>
+
+            <div class="upfront-cat">At Closing (not in closing costs %)</div>
+            <div class="upfront-row">
+              <span class="upfront-lbl">Prepaid items</span>
+              <div class="input-wrap has-prefix upfront-iw"><span class="input-prefix">$</span><input type="number" id="uc-prepaid" value="3000" min="0" step="100"></div>
+            </div>
+            <div class="upfront-hint">First-year homeowners insurance premium + property tax escrow (2–6 months) + prepaid mortgage interest · Not included in closing costs %</div>
+
+            <div id="duplex-upfront-section">
+            <div class="upfront-cat">Duplex-Specific</div>
+            <div class="upfront-row">
+              <span class="upfront-lbl">Rental license (first year)</span>
+              <div class="input-wrap has-prefix upfront-iw"><span class="input-prefix">$</span><input type="number" id="uc-rental-license" value="75" min="0" step="25"></div>
+            </div>
+            <div class="upfront-hint">~$75/yr · Apply within 60 days of closing</div>
+            <div class="upfront-row">
+              <span class="upfront-lbl">City rental inspection repairs</span>
+              <div class="input-wrap has-prefix upfront-iw"><span class="input-prefix">$</span><input type="number" id="uc-city-repairs" value="0" min="0" step="100"></div>
+            </div>
+            <div class="upfront-hint">Repairs required before city issues rental license</div>
+            </div>
+
+            <div class="upfront-cat">Move-In &amp; Post-Close</div>
+            <div class="upfront-row">
+              <span class="upfront-lbl">Moving costs</span>
+              <div class="input-wrap has-prefix upfront-iw"><span class="input-prefix">$</span><input type="number" id="uc-moving" value="1500" min="0" step="100"></div>
+            </div>
+            <div class="upfront-hint">$500–2,500</div>
+            <div class="upfront-row">
+              <span class="upfront-lbl">Repairs / contingency</span>
+              <div class="input-wrap has-prefix upfront-iw"><span class="input-prefix">$</span><input type="number" id="uc-repairs" value="3000" min="0" step="100"></div>
+            </div>
+            <div class="upfront-hint">~1% of purchase price · Year-one surprises: furnace filters, plumbing, weatherization</div>
+
+            <div class="upfront-total">
+              <span>Total Other Upfront Costs</span>
+              <span class="upfront-total-val" id="upfront-total-val">—</span>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="field" style="padding-bottom:16px;">
+          <label for="cash-reserve">Cash Reserve Target (keep after closing)</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="cash-reserve" value="10000" min="0" step="1000">
+          </div>
+          <div class="field-note">Amount you want to retain in savings after all closing costs</div>
+        </div>
+      </fieldset>
+
+      <!-- Rental Income -->
+      <fieldset>
+        <legend>Rental Income</legend>
+
+        <!-- Duplex mode: single unit rent -->
+        <div id="rent-mode-duplex">
+          <div class="field">
+            <label for="monthly-rent">Expected Monthly Rent</label>
+            <div class="input-wrap has-prefix">
+              <span class="input-prefix">$</span>
+              <input type="number" id="monthly-rent" value="1400" min="0" step="50">
+            </div>
+            <div class="field-note">Median Minneapolis 1BR: ~$1,200–$1,600/mo (2025)</div>
+          </div>
+        </div>
+
+        <!-- House mode: per-bedroom rents -->
+        <div id="rent-mode-house" style="display:none;">
+          <div class="field-note" style="margin-bottom:10px;">Check each bedroom you plan to rent. Uncheck rooms you'll keep for personal use.</div>
+          <div class="bedroom-list">
+            <div class="bedroom-row">
+              <input type="checkbox" id="cb-br1" checked>
+              <label class="br-label" for="cb-br1">Bedroom 1</label>
+              <div class="input-wrap has-prefix">
+                <span class="input-prefix">$</span>
+                <input type="number" id="rent-br1" value="800" min="0" step="50">
+              </div>
+            </div>
+            <div class="bedroom-row">
+              <input type="checkbox" id="cb-br2">
+              <label class="br-label muted" for="cb-br2">Bedroom 2</label>
+              <div class="input-wrap has-prefix">
+                <span class="input-prefix">$</span>
+                <input type="number" id="rent-br2" value="700" min="0" step="50" disabled>
+              </div>
+            </div>
+            <div class="bedroom-row">
+              <input type="checkbox" id="cb-br3">
+              <label class="br-label muted" for="cb-br3">Bedroom 3</label>
+              <div class="input-wrap has-prefix">
+                <span class="input-prefix">$</span>
+                <input type="number" id="rent-br3" value="600" min="0" step="50" disabled>
+              </div>
+            </div>
+          </div>
+          <div class="field-note" style="margin-top:8px; margin-bottom:12px;">Minneapolis median room rental: ~$600–$900/mo · Renting 2+ rooms may require city rental license — verify at minneapolismn.gov</div>
+        </div>
+
+        <div class="field" style="padding-bottom:16px; margin-top:4px;">
+          <label for="vacancy-rate">Vacancy Rate</label>
+          <div class="input-wrap has-suffix">
+            <input type="number" id="vacancy-rate" value="8" min="0" max="100" step="0.5">
+            <span class="input-suffix">%</span>
+          </div>
+          <div class="field-note" id="vacancy-note">Minneapolis ~5–8% historically · 8% default is conservative</div>
+        </div>
+      </fieldset>
+
+      <!-- Monthly Expenses -->
+      <fieldset>
+        <legend>Monthly Expenses</legend>
+
+        <div class="field">
+          <label for="monthly-tax">Property Tax</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="monthly-tax" value="292" min="0" step="10">
+          </div>
+          <div class="field-note" id="tax-note">Hennepin Co. eff. rate ~1.17–1.19%/yr · Owner-occupied split homestead saves ~$200–400/yr</div>
+        </div>
+
+        <div class="field">
+          <label for="monthly-insurance">Homeowners Insurance</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="monthly-insurance" value="120" min="0" step="10">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="monthly-pmi">PMI <span id="pmi-badge" style="font-size:10.5px; font-weight:400; color:var(--text-muted);">· auto-calculated</span></label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="monthly-pmi" value="0" min="0" step="5" placeholder="auto">
+          </div>
+          <div class="field-note" id="pmi-note">PMI applies when down payment &lt; 20% on conventional loans · Typically 0.5–1.5% of loan/yr · Leave at 0 to auto-calculate (uses 0.85%/yr) · FHA loans have MIP regardless of down payment</div>
+        </div>
+
+        <div class="field">
+          <label for="monthly-maint">Maintenance Budget</label>
+          <div class="input-wrap has-prefix">
+            <span class="input-prefix">$</span>
+            <input type="number" id="monthly-maint" value="200" min="0" step="25">
+          </div>
+          <div class="field-note">Rule of thumb: 1% of purchase price per year ÷ 12</div>
+        </div>
+
+        <div class="field">
+          <label for="monthly-pm-pct">Property Management <span style="font-size:10.5px; font-weight:400; color:var(--text-muted);">(if not self-managing)</span></label>
+          <div class="input-wrap has-suffix">
+            <input type="number" id="monthly-pm-pct" value="0" min="0" max="20" step="0.5">
+            <span class="input-suffix">%</span>
+          </div>
+          <div class="field-note">% of monthly rent · Typical Minneapolis PM: 8–10% · Set to 0 if self-managing as owner-occupant</div>
+        </div>
+
+        <div class="field">
+          <label>Utilities <span style="font-size:10.5px; font-weight:400; color:var(--text-muted);" id="util-mode-note">(owner-paid portion)</span></label>
+          <div class="field-note" style="margin-bottom:8px;" id="util-note">Duplex: owner typically covers water/trash for both units; tenant pays their own gas, electric, internet. Adjust to match your lease structure.</div>
+          <div style="display:flex; flex-direction:column; gap:7px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <label style="flex:1; font-size:12.5px; color:var(--text-muted);" for="util-water">Water</label>
+              <div class="input-wrap has-prefix" style="width:110px;"><span class="input-prefix">$</span><input type="number" id="util-water" value="45" min="0" step="5"></div>
+            </div>
+            <div style="font-size:10.5px; color:var(--text-xs); line-height:1.4; margin-top:-3px;">Minneapolis Water Works avg ~$40–$55/mo for duplex</div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <label style="flex:1; font-size:12.5px; color:var(--text-muted);" for="util-sewer">Sewer &amp; Trash</label>
+              <div class="input-wrap has-prefix" style="width:110px;"><span class="input-prefix">$</span><input type="number" id="util-sewer" value="35" min="0" step="5"></div>
+            </div>
+            <div style="font-size:10.5px; color:var(--text-xs); line-height:1.4; margin-top:-3px;">Minneapolis sewer + solid waste avg ~$30–$40/mo</div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <label style="flex:1; font-size:12.5px; color:var(--text-muted);" for="util-gas">Gas / Heat</label>
+              <div class="input-wrap has-prefix" style="width:110px;"><span class="input-prefix">$</span><input type="number" id="util-gas" value="90" min="0" step="5"></div>
+            </div>
+            <div style="font-size:10.5px; color:var(--text-xs); line-height:1.4; margin-top:-3px;">Xcel Energy avg ~$70–$120/mo Minneapolis · higher Nov–Mar</div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <label style="flex:1; font-size:12.5px; color:var(--text-muted);" for="util-electric">Electricity</label>
+              <div class="input-wrap has-prefix" style="width:110px;"><span class="input-prefix">$</span><input type="number" id="util-electric" value="60" min="0" step="5"></div>
+            </div>
+            <div style="font-size:10.5px; color:var(--text-xs); line-height:1.4; margin-top:-3px;">Xcel Energy avg ~$50–$75/mo per unit</div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <label style="flex:1; font-size:12.5px; color:var(--text-muted);" for="util-internet">Internet</label>
+              <div class="input-wrap has-prefix" style="width:110px;"><span class="input-prefix">$</span><input type="number" id="util-internet" value="65" min="0" step="5"></div>
+            </div>
+            <div style="font-size:10.5px; color:var(--text-xs); line-height:1.4; margin-top:-3px;">Comcast/Xfinity or CenturyLink avg ~$55–$75/mo</div>
+          </div>
+          <div id="util-house-note" style="display:none; margin-top:8px; font-size:11px; color:var(--text-muted); background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:6px 9px; line-height:1.4;"></div>
+        </div>
+
+        <div class="field" style="padding-bottom:18px;">
+          <div style="display:flex; justify-content:space-between; font-size:12.5px; color:var(--text-muted); margin-top:2px;">
+            <span>Total Utilities</span>
+            <span id="util-total" style="font-weight:600; color:var(--text);">—</span>
+          </div>
+        </div>
+      </fieldset>
+
+    </div><!-- /inputs-panel -->
+
+    <!-- ═══════════════════════════════════════════════
+         OUTPUTS
+    ════════════════════════════════════════════════ -->
+    <div class="outputs-panel">
+
+      <div class="compare-bar">
+        <button class="compare-btn" id="btn-view-compare" onclick="toggleCompare()">Compare Properties <span id="compare-count" style="font-size:10.5px; color:var(--accent);">0 saved</span></button>
+        <button class="save-btn" id="btn-save-prop" onclick="openSaveModal()">+ Save This Property</button>
+      </div>
+
+      <!-- Card: Financing Summary -->
+      <div class="out-card">
+        <div class="card-header">Financing Summary</div>
+        <div class="card-body">
+          <div class="line-items">
+            <div class="line-item">
+              <span class="ll">Purchase Price</span>
+              <span class="lv" id="o-purchase-price">—</span>
+            </div>
+            <div class="line-item">
+              <span class="ll">Down Payment</span>
+              <span class="lv" id="o-down-payment">—</span>
+            </div>
+            <div class="line-item">
+              <span class="ll">Loan Amount</span>
+              <span class="lv" id="o-loan">—</span>
+            </div>
+            <div class="line-item section-gap">
+              <span class="ll">Closing Costs</span>
+              <span class="lv" id="o-closing">—</span>
+            </div>
+            <div class="line-item" id="row-agent-fee">
+              <span class="ll">Buyer Agent Fee</span>
+              <span class="lv" id="o-agent-fee">—</span>
+            </div>
+            <div class="line-item" id="row-other-upfront">
+              <span class="ll">Other Upfront Costs</span>
+              <span class="lv" id="o-other-upfront">—</span>
+            </div>
+            <div class="line-item subtotal">
+              <span class="ll strong">Total Cash to Close</span>
+              <span class="lv" id="o-cash-close">—</span>
+            </div>
+            <div class="line-item" style="border-bottom:none;">
+              <span class="ll">Cash Remaining After Closing</span>
+              <span class="lv" id="o-cash-remain">—</span>
+            </div>
+          </div>
+          <div class="reserve-row">
+            <span class="reserve-lbl">Reserve target met?</span>
+            <span class="badge badge-neutral" id="o-reserve-badge">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card: Monthly Breakdown -->
+      <div class="out-card">
+        <div class="card-header">Monthly Breakdown</div>
+        <div class="card-body">
+          <div class="line-items">
+            <div class="line-item">
+              <span class="ll">Principal &amp; Interest (P&amp;I)</span>
+              <span class="lv" id="o-pi">—</span>
+            </div>
+            <div class="line-item">
+              <span class="ll">Property Tax</span>
+              <span class="lv" id="o-tax">—</span>
+            </div>
+            <div class="line-item">
+              <span class="ll">Insurance</span>
+              <span class="lv" id="o-ins">—</span>
+            </div>
+            <div class="line-item" id="row-pmi" style="display:none;">
+              <span class="ll">PMI</span>
+              <span class="lv" id="o-pmi">—</span>
+            </div>
+            <div class="line-item subtotal">
+              <span class="ll strong">Total PITI</span>
+              <span class="lv" id="o-piti">—</span>
+            </div>
+            <div class="line-item">
+              <span class="ll">Maintenance</span>
+              <span class="lv" id="o-maint">—</span>
+            </div>
+            <div class="line-item" id="row-pm" style="display:none;">
+              <span class="ll">Property Management</span>
+              <span class="lv" id="o-pm">—</span>
+            </div>
+            <div class="line-item" id="row-utilities">
+              <span class="ll">Utilities (owner-paid)</span>
+              <span class="lv" id="o-utilities">—</span>
+            </div>
+            <div class="line-item subtotal">
+              <span class="ll strong">Total Monthly Costs</span>
+              <span class="lv" id="o-total-costs">—</span>
+            </div>
+            <div class="line-item" style="padding-top:6px;">
+              <span class="ll" style="color:var(--text-muted);">Break-even rent needed</span>
+              <span class="lv" id="o-breakeven" style="color:var(--text-muted);">—</span>
+            </div>
+            <div id="rent-adj-row" class="line-item rent-adj-row" style="border-bottom:none; flex-direction:column; align-items:stretch; gap:6px; padding-top:10px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span class="ll" id="o-rent-label">Effective Rental Income</span>
+                <span class="lv green" id="o-rent">—</span>
+              </div>
+              <div class="rent-adjuster">
+                <span class="ra-label">Adjust rent scenario:</span>
+                <div class="input-wrap has-prefix ra-input-wrap">
+                  <span class="input-prefix">$</span>
+                  <input type="number" id="rent-scenario" min="0" step="50" placeholder="0">
+                </div>
+                <span class="ra-occ" id="ra-occ-label">/mo</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="net-cost-box">
+            <div class="nc-label">Your Effective Monthly Rent</div>
+            <div class="nc-value" id="o-net">—</div>
+            <div class="nc-sub" id="o-net-sub">Enter values above to calculate</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card: Appreciation & Returns -->
+      <div class="out-card">
+        <div class="card-header">Appreciation &amp; Returns</div>
+        <div class="card-body">
+          <div class="line-items">
+            <div class="line-item">
+              <span class="ll">Gross Rent Multiplier (GRM)</span>
+              <span class="lv" id="o-grm">—</span>
+            </div>
+            <div class="line-item">
+              <span class="ll">Est. 5-yr value <span style="font-size:10.5px;">(3% ann.)</span></span>
+              <span class="lv" id="o-appr-3">—</span>
+            </div>
+            <div class="line-item">
+              <span class="ll">Est. 5-yr value <span style="font-size:10.5px;">(5% ann.)</span></span>
+              <span class="lv" id="o-appr-5">—</span>
+            </div>
+            <div class="line-item" style="border-bottom:none;">
+              <span class="ll">Est. 5-yr equity built</span>
+              <span class="lv" id="o-equity-5">—</span>
+            </div>
+          </div>
+
+          <div style="margin-top:12px; font-size:10.5px; font-weight:700; letter-spacing:0.6px; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;">vs. Renting + Investing Your Down Payment</div>
+          <table class="roi-table">
+            <thead>
+              <tr>
+                <th>Scenario</th>
+                <th>5-yr terminal value</th>
+                <th>5-yr cost</th>
+                <th>Net gain</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>🏘 House-hack</td>
+                <td class="roi-num" id="roi-house-val">—</td>
+                <td class="roi-num" id="roi-house-cost">—</td>
+                <td class="roi-num" id="roi-house-net">—</td>
+              </tr>
+              <tr>
+                <td>📈 S&amp;P 500 (10%/yr)</td>
+                <td class="roi-num" id="roi-sp-val">—</td>
+                <td class="roi-num" id="roi-sp-cost">—</td>
+                <td class="roi-num" id="roi-sp-net">—</td>
+              </tr>
+              <tr>
+                <td>🏦 CDs (4.5%/yr)</td>
+                <td class="roi-num" id="roi-cd-val">—</td>
+                <td class="roi-num" id="roi-cd-cost">—</td>
+                <td class="roi-num" id="roi-cd-net">—</td>
+              </tr>
+              <tr>
+                <td>📄 Bonds (3.5%/yr)</td>
+                <td class="roi-num" id="roi-bond-val">—</td>
+                <td class="roi-num" id="roi-bond-cost">—</td>
+                <td class="roi-num" id="roi-bond-net">—</td>
+              </tr>
+            </tbody>
+          </table>
+          <div id="roi-verdict" class="roi-verdict" style="display:none;"></div>
+          <div id="roi-assumptions" style="font-size:10.5px; color:var(--text-xs); margin-top:6px; line-height:1.5;">Assumes current rent $1,200/mo · Down payment deployed at purchase · Monthly cost difference reinvested at scenario rate</div>
+        </div>
+      </div>
+
+    </div><!-- /outputs-panel -->
+  </div><!-- /calculator-shell -->
+
+  <!-- ═══════════════════════════════════════════════
+       MINNEAPOLIS RESOURCES
+  ════════════════════════════════════════════════ -->
+  <div class="mpls-section">
+    <div class="mpls-outer">
+      <details>
+        <summary class="mpls-summary">
+          <span style="font-size:15px;">🏠</span>
+          Minneapolis &amp; Minnesota Homebuyer Programs &amp; Local Rules
+          <span class="arrow">▼</span>
+        </summary>
+
+        <div class="mpls-grid">
+
+          <div class="mpls-card">
+            <details>
+              <summary>
+                <span class="mc-icon">🏡</span>
+                <div class="mc-text">
+                  <div class="mc-title">Homestead Exemption</div>
+                  <div class="mc-hook">Lower tax rate for owner-occupied duplex units</div>
+                </div>
+                <span class="mc-arrow">▼</span>
+              </summary>
+              <div class="mc-body">
+                <p>When you occupy one unit of a duplex, the owner-occupied portion qualifies for the <strong>1.00% homestead class rate</strong> (first $500K of value). The rental unit is assessed at the higher <strong>1.25% non-homestead rate</strong>.</p>
+                <p>This split can save $200–$400+ per year. File a Homestead Application with <strong>Hennepin County Assessor by December 31</strong> to receive the benefit the following tax year. Call 612-348-3046 for help.</p>
+              </div>
+            </details>
+          </div>
+
+          <div class="mpls-card">
+            <details>
+              <summary>
+                <span class="mc-icon">💰</span>
+                <div class="mc-text">
+                  <div class="mc-title">MN Housing Start Up Loan</div>
+                  <div class="mc-hook">Up to $18,000 — deferred, 0% interest DPA</div>
+                </div>
+                <span class="mc-arrow">▼</span>
+              </summary>
+              <div class="mc-body">
+                <p>Minnesota Housing's <strong>Start Up program</strong> offers a deferred second mortgage of up to $18,000 for down payment and closing costs. The loan is interest-free and repayment is deferred until sale, refinance, or the home is no longer a primary residence.</p>
+                <p><strong>Limits:</strong> Max purchase price <strong>$310,000</strong> in the Twin Cities metro · Min credit score 640 · Income limits apply · Requires a homebuyer education course. See mnhousing.gov.</p>
+              </div>
+            </details>
+          </div>
+
+          <div class="mpls-card">
+            <details>
+              <summary>
+                <span class="mc-icon">🏙️</span>
+                <div class="mc-text">
+                  <div class="mc-title">Minneapolis Homes Access DPA</div>
+                  <div class="mc-hook">Up to $20,000 for Minneapolis primary residences</div>
+                </div>
+                <span class="mc-arrow">▼</span>
+              </summary>
+              <div class="mc-body">
+                <p>The <strong>Minneapolis Homes: Access</strong> program offers up to $20,000 in down payment assistance for buyers purchasing a primary residence within Minneapolis city limits.</p>
+                <p>Income limits and application requirements apply. Contact Minneapolis CPED or visit minneapolismn.gov/housing for current details and to confirm duplex eligibility.</p>
+              </div>
+            </details>
+          </div>
+
+          <div class="mpls-card">
+            <details>
+              <summary>
+                <span class="mc-icon">🌱</span>
+                <div class="mc-text">
+                  <div class="mc-title">First-Generation Homebuyer Loan</div>
+                  <div class="mc-hook">Up to $35,000 — partially forgivable over 20 years</div>
+                </div>
+                <span class="mc-arrow">▼</span>
+              </summary>
+              <div class="mc-body">
+                <p>MN Housing's <strong>First Generation Homebuyer Loan</strong> provides up to $35,000 for buyers whose parents never owned a home (or lost one to foreclosure). Must be paired with a Start Up first mortgage.</p>
+                <p><strong>Forgiveness:</strong> 50% forgiven after 10 years of owner-occupancy; remaining 50% after 20 years. Deferred, 0% interest. Limited slots — first-come, first-served. See mnhousing.gov.</p>
+              </div>
+            </details>
+          </div>
+
+          <div class="mpls-card">
+            <details>
+              <summary>
+                <span class="mc-icon">📋</span>
+                <div class="mc-text">
+                  <div class="mc-title">Rental License Exemption</div>
+                  <div class="mc-hook">Owner-occupants generally exempt from licensing</div>
+                </div>
+                <span class="mc-arrow">▼</span>
+              </summary>
+              <div class="mc-body">
+                <p>Minneapolis requires a rental license for landlords who <em>don't</em> live on the property. <strong>If you occupy one unit as your primary residence</strong>, you are generally exempt — a meaningful operational simplification.</p>
+                <p>If you ever vacate and rent both units, a license is required (~$450 at ownership change + annual renewal by March 1). New 2025 rules: mandatory disclosures before lease signing and 30-day pre-eviction notice.</p>
+              </div>
+            </details>
+          </div>
+
+          <div class="mpls-card">
+            <details>
+              <summary>
+                <span class="mc-icon">📈</span>
+                <div class="mc-text">
+                  <div class="mc-title">Rent Stabilization Status</div>
+                  <div class="mc-hook">No rent control currently in effect (as of 2026)</div>
+                </div>
+                <span class="mc-arrow">▼</span>
+              </summary>
+              <div class="mc-body">
+                <p>Minneapolis voters approved a charter amendment in 2021 giving the City Council authority to regulate rents, but <strong>no ordinance has been enacted as of early 2026</strong>. A proposal capping annual increases at ~3% has been discussed but not passed.</p>
+                <p>Note: St. Paul has a separate 3% annual cap — Minneapolis does not. You can currently raise rent at lease renewal. Monitor minneapolismn.gov/housing for updates.</p>
+              </div>
+            </details>
+          </div>
+
+        </div><!-- /mpls-grid -->
+
+        <div class="mpls-disclaimer">
+          Program details, income limits, and rates change frequently. Verify current eligibility at mnhousing.gov and minneapolismn.gov before applying. This calculator is for educational purposes only and does not constitute financial, tax, or legal advice.
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <div class="compare-section" id="compare-section" style="display:none; margin-top:16px;">
+    <div class="mpls-outer">
+      <div style="padding:14px 20px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:13px; font-weight:600;">Saved Properties</span>
+        <button onclick="clearAllSaved()" style="font-size:11px; color:var(--red); border:none; background:none; cursor:pointer; font-family:inherit;">Clear All</button>
+      </div>
+      <div class="compare-table-wrap" id="compare-table-wrap">
+        <div class="compare-empty">No saved properties yet. Save a property snapshot to compare.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page-content -->
+
+<div class="modal-backdrop hidden" id="save-modal">
+  <div class="modal-box">
+    <div class="modal-title">Save Property Snapshot</div>
+    <div class="modal-field">
+      <label>Address / Name</label>
+      <input type="text" id="m-address" placeholder="e.g. 2847 Dupont Ave N">
+    </div>
+    <div class="modal-field">
+      <label>Listing URL (optional)</label>
+      <input type="url" id="m-url" placeholder="https://...">
+    </div>
+    <div class="modal-row">
+      <div class="modal-field">
+        <label>Bedrooms</label>
+        <input type="number" id="m-beds" min="1" max="10" value="3">
+      </div>
+      <div class="modal-field">
+        <label>Bathrooms</label>
+        <input type="number" id="m-baths" min="1" max="10" value="2" step="0.5">
+      </div>
+      <div class="modal-field">
+        <label>Sq Ft</label>
+        <input type="number" id="m-sqft" min="0" step="50" value="1400">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeSaveModal()">Cancel</button>
+      <button class="modal-save" onclick="confirmSave()">Save Snapshot</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Minneapolis Owner-Occupied Duplex Calculator &nbsp;·&nbsp; All figures are estimates &nbsp;·&nbsp; 2025–2026 &nbsp;·&nbsp; Save this file to use offline from any device
+</footer>
+
+<script>
+  // ─────────────────────────────────────────────────────────────
+  // Cookie helpers
+  // ─────────────────────────────────────────────────────────────
+  function setCookie(name, value) {
+    var d = new Date();
+    d.setFullYear(d.getFullYear() + 2);
+    document.cookie = name + '=' + encodeURIComponent(value) + ';expires=' + d.toUTCString() + ';path=/';
+  }
+  function getCookie(name) {
+    var match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+    return match ? decodeURIComponent(match[1]) : null;
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // State
+  // ─────────────────────────────────────────────────────────────
+  var activeTerm = 30;
+  var activeMode = 'duplex'; // 'duplex' | 'house'
+  var activeLoanType = 'conventional'; // 'conventional' | 'fha'
+
+  // ─────────────────────────────────────────────────────────────
+  // Formatting
+  // ─────────────────────────────────────────────────────────────
+  var currencyFmt = new Intl.NumberFormat('en-US', {
+    style: 'currency', currency: 'USD', maximumFractionDigits: 0
+  });
+
+  function fc(n) {
+    if (!isFinite(n)) return '—';
+    return currencyFmt.format(n);
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // Read inputs
+  // ─────────────────────────────────────────────────────────────
+  function readInputs() {
+    function num(id) {
+      var el2 = document.getElementById(id);
+      return el2 ? (parseFloat(el2.value) || 0) : 0;
+    }
+
+    // Rent: duplex = single unit; house = sum of enabled bedrooms
+    var monthlyRent, rentScenario;
+    if (activeMode === 'house') {
+      monthlyRent = 0;
+      ['br1','br2','br3'].forEach(function(br) {
+        var cb = document.getElementById('cb-' + br);
+        if (cb && cb.checked) monthlyRent += num('rent-' + br);
+      });
+      rentScenario = monthlyRent;
+    } else {
+      monthlyRent = num('monthly-rent');
+      var scenarioEl = document.getElementById('rent-scenario');
+      var scenarioRaw = parseFloat(scenarioEl.value);
+      rentScenario = (!scenarioEl.value || isNaN(scenarioRaw)) ? monthlyRent : scenarioRaw;
+    }
+
+    // Upfront: exclude duplex-specific rows in house mode
+    var ucIds = ['uc-education','uc-inspection','uc-radon','uc-sewer','uc-mold','uc-tish','uc-prepaid','uc-moving','uc-repairs'];
+    if (activeMode === 'duplex') ucIds = ucIds.concat(['uc-rental-license','uc-city-repairs']);
+    var otherUpfront = ucIds.reduce(function(s,id){return s+num(id);},0);
+
+    return {
+      purchasePrice:    num('purchase-price'),
+      downPayment:      num('down-payment'),
+      loanTerm:         activeTerm,
+      interestRate:     num('interest-rate'),
+      ccAppraisal:      num('cc-appraisal'),
+      ccTitle:          num('cc-title'),
+      ccLender:         num('cc-lender'),
+      buyerAgentPct:    num('buyer-agent-pct'),
+      otherUpfront:     otherUpfront,
+      totalCash:        num('total-cash'),
+      cashUsed:         num('cash-used'),
+      cashReserve:      num('cash-reserve'),
+      monthlyPmiManual: num('monthly-pmi'),
+      utilWater:        num('util-water'),
+      utilSewer:        num('util-sewer'),
+      utilGas:          num('util-gas'),
+      utilElectric:     num('util-electric'),
+      utilInternet:     num('util-internet'),
+      monthlyRent:      monthlyRent,
+      rentScenario:     rentScenario,
+      vacancyRate:      num('vacancy-rate'),
+      monthlyTax:       num('monthly-tax'),
+      monthlyIns:       num('monthly-insurance'),
+      monthlyMaint:     num('monthly-maint'),
+      pmPct:            num('monthly-pm-pct'),
+    };
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // Calculate
+  // ─────────────────────────────────────────────────────────────
+  function calculate() {
+    var v = readInputs();
+
+    var loanAmount       = Math.max(0, v.purchasePrice - v.downPayment);
+    var downPct          = v.purchasePrice > 0 ? (v.downPayment / v.purchasePrice * 100) : 0;
+
+    // Closing costs — itemized
+    var mrt              = loanAmount * 0.0023;
+    var closingDollar    = v.ccAppraisal + v.ccTitle + v.ccLender + mrt;
+    var closingPct       = v.purchasePrice > 0 ? (closingDollar / v.purchasePrice * 100) : 0;
+
+    var agentFeeDollar   = v.purchasePrice * (v.buyerAgentPct / 100);
+    var totalCashToClose = v.downPayment + closingDollar + agentFeeDollar + v.otherUpfront;
+    var cashRemaining    = v.cashUsed - totalCashToClose;
+    var reserveMet       = cashRemaining >= v.cashReserve;
+
+    // Monthly P&I
+    var r  = (v.interestRate / 100) / 12;
+    var n  = v.loanTerm * 12;
+    var pi = 0;
+    if (loanAmount > 0 && v.interestRate > 0) {
+      var f = Math.pow(1 + r, n);
+      pi = loanAmount * (r * f) / (f - 1);
+    } else if (loanAmount > 0) {
+      pi = loanAmount / n;
+    }
+
+    // FHA upfront MIP (added to loan cost display, not amortized here)
+    var fhaUpfrontMip = activeLoanType === 'fha' ? loanAmount * 0.0175 : 0;
+    // FHA monthly MIP rate: 0.55% if <5% down (30yr), 0.50% if >=5% down
+    var fhaMipRate = downPct < 5 ? 0.0055 : 0.005;
+    var fhaMip = activeLoanType === 'fha' && loanAmount > 0 ? Math.round(loanAmount * fhaMipRate / 12) : 0;
+
+    // PMI / MIP
+    var pmiApplies, monthlyPmi;
+    if (activeLoanType === 'fha') {
+      pmiApplies = loanAmount > 0;
+      monthlyPmi = v.monthlyPmiManual > 0 ? v.monthlyPmiManual : fhaMip;
+    } else {
+      pmiApplies = downPct < 20 && loanAmount > 0;
+      monthlyPmi = v.monthlyPmiManual > 0 ? v.monthlyPmiManual
+                 : pmiApplies ? Math.round(loanAmount * 0.0085 / 12) : 0;
+    }
+
+    // Utilities
+    var monthlyUtils = v.utilWater + v.utilSewer + v.utilGas + v.utilElectric + v.utilInternet;
+
+    // Property management cost
+    var pmCost = v.monthlyRent * (v.pmPct / 100);
+
+    var totalPITI        = pi + v.monthlyTax + v.monthlyIns + monthlyPmi;
+    var totalMonthlyCosts = totalPITI + v.monthlyMaint + monthlyUtils + pmCost;
+
+    // Effective rent uses the scenario rent (may differ from main rent input)
+    var effRent    = v.rentScenario * (1 - v.vacancyRate / 100);
+    var netCost    = totalMonthlyCosts - effRent;
+    var vacFactor  = 1 - v.vacancyRate / 100;
+    var breakEven  = vacFactor > 0 ? totalMonthlyCosts / vacFactor : 0;
+    var hasData    = v.purchasePrice > 0 && v.interestRate > 0;
+
+    // GRM
+    var grm = v.monthlyRent > 0 && v.purchasePrice > 0 ? (v.purchasePrice / (v.monthlyRent * 12)) : 0;
+
+    // Appreciation projections (5-year)
+    var pp    = v.purchasePrice;
+    var appr3 = pp > 0 ? Math.round(pp * Math.pow(1.03, 5)) : 0;
+    var appr5 = pp > 0 ? Math.round(pp * Math.pow(1.05, 5)) : 0;
+
+    // Equity after 5 years = appreciation gain + principal paid down
+    var principalPaid5 = 0;
+    if (loanAmount > 0 && v.interestRate > 0) {
+      var r2 = (v.interestRate / 100) / 12, n2 = v.loanTerm * 12;
+      var f2 = Math.pow(1 + r2, n2), f5 = Math.pow(1 + r2, 60);
+      var bal5 = loanAmount * (f2 - f5) / (f2 - 1);
+      principalPaid5 = loanAmount - bal5;
+    }
+    var equity5at3 = pp > 0 ? Math.round((appr3 - pp) + principalPaid5) : 0;
+
+    // ── 5-year ROI comparison ──
+    var downPmt      = v.downPayment;
+    var currentRent  = 1200;
+    var months       = 60;
+
+    // House-hack terminal value = net equity after 5yr at 3% appreciation
+    var houseVal  = appr3 - (loanAmount - principalPaid5);
+    var houseCost = Math.max(0, netCost) * months;
+    var houseNet  = houseVal - downPmt;
+
+    var monthlyDiff = currentRent - netCost;
+
+    function fvInvest(rate, dp, monthlySavings, mo) {
+      var monthlyRate = rate / 12;
+      var fvLump = dp * Math.pow(1 + monthlyRate, mo);
+      var fvAnnuity = monthlySavings > 0
+        ? monthlySavings * (Math.pow(1 + monthlyRate, mo) - 1) / monthlyRate
+        : 0;
+      return fvLump + fvAnnuity;
+    }
+
+    var spVal   = fvInvest(0.10,  downPmt, Math.max(0, monthlyDiff), months);
+    var spCost  = currentRent * months;
+    var spNet   = spVal - downPmt;
+
+    var cdVal   = fvInvest(0.045, downPmt, Math.max(0, monthlyDiff), months);
+    var cdNet   = cdVal - downPmt;
+
+    var bondVal = fvInvest(0.035, downPmt, Math.max(0, monthlyDiff), months);
+    var bondNet = bondVal - downPmt;
+
+    var roiVerdict = '';
+    if (hasData && downPmt > 0) {
+      if (houseNet > spNet * 1.1) {
+        roiVerdict = 'green';
+      } else if (houseNet > spNet * 0.7) {
+        roiVerdict = 'yellow';
+      } else {
+        roiVerdict = 'red';
+      }
+    }
+
+    return {
+      v, loanAmount, downPct, closingDollar, closingPct, mrt, agentFeeDollar,
+      totalCashToClose, cashRemaining, reserveMet,
+      pi, monthlyPmi, pmiApplies, fhaMip, fhaUpfrontMip,
+      monthlyUtils, totalPITI, totalMonthlyCosts, effRent,
+      netCost, breakEven, hasData, pmCost, grm,
+      appr3, appr5, equity5at3, principalPaid5,
+      houseVal, houseCost, houseNet, spVal, spCost, spNet,
+      cdVal, cdNet, bondVal, bondNet, roiVerdict,
+      currentRent, monthlyDiff
+    };
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // Update DOM
+  // ─────────────────────────────────────────────────────────────
+  function el(id) { return document.getElementById(id); }
+  function setText(id, val) { var e = el(id); if (e) e.textContent = val; }
+
+  function updateUI() {
+    var c = calculate();
+
+    // Down payment %
+    el('dp-pct').textContent = c.downPct.toFixed(1) + '%';
+
+    // Financing summary
+    setText('o-purchase-price', c.v.purchasePrice > 0 ? fc(c.v.purchasePrice) : '—');
+    setText('o-down-payment',   c.v.purchasePrice > 0 ? fc(c.v.downPayment) + ' (' + c.downPct.toFixed(1) + '%)' : '—');
+    setText('o-loan',           fc(c.loanAmount));
+    setText('o-closing',        c.v.purchasePrice > 0 ? fc(c.closingDollar) + ' (' + c.closingPct.toFixed(1) + '%)' : '—');
+    setText('o-agent-fee',      c.v.purchasePrice > 0 ? fc(c.agentFeeDollar) + ' (' + c.v.buyerAgentPct + '%)' : '—');
+    setText('o-other-upfront',  fc(c.v.otherUpfront));
+
+    // Closing costs itemized display
+    if (el('cc-mrt-display'))   el('cc-mrt-display').textContent  = c.v.purchasePrice > 0 ? fc(c.mrt) : '—';
+    if (el('cc-total-display')) el('cc-total-display').textContent = c.v.purchasePrice > 0 ? fc(c.closingDollar) : '—';
+    if (el('closing-dollar'))   el('closing-dollar').textContent   = c.v.purchasePrice > 0 ? '≈ ' + c.closingPct.toFixed(1) + '% of purchase price' : '—';
+
+    if (el('agent-dollar')) el('agent-dollar').innerHTML = c.v.purchasePrice > 0 ? (c.v.buyerAgentPct === 0 ? '$0 — seller covering agent fee' : '≈ <strong>' + fc(c.agentFeeDollar) + '</strong> at ' + c.v.buyerAgentPct + '% of purchase price') : '—';
+
+    // Upfront table total
+    setText('upfront-total-val', fc(c.v.otherUpfront));
+    setText('o-cash-close',      fc(c.totalCashToClose));
+    setText('o-cash-remain',     c.hasData ? fc(c.cashRemaining) : '—');
+
+    // Reserve badge
+    var rb = el('o-reserve-badge');
+    if (!c.hasData) {
+      rb.textContent = '—';
+      rb.className = 'badge badge-neutral';
+    } else if (c.cashRemaining < 0) {
+      rb.textContent = 'Cash Shortfall';
+      rb.className = 'badge badge-unmet';
+    } else if (c.reserveMet) {
+      rb.textContent = 'Met ✓';
+      rb.className = 'badge badge-met';
+    } else {
+      rb.textContent = 'Not Met';
+      rb.className = 'badge badge-unmet';
+    }
+
+    // Monthly breakdown
+    setText('o-pi',  c.hasData ? fc(c.pi) : '—');
+    setText('o-tax', fc(c.v.monthlyTax));
+    setText('o-ins', fc(c.v.monthlyIns));
+
+    // PMI / MIP row
+    el('row-pmi').style.display = c.monthlyPmi > 0 ? '' : 'none';
+    var pmiLabel = activeLoanType === 'fha' ? 'MIP' : 'PMI';
+    if (el('row-pmi')) el('row-pmi').querySelector('.ll').textContent = pmiLabel;
+    setText('o-pmi', c.monthlyPmi > 0 ? fc(c.monthlyPmi) + (c.pmiApplies && c.v.monthlyPmiManual === 0 ? ' (auto)' : '') : '—');
+
+    // PMI/MIP badge in input
+    if (el('pmi-badge')) {
+      if (activeLoanType === 'fha') {
+        el('pmi-badge').textContent = c.loanAmount > 0 ? '· FHA MIP applies always' : '· not applicable';
+      } else {
+        el('pmi-badge').textContent = c.pmiApplies ? '· applies — down payment under 20%' : '· not applicable (≥20% down)';
+      }
+    }
+
+    setText('o-piti',  c.hasData ? fc(c.totalPITI) : '—');
+    setText('o-maint', fc(c.v.monthlyMaint));
+
+    // PM row
+    el('row-pm').style.display = c.pmCost > 0 ? '' : 'none';
+    setText('o-pm', c.pmCost > 0 ? fc(c.pmCost) + '/mo' : '—');
+
+    // Utilities
+    var utilTotal = c.v.utilWater + c.v.utilSewer + c.v.utilGas + c.v.utilElectric + c.v.utilInternet;
+    setText('o-utilities', utilTotal > 0 ? fc(utilTotal) : '—');
+    el('row-utilities').style.display = utilTotal > 0 ? '' : 'none';
+    if (el('util-total')) setText('util-total', utilTotal > 0 ? fc(utilTotal) + '/mo' : '—');
+    setText('o-total-costs', c.hasData ? fc(c.totalMonthlyCosts) : '—');
+
+    // Loan type note
+    if (el('loan-type-note')) {
+      if (activeLoanType === 'fha') {
+        el('loan-type-note').innerHTML = '<strong>FHA:</strong> MIP required regardless of down payment. Upfront MIP: 1.75% of loan (≈ ' + fc(c.fhaUpfrontMip) + '). Monthly MIP: ' + fc(c.fhaMip) + '/mo. MIP lasts life of loan if &lt;10% down. Min 3.5% down.';
+      } else {
+        el('loan-type-note').innerHTML = '<strong>Conventional:</strong> PMI required if &lt;20% down; cancels when you reach 20% equity. Min 5% down (3% some programs). No upfront MIP.';
+      }
+    }
+
+    // Appreciation card
+    setText('o-grm', c.grm > 0 ? c.grm.toFixed(1) + 'x' + (c.grm < 12 ? ' 🟢 strong' : c.grm < 16 ? ' 🟡 fair' : ' 🔴 high') : '—');
+    setText('o-appr-3',   c.v.purchasePrice > 0 ? fc(c.appr3) : '—');
+    setText('o-appr-5',   c.v.purchasePrice > 0 ? fc(c.appr5) : '—');
+    setText('o-equity-5', c.v.purchasePrice > 0 ? fc(c.equity5at3) + ' (at 3%/yr)' : '—');
+
+    // ROI comparison table
+    if (c.hasData && c.v.purchasePrice > 0) {
+      setText('roi-house-val',  fc(c.houseVal));
+      setText('roi-house-cost', fc(c.houseCost));
+      setText('roi-house-net',  fc(c.houseNet));
+      setText('roi-sp-val',     fc(c.spVal));
+      setText('roi-sp-cost',    fc(c.spCost));
+      setText('roi-sp-net',     fc(c.spNet));
+      setText('roi-cd-val',     fc(c.cdVal));
+      setText('roi-cd-cost',    fc(c.spCost));
+      setText('roi-cd-net',     fc(c.cdNet));
+      setText('roi-bond-val',   fc(c.bondVal));
+      setText('roi-bond-cost',  fc(c.spCost));
+      setText('roi-bond-net',   fc(c.bondNet));
+    }
+
+    // ROI verdict
+    var verdictEl = el('roi-verdict');
+    if (verdictEl && c.roiVerdict) {
+      verdictEl.style.display = '';
+      verdictEl.className = 'roi-verdict ' + c.roiVerdict + '-bg';
+      if (c.roiVerdict === 'green') {
+        verdictEl.textContent = 'House-hacking wins. Your 5-year equity gain of ' + fc(c.houseNet) + ' outperforms even S&P returns of ' + fc(c.spNet) + ', while providing stable housing and building equity on a leveraged asset.';
+      } else if (c.roiVerdict === 'yellow') {
+        verdictEl.textContent = 'House-hacking is competitive. Your equity gain (' + fc(c.houseNet) + ') is close to S&P returns (' + fc(c.spNet) + '). The real advantage is leverage — equity builds on the full ' + fc(c.v.purchasePrice) + ' asset, not just your ' + fc(c.v.downPayment) + ' investment. Plus housing stability.';
+      } else {
+        verdictEl.textContent = 'Investing may outperform this deal at current numbers. S&P returns of ' + fc(c.spNet) + ' outpace your projected equity of ' + fc(c.houseNet) + '. Consider increasing rent, reducing purchase price, or a larger down payment.';
+      }
+    } else if (verdictEl) {
+      verdictEl.style.display = 'none';
+    }
+
+    setText('o-rent', c.v.rentScenario > 0 ? '−' + fc(c.effRent) : '—');
+    // Update rent label based on mode
+    el('o-rent-label').textContent = activeMode === 'house' ? 'Bedroom Rental Income' : 'Effective Rental Income';
+
+    // Show/hide rent scenario adjuster (duplex only)
+    el('rent-adj-row').style.display = activeMode === 'duplex' ? '' : 'none';
+
+    // Rent adjuster occupancy label
+    var occ = (100 - c.v.vacancyRate).toFixed(0);
+    el('ra-occ-label').textContent = '/mo · ' + occ + '% occ. = ' + (c.v.rentScenario > 0 ? fc(c.effRent) + ' net' : '—');
+
+    // Sync rent-scenario placeholder with main rent input when blank (duplex only)
+    if (activeMode === 'duplex') {
+      var scenarioEl = el('rent-scenario');
+      if (!scenarioEl.value) {
+        scenarioEl.placeholder = c.v.monthlyRent > 0 ? String(c.v.monthlyRent) : '0';
+      }
+    }
+
+    // Net / out-of-pocket
+    var ncEl  = el('o-net');
+    var ncSub = el('o-net-sub');
+    if (!c.hasData) {
+      ncEl.textContent = '—';
+      ncEl.className = 'nc-value';
+      ncSub.textContent = 'Enter purchase price and interest rate';
+    } else {
+      var rentLabel = activeMode === 'house' ? 'room rents' : (c.v.rentScenario !== c.v.monthlyRent ? 'scenario rent' : 'your rent');
+      if (c.netCost <= 0) {
+        ncEl.textContent = fc(Math.abs(c.netCost)) + '/mo tenant surplus';
+        ncEl.className = 'nc-value good';
+        ncSub.textContent = 'Tenant fully covers costs — you pocket ' + fc(Math.abs(c.netCost)) + '/mo';
+      } else {
+        ncEl.textContent = fc(c.netCost) + '/mo';
+        ncEl.className = c.netCost <= 799 ? 'nc-value good'
+                       : c.netCost <= 1499 ? 'nc-value warn'
+                       : 'nc-value bad';
+        ncSub.textContent = 'What you\'d pay in rent each month (' + rentLabel + ' at ' + occ + '% occ.)';
+      }
+    }
+
+    // Break-even
+    setText('o-breakeven', c.hasData ? fc(c.breakEven) + '/mo' : '—');
+
+    // Update compare count
+    updateCompareCount();
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // Mode switch
+  // ─────────────────────────────────────────────────────────────
+  function switchMode(mode) {
+    activeMode = mode;
+    el('btn-duplex').classList.toggle('active', mode === 'duplex');
+    el('btn-house').classList.toggle('active', mode === 'house');
+    el('rent-mode-duplex').style.display = mode === 'duplex' ? '' : 'none';
+    el('rent-mode-house').style.display  = mode === 'house'  ? '' : 'none';
+    el('duplex-upfront-section').style.display = mode === 'duplex' ? '' : 'none';
+    el('tax-note').textContent = mode === 'duplex'
+      ? 'Hennepin Co. eff. rate ~1.17–1.19%/yr · Owner-occupied split homestead saves ~$200–400/yr'
+      : 'Hennepin Co. eff. rate ~1.17–1.19%/yr · Full homestead rate 1.00% on all owner-occupied SFH';
+    if (el('util-note')) el('util-note').textContent = mode === 'duplex'
+      ? 'Duplex: owner typically covers water/trash for both units; tenant pays their own gas, electric, internet. Adjust to match your lease structure.'
+      : 'Single-family: owner pays all utilities for the whole house. Enter your total expected monthly utility costs.';
+
+    // House mode utility note
+    if (el('util-house-note')) {
+      if (mode === 'house') {
+        var checkedBeds = 0;
+        ['br1','br2','br3'].forEach(function(br) {
+          var cb = document.getElementById('cb-' + br);
+          if (cb && cb.checked) checkedBeds++;
+        });
+        var totalBeds = checkedBeds + 1; // owner occupies 1 bedroom
+        el('util-house-note').style.display = '';
+        el('util-house-note').textContent = 'Estimated for ' + totalBeds + '-bedroom house. Owner pays 1/' + totalBeds + ' share (1 bedroom). Adjust if your roommate agreement differs.';
+      } else {
+        el('util-house-note').style.display = 'none';
+      }
+    }
+
+    updateUI();
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // Property comparison (localStorage)
+  // ─────────────────────────────────────────────────────────────
+  function getSaved() {
+    try { return JSON.parse(localStorage.getItem('mpce_props') || '[]'); } catch(e) { return []; }
+  }
+  function setSaved(arr) {
+    try { localStorage.setItem('mpce_props', JSON.stringify(arr)); } catch(e) {}
+  }
+  function updateCompareCount() {
+    var n = getSaved().length;
+    var el2 = el('compare-count');
+    if (el2) el2.textContent = n + ' saved';
+  }
+  function openSaveModal() {
+    el('save-modal').classList.remove('hidden');
+    el('m-address').focus();
+  }
+  function closeSaveModal() {
+    el('save-modal').classList.add('hidden');
+  }
+  function confirmSave() {
+    var c = calculate();
+    var addr = el('m-address').value.trim() || 'Unnamed property';
+    var saved = getSaved();
+    saved.push({
+      id: Date.now(),
+      name: addr,
+      url: el('m-url').value.trim(),
+      beds: parseInt(el('m-beds').value) || 0,
+      baths: parseFloat(el('m-baths').value) || 0,
+      sqft: parseInt(el('m-sqft').value) || 0,
+      type: activeMode,
+      savedAt: new Date().toLocaleDateString(),
+      purchasePrice: c.v.purchasePrice,
+      downPayment: c.v.downPayment,
+      downPct: c.downPct,
+      loanAmount: c.loanAmount,
+      netCost: c.netCost,
+      totalMonthlyCosts: c.totalMonthlyCosts,
+      monthlyRent: c.v.monthlyRent,
+      breakEven: c.breakEven,
+      equity5at3: c.equity5at3,
+      cashRemaining: c.cashRemaining
+    });
+    setSaved(saved);
+    closeSaveModal();
+    renderCompareTable();
+    updateCompareCount();
+    el('m-address').value = '';
+    el('m-url').value = '';
+  }
+  function deleteSaved(id) {
+    setSaved(getSaved().filter(function(p) { return p.id !== id; }));
+    renderCompareTable();
+    updateCompareCount();
+  }
+  function toggleCompare() {
+    var sec = el('compare-section');
+    var showing = sec.style.display !== 'none';
+    sec.style.display = showing ? 'none' : '';
+    if (!showing) renderCompareTable();
+    var btnText = showing ? 'Compare Properties ' : 'Hide Comparison ';
+    el('btn-view-compare').textContent = btnText;
+    var sp = document.createElement('span');
+    sp.id = 'compare-count';
+    sp.style.cssText = 'font-size:10.5px; color:var(--accent);';
+    sp.textContent = getSaved().length + ' saved';
+    el('btn-view-compare').appendChild(sp);
+  }
+  function clearAllSaved() {
+    if (confirm('Clear all saved properties?')) {
+      setSaved([]);
+      renderCompareTable();
+      updateCompareCount();
+    }
+  }
+  function renderCompareTable() {
+    var wrap = el('compare-table-wrap');
+    if (!wrap) return;
+    var props = getSaved();
+    if (props.length === 0) {
+      wrap.innerHTML = '<div class="compare-empty">No saved properties yet. Save a property snapshot to compare.</div>';
+      return;
+    }
+    var html = '<table class="compare-table"><thead><tr>' +
+      '<th>Property</th><th>Type</th><th>Price</th><th>Down</th>' +
+      '<th>Eff. Monthly Rent</th><th>Break-Even Rent</th><th>5yr Equity</th><th>Cash Left</th><th>Actions</th>' +
+      '</tr></thead><tbody>';
+    props.forEach(function(p) {
+      var netClass = p.netCost <= 799 ? 'td-good' : p.netCost <= 1499 ? 'td-warn' : 'td-bad';
+      html += '<tr>';
+      html += '<td class="td-addr">' + p.name + (p.url ? '<a href="' + p.url + '" target="_blank">View listing ↗</a>' : '') +
+        '<div style="font-size:10.5px;color:var(--text-muted);">' +
+        (p.beds ? p.beds + 'BR ' : '') + (p.baths ? p.baths + 'BA ' : '') + (p.sqft ? p.sqft + ' sqft' : '') +
+        ' · Saved ' + p.savedAt + '</div></td>';
+      html += '<td>' + (p.type === 'duplex' ? '🏘 Duplex' : '🏠 SFH') + '</td>';
+      html += '<td class="td-num">' + fc(p.purchasePrice) + '</td>';
+      html += '<td class="td-num">' + (p.downPct ? p.downPct.toFixed(1) + '%' : '—') + '</td>';
+      html += '<td class="td-num ' + netClass + '">' + (isFinite(p.netCost) ? fc(p.netCost) + '/mo' : '—') + '</td>';
+      html += '<td class="td-num">' + (p.breakEven > 0 ? fc(p.breakEven) + '/mo' : '—') + '</td>';
+      html += '<td class="td-num td-good">' + (p.equity5at3 > 0 ? fc(p.equity5at3) : '—') + '</td>';
+      html += '<td class="td-num' + (p.cashRemaining < 0 ? ' td-bad' : '') + '">' + fc(p.cashRemaining) + '</td>';
+      html += '<td><button class="compare-del" onclick="deleteSaved(' + p.id + ')">✕</button></td>';
+      html += '</tr>';
+    });
+    html += '</tbody></table>';
+    wrap.innerHTML = html;
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // Event Binding
+  // ─────────────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', function () {
+
+    // All number inputs (includes bedroom rent inputs)
+    document.querySelectorAll('input[type="number"]').forEach(function (input) {
+      input.addEventListener('input', updateUI);
+    });
+
+    // Property type toggles
+    el('btn-duplex').addEventListener('click', function () { switchMode('duplex'); });
+    el('btn-house').addEventListener('click',  function () { switchMode('house'); });
+
+    // Bedroom checkboxes: enable/disable input and recalc
+    ['br1','br2','br3'].forEach(function(br) {
+      var cb = document.getElementById('cb-' + br);
+      var inp = document.getElementById('rent-' + br);
+      var lbl = cb ? cb.closest('.bedroom-row').querySelector('.br-label') : null;
+      if (cb) cb.addEventListener('change', function() {
+        inp.disabled = !cb.checked;
+        if (lbl) lbl.classList.toggle('muted', !cb.checked);
+        updateUI();
+      });
+    });
+
+    // Loan term toggles
+    el('btn-30').addEventListener('click', function () {
+      activeTerm = 30;
+      el('btn-30').classList.add('active');
+      el('btn-15').classList.remove('active');
+      updateUI();
+    });
+    el('btn-15').addEventListener('click', function () {
+      activeTerm = 15;
+      el('btn-15').classList.add('active');
+      el('btn-30').classList.remove('active');
+      updateUI();
+    });
+
+    // FHA / Conventional toggles
+    el('btn-conv').addEventListener('click', function () {
+      activeLoanType = 'conventional';
+      el('btn-conv').classList.add('active');
+      el('btn-fha').classList.remove('active');
+      updateUI();
+    });
+    el('btn-fha').addEventListener('click', function () {
+      activeLoanType = 'fha';
+      el('btn-fha').classList.add('active');
+      el('btn-conv').classList.remove('active');
+      updateUI();
+    });
+
+    // Rate preset buttons
+    document.querySelectorAll('.preset-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var rate = parseFloat(btn.dataset.rate);
+        var term = parseInt(btn.dataset.term);
+
+        el('interest-rate').value = rate;
+        activeTerm = term;
+        el('btn-30').classList.toggle('active', term === 30);
+        el('btn-15').classList.toggle('active', term === 15);
+
+        document.querySelectorAll('.preset-btn').forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        setCookie('mpce_rate', rate);
+
+        updateUI();
+      });
+    });
+
+    // Manually editing rate clears active preset highlight and saves cookie
+    el('interest-rate').addEventListener('input', function () {
+      document.querySelectorAll('.preset-btn').forEach(function (b) { b.classList.remove('active'); });
+      setCookie('mpce_rate', this.value);
+    });
+
+    // Save buyer agent commission to cookie on change
+    el('buyer-agent-pct').addEventListener('input', function () {
+      setCookie('mpce_agent', this.value);
+    });
+
+    // Cookie-saved fields
+    var cookieFieldIds = [
+      'total-cash','cash-used','cash-reserve',
+      'uc-education','uc-inspection','uc-radon','uc-sewer','uc-mold','uc-tish',
+      'uc-prepaid','uc-rental-license','uc-city-repairs','uc-moving','uc-repairs',
+      'monthly-rent','monthly-tax','monthly-insurance','monthly-maint',
+      'vacancy-rate'
+    ];
+    cookieFieldIds.forEach(function(id) {
+      var input = el(id);
+      if (!input) return;
+      var cookieName = 'mpce_' + id.replace(/-/g,'_');
+      var saved = getCookie(cookieName);
+      if (saved !== null) input.value = saved;
+      input.addEventListener('input', function() {
+        setCookie(cookieName, this.value);
+      });
+    });
+
+    // When main rent input changes (duplex mode), clear scenario so it mirrors main rent
+    el('monthly-rent').addEventListener('input', function () {
+      if (activeMode === 'duplex') el('rent-scenario').value = '';
+      updateUI();
+    });
+
+    // Restore cookies
+    var savedRate = getCookie('mpce_rate');
+    var savedAgent = getCookie('mpce_agent');
+    if (savedRate !== null) {
+      el('interest-rate').value = savedRate;
+      document.querySelectorAll('.preset-btn').forEach(function (b) { b.classList.remove('active'); });
+    }
+    if (savedAgent !== null) el('buyer-agent-pct').value = savedAgent;
+
+    // Initial render
+    updateUI();
+  });
+</script>
+</body>
+</html>
