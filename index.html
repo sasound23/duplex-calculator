@@ -505,6 +505,23 @@
     }
     details[open] .mpls-summary .arrow { transform: rotate(180deg); }
 
+    /* Sub-section collapsibles (City / County / State / Federal) */
+    .mpls-sub-details { margin-bottom: 12px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .mpls-sub-summary {
+      display: flex; align-items: center; gap: 10px;
+      padding: 11px 16px;
+      cursor: pointer; list-style: none; user-select: none;
+      background: var(--surface-2);
+      font-size: 13px; font-weight: 600; color: var(--text);
+    }
+    .mpls-sub-summary::-webkit-details-marker { display: none; }
+    .mpls-sub-summary .sub-icon { font-size: 16px; flex-shrink: 0; }
+    .mpls-sub-summary .sub-label { flex: 1; }
+    .mpls-sub-summary .sub-hook { font-size: 11px; font-weight: 400; color: var(--text-muted); margin-left: 6px; }
+    .mpls-sub-summary .sub-arrow { font-size: 10px; color: var(--text-muted); transition: transform 0.2s; margin-left: auto; }
+    details[open] .mpls-sub-summary .sub-arrow { transform: rotate(180deg); }
+    .mpls-sub-body { padding: 14px 14px 6px; }
+
     .mpls-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -903,6 +920,59 @@
     .roi-verdict.yellow-bg { background: var(--yellow-bg); border: 1px solid var(--yellow-border); color: #92400e; }
     .roi-verdict.red-bg { background: var(--red-bg); border: 1px solid var(--red-border); color: #991b1b; }
 
+    /* ── Cash Flow Waterfall ── */
+    .cf-section-header { font-size:10.5px; font-weight:700; letter-spacing:0.6px; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px; margin-top:4px; }
+    .cf-waterfall { display:flex; flex-direction:column; }
+    .cf-row { display:flex; justify-content:space-between; align-items:center; padding:4px 0; border-bottom:1px solid var(--bg); font-size:12.5px; }
+    .cf-row:last-child { border-bottom:none; }
+    .cf-row.cf-indent .cf-lbl { padding-left:12px; color:var(--text-muted); }
+    .cf-row.cf-subtotal { background:var(--surface-2); padding:5px 8px; border-radius:var(--radius-sm); margin:2px 0; font-weight:600; }
+    .cf-row.cf-net { background:var(--surface-2); padding:5px 8px; border-radius:var(--radius-sm); margin-top:4px; font-weight:700; }
+    .cf-val { font-family:'SF Mono','Fira Code',Menlo,monospace; font-size:12px; font-variant-numeric:tabular-nums; }
+    .cf-val.green { color:#16a34a; }
+    .cf-val.red { color:#dc2626; }
+    .cf-val.muted { color:var(--text-muted); }
+    .cf-split-row { display:flex; gap:8px; margin-top:8px; }
+    .cf-split-item { flex:1; background:var(--surface-2); border-radius:var(--radius-sm); padding:7px 9px; }
+    .cf-split-lbl { font-size:10.5px; color:var(--text-muted); display:block; margin-bottom:2px; }
+    .cf-split-val { font-size:13px; font-weight:700; font-family:'SF Mono','Fira Code',Menlo,monospace; }
+    .cf-split-val.green { color:#16a34a; }
+
+    /* ── Investment Metrics grid ── */
+    .metrics-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
+    .metric-box { background:var(--surface-2); border-radius:var(--radius-sm); padding:10px 8px; text-align:center; }
+    .metric-val { font-size:18px; font-weight:800; font-family:'SF Mono','Fira Code',Menlo,monospace; color:var(--text); line-height:1.1; }
+    .metric-lbl { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--text-muted); margin-top:3px; }
+    .metric-hint { font-size:9.5px; color:var(--text-xs); margin-top:1px; }
+
+    /* ── 10-Year Projection table ── */
+    .proj-table { width:100%; border-collapse:collapse; font-size:11.5px; margin-top:6px; }
+    .proj-table th { font-size:9.5px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; color:var(--text-muted); padding:5px 6px; text-align:right; background:var(--surface-2); border-bottom:1px solid var(--border); }
+    .proj-table th:first-child { text-align:left; }
+    .proj-table td { padding:5px 6px; border-bottom:1px solid var(--bg); text-align:right; font-variant-numeric:tabular-nums; font-family:'SF Mono','Fira Code',Menlo,monospace; }
+    .proj-table td:first-child { text-align:left; font-family:inherit; font-weight:600; }
+    .proj-table tr:last-child td { border-bottom:none; }
+    .proj-table tr.proj-highlight td { background:var(--green-bg); color:#166534; }
+    .proj-neg { color:#dc2626; }
+    .proj-pos { color:#16a34a; }
+
+    /* ── Amortization table ── */
+    .amort-table { width:100%; border-collapse:collapse; font-size:11.5px; }
+    .amort-table th { font-size:9.5px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; color:var(--text-muted); padding:6px 8px; text-align:right; background:var(--surface-2); border-bottom:1px solid var(--border); white-space:nowrap; }
+    .amort-table th:first-child { text-align:left; }
+    .amort-table td { padding:5px 8px; border-bottom:1px solid var(--bg); text-align:right; font-variant-numeric:tabular-nums; font-family:'SF Mono','Fira Code',Menlo,monospace; }
+    .amort-table td:first-child { text-align:left; font-family:inherit; font-weight:600; }
+    .amort-table tr:last-child td { border-bottom:none; }
+    .amort-table tr:hover td { background:var(--surface-2); }
+    .amort-header-toggle { cursor:pointer; user-select:none; }
+    .amort-header-toggle:hover { background:var(--surface-2); }
+    .tax-savings-row { border-top:1px dashed var(--border); margin-top:6px; padding-top:10px; }
+
+    /* ── Appreciation rate slider ── */
+    .appr-slider { -webkit-appearance:none; appearance:none; width:100%; height:4px; background:var(--border); border-radius:2px; outline:none; cursor:pointer; }
+    .appr-slider::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--accent); cursor:pointer; border:2px solid #fff; box-shadow:0 0 0 1px var(--accent); }
+    .appr-slider::-moz-range-thumb { width:16px; height:16px; border-radius:50%; background:var(--accent); cursor:pointer; border:2px solid #fff; }
+
     /* ── Closing costs itemized table ── */
     .cc-table { display: flex; flex-direction: column; margin-top: 6px; }
     .cc-row {
@@ -948,6 +1018,28 @@
       font-size: 14px;
       font-weight: 700;
     }
+
+    /* ── Print styles ── */
+    @media print {
+      body { background: white; }
+      .inputs-panel { display: none !important; }
+      .calculator-shell { display: block !important; }
+      .outputs-panel { width: 100% !important; }
+      .compare-bar, .mpls-section, .compare-section, footer { display: none !important; }
+      .out-card { box-shadow: none !important; border: 1px solid #ccc !important; break-inside: avoid; }
+      #amort-body { display: block !important; }
+      #sell-card { display: block !important; }
+      .card-header { background: #f5f5f5 !important; }
+      .btn-print { display: none !important; }
+      details { open: true; }
+    }
+    .btn-print {
+      padding: 6px 14px; background: var(--surface); color: var(--text-muted);
+      border: 1px solid var(--border); border-radius: var(--radius-sm);
+      cursor: pointer; font-size: 12px; font-family: inherit; font-weight: 500;
+      margin-left: auto; white-space: nowrap;
+    }
+    .btn-print:hover { background: var(--surface-2); color: var(--text); }
   </style>
 </head>
 <body>
@@ -955,6 +1047,7 @@
 <header>
   <div class="header-inner">
     <h1>Minneapolis Property Cost Estimator</h1>
+    <button class="btn-print" onclick="window.print()">🖨️ Print / Save PDF</button>
   </div>
 </header>
 
@@ -971,7 +1064,7 @@
         <button class="prop-pane active" id="btn-duplex">
           <span class="prop-pane-icon">🏘</span>
           <span class="prop-pane-title">Duplex</span>
-          <span class="prop-pane-sub">Owner-occupied · rent one unit</span>
+          <span class="prop-pane-sub">Owner-occupied · rent one unit &amp; potentially a bedroom</span>
         </button>
         <button class="prop-pane" id="btn-house">
           <span class="prop-pane-icon">🏠</span>
@@ -993,15 +1086,23 @@
         </div>
 
         <div class="field">
-          <label for="down-payment">Down Payment</label>
+          <label>Down Payment</label>
+          <div class="toggle-group" style="margin-bottom:8px; max-width:200px;">
+            <button class="toggle-btn active" id="btn-dp-dollar" onclick="setDpMode('$')">$ Amount</button>
+            <button class="toggle-btn" id="btn-dp-pct-btn" onclick="setDpMode('%')">% of Price</button>
+          </div>
           <div class="dp-row">
-            <div class="input-wrap has-prefix">
+            <div class="input-wrap has-prefix" id="dp-dollar-wrap">
               <span class="input-prefix">$</span>
               <input type="number" id="down-payment" value="60000" min="0" step="1000">
             </div>
+            <div class="input-wrap has-suffix" id="dp-pct-wrap" style="display:none; max-width:120px;">
+              <input type="number" id="down-payment-pct" value="20" min="0" max="100" step="0.5">
+              <span class="input-suffix">%</span>
+            </div>
             <span class="dp-pct" id="dp-pct">20.0%</span>
           </div>
-          <div class="field-note">Min 3.5% FHA · 5% conventional · 20% avoids PMI</div>
+          <div class="field-note">Minimum 3.5% for Federal Housing Administration loans · 5% for conventional · 20% down avoids Private Mortgage Insurance</div>
         </div>
 
         <div class="field">
@@ -1019,7 +1120,7 @@
             <button class="toggle-btn" id="btn-fha">FHA</button>
           </div>
           <div class="loan-type-note" id="loan-type-note">
-            <strong>Conventional:</strong> PMI required if &lt;20% down; cancels when you reach 20% equity. Min 5% down (3% some programs). No upfront MIP.
+            <strong>Conventional loan — </strong><em>Pros:</em> Private Mortgage Insurance cancels automatically once you reach 20% equity; no upfront insurance premium; lower long-term cost if your credit score is strong (720 or above). <em>Cons:</em> Minimum 5% down (3% on select programs); stricter credit qualification; you pay Private Mortgage Insurance each month until reaching 20% equity. Best choice if you have strong credit and a meaningful down payment.
           </div>
         </div>
 
@@ -1046,7 +1147,7 @@
               <span class="cc-lbl">Appraisal</span>
               <div class="input-wrap has-prefix cc-iw"><span class="input-prefix">$</span><input type="number" id="cc-appraisal" value="650" min="0" step="50"></div>
             </div>
-            <div class="cc-hint">Avg Minneapolis duplex ~$600–$700</div>
+            <div class="cc-hint" id="cc-appraisal-hint">Avg Minneapolis duplex appraisal ~$600–$700</div>
             <div class="cc-row">
               <span class="cc-lbl">Title insurance</span>
               <div class="input-wrap has-prefix cc-iw"><span class="input-prefix">$</span><input type="number" id="cc-title" value="1500" min="0" step="50"></div>
@@ -1071,13 +1172,19 @@
         </div>
 
         <div class="field" style="padding-bottom:16px;">
-          <label for="buyer-agent-pct">Buyer Agent Commission</label>
-          <div class="input-wrap has-suffix">
-            <input type="number" id="buyer-agent-pct" value="0" min="0" max="10" step="0.25">
-            <span class="input-suffix">%</span>
+          <label>Buyer Agent Commission</label>
+          <div class="toggle-group" style="margin-bottom:8px;">
+            <button class="toggle-btn active" id="btn-agent-seller" onclick="setAgentPayer('seller')">Seller Pays</button>
+            <button class="toggle-btn" id="btn-agent-buyer" onclick="setAgentPayer('buyer')">I Pay</button>
           </div>
-          <div class="pct-dollar" id="agent-dollar">—</div>
-          <div class="field-note">Post-NAR settlement (Aug 2024): buyer pays their agent directly if not negotiated into the sale · Typical: 2–3% · Default 0% if seller covers</div>
+          <div id="agent-pct-wrap" style="display:none;">
+            <div class="input-wrap has-suffix">
+              <input type="number" id="buyer-agent-pct" value="2.5" min="0" max="10" step="0.25">
+              <span class="input-suffix">%</span>
+            </div>
+            <div class="pct-dollar" id="agent-dollar">—</div>
+          </div>
+          <div class="field-note" id="agent-note">Seller is covering your buyer agent's commission — not included in your costs. Post-NAR settlement (Aug 2024): seller coverage is negotiable but remains common practice in Minneapolis.</div>
         </div>
       </fieldset>
 
@@ -1105,7 +1212,7 @@
 
         <div class="tip-chip">
           <i class="tip-icon">ℹ</i>
-          <span>MN Housing Start Up: up to <strong>$18,000</strong> deferred 0% DPA &nbsp;·&nbsp; Minneapolis Homes Access: up to <strong>$20,000</strong> &nbsp;·&nbsp; First-Gen Homebuyer Loan: up to <strong>$35,000</strong> (forgivable)</span>
+          <span>Minnesota Housing Start Up: up to <strong>$18,000</strong> deferred 0% down payment assistance &nbsp;·&nbsp; Minneapolis Homes Access: up to <strong>$20,000</strong> &nbsp;·&nbsp; First-Generation Homebuyer Loan: up to <strong>$35,000</strong> (forgivable)</span>
         </div>
 
         <div class="field">
@@ -1128,7 +1235,7 @@
               <span class="upfront-lbl">Home inspection</span>
               <div class="input-wrap has-prefix upfront-iw"><span class="input-prefix">$</span><input type="number" id="uc-inspection" value="500" min="0" step="50"></div>
             </div>
-            <div class="upfront-hint">$400–600 for a duplex</div>
+            <div class="upfront-hint" id="uc-inspection-hint">$400–$600 for a duplex in Minneapolis</div>
             <div class="upfront-row">
               <span class="upfront-lbl">Radon testing</span>
               <div class="input-wrap has-prefix upfront-iw"><span class="input-prefix">$</span><input type="number" id="uc-radon" value="150" min="0" step="25"></div>
@@ -1144,12 +1251,6 @@
               <div class="input-wrap has-prefix upfront-iw"><span class="input-prefix">$</span><input type="number" id="uc-mold" value="0" min="0" step="50"></div>
             </div>
             <div class="upfront-hint">If flagged during inspection</div>
-            <div class="upfront-row">
-              <span class="upfront-lbl">TISH required repairs</span>
-              <div class="input-wrap has-prefix upfront-iw"><span class="input-prefix">$</span><input type="number" id="uc-tish" value="0" min="0" step="100"></div>
-            </div>
-            <div class="upfront-hint">Minneapolis requires seller-provided Truth in Sale of Housing report · Buyer must fix any "Required Repairs" within 90 days of closing</div>
-
             <div class="upfront-cat">At Closing (not in closing costs %)</div>
             <div class="upfront-row">
               <span class="upfront-lbl">Prepaid items</span>
@@ -1164,11 +1265,6 @@
               <div class="input-wrap has-prefix upfront-iw"><span class="input-prefix">$</span><input type="number" id="uc-rental-license" value="75" min="0" step="25"></div>
             </div>
             <div class="upfront-hint">~$75/yr · Apply within 60 days of closing</div>
-            <div class="upfront-row">
-              <span class="upfront-lbl">City rental inspection repairs</span>
-              <div class="input-wrap has-prefix upfront-iw"><span class="input-prefix">$</span><input type="number" id="uc-city-repairs" value="0" min="0" step="100"></div>
-            </div>
-            <div class="upfront-hint">Repairs required before city issues rental license</div>
             </div>
 
             <div class="upfront-cat">Move-In &amp; Post-Close</div>
@@ -1178,10 +1274,10 @@
             </div>
             <div class="upfront-hint">$500–2,500</div>
             <div class="upfront-row">
-              <span class="upfront-lbl">Repairs / contingency</span>
+              <span class="upfront-lbl">Repairs &amp; contingency</span>
               <div class="input-wrap has-prefix upfront-iw"><span class="input-prefix">$</span><input type="number" id="uc-repairs" value="3000" min="0" step="100"></div>
             </div>
-            <div class="upfront-hint">~1% of purchase price · Year-one surprises: furnace filters, plumbing, weatherization</div>
+            <div class="upfront-hint">Covers TISH required repairs (Minneapolis seller-provided report · buyer must fix within 90 days) · City rental inspection repairs (duplex: required before rental license issued) · Year-one contingency ~1% of purchase price for surprises: furnace, plumbing, weatherization</div>
 
             <div class="upfront-total">
               <span>Total Other Upfront Costs</span>
@@ -1207,13 +1303,72 @@
 
         <!-- Duplex mode: single unit rent -->
         <div id="rent-mode-duplex">
-          <div class="field">
-            <label for="monthly-rent">Expected Monthly Rent</label>
+          <div style="margin-bottom:4px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
+              <span style="font-size:12px; font-weight:500; color:var(--text-muted);">Rent input mode:</span>
+              <div class="toggle-group">
+                <button class="toggle-btn active" id="btn-duplex-rent-combined" onclick="setDuplexRentMode('combined')" style="padding:0 20px; min-width:110px;">Combined</button>
+                <button class="toggle-btn" id="btn-duplex-rent-perunit" onclick="setDuplexRentMode('perunit')" style="padding:0 20px; min-width:110px;">Per Unit</button>
+              </div>
+            </div>
+            <div style="font-size:10.5px; color:var(--text-xs); line-height:1.5; margin-bottom:8px;">
+              <strong>Combined</strong> — enter one rent figure for the tenant unit. Best when you know (or are estimating) total rental income without needing to break it down.&ensp;<strong>Per Unit</strong> — enter rents for Unit 1 (tenant) and Unit 2 (your unit) separately. Use this when the two units have noticeably different sizes or market rents, or if you want to model each unit's income independently.
+            </div>
+          </div>
+
+          <!-- Combined mode: single tenant rent field -->
+          <div id="duplex-rent-combined">
+          <div class="field" style="margin-bottom:0;">
+            <label for="monthly-rent">Tenant Unit Monthly Rent</label>
             <div class="input-wrap has-prefix">
               <span class="input-prefix">$</span>
               <input type="number" id="monthly-rent" value="1400" min="0" step="50">
             </div>
             <div class="field-note">Median Minneapolis 1BR: ~$1,200–$1,600/mo (2025)</div>
+          </div>
+          </div>
+
+          <!-- Per-unit mode: Unit 1 (tenant) + Unit 2 (owner) displayed separately -->
+          <div id="duplex-rent-perunit" style="display:none;">
+          <div class="field" style="margin-bottom:6px;">
+            <label>Unit 1 — Tenant Unit</label>
+            <div class="input-wrap has-prefix">
+              <span class="input-prefix">$</span>
+              <input type="number" id="monthly-rent-u1" value="1400" min="0" step="50">
+            </div>
+            <div class="field-note">Median Minneapolis 1BR: ~$1,200–$1,600/mo (2025)</div>
+          </div>
+          <div class="field" style="margin-bottom:0;">
+            <label>Unit 2 — Your Unit (room rentals)</label>
+            <div style="padding:8px 10px; background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius-sm); font-size:12px; color:var(--text-muted);">
+              Set below in <em>Owner's Unit — Room Rentals</em> ↓ · Total: <strong id="u2-rent-total">$0/mo</strong>
+            </div>
+          </div>
+          </div>
+          <div class="field" style="margin-top:4px; padding-bottom:4px;">
+            <div style="font-size:12px; font-weight:600; color:var(--text); margin-bottom:4px;">Owner's Unit — Room Rentals <span style="font-size:10.5px; font-weight:400; color:var(--text-muted);">(optional)</span></div>
+            <div class="field-note" style="margin-bottom:8px;">Rent bedrooms in your unit for additional income on top of the tenant unit above.</div>
+            <div class="bedroom-list">
+              <div class="bedroom-row">
+                <input type="checkbox" id="cb-d-br1">
+                <label class="br-label muted" for="cb-d-br1">Room 1</label>
+                <div class="input-wrap has-prefix">
+                  <span class="input-prefix">$</span>
+                  <input type="number" id="rent-d-br1" value="700" min="0" step="50" disabled>
+                </div>
+              </div>
+              <div id="d-br1-cost-hint" style="display:none; font-size:10.5px; color:var(--text-xs); margin:-3px 0 5px 22px; line-height:1.5;"></div>
+              <div class="bedroom-row">
+                <input type="checkbox" id="cb-d-br2">
+                <label class="br-label muted" for="cb-d-br2">Room 2</label>
+                <div class="input-wrap has-prefix">
+                  <span class="input-prefix">$</span>
+                  <input type="number" id="rent-d-br2" value="600" min="0" step="50" disabled>
+                </div>
+              </div>
+              <div id="d-br2-cost-hint" style="display:none; font-size:10.5px; color:var(--text-xs); margin:-3px 0 5px 22px; line-height:1.5;"></div>
+            </div>
+            <div class="field-note" style="margin-top:6px;">~$600–$900/mo per room · Renting rooms may require a city rental license — verify at minneapolismn.gov</div>
           </div>
         </div>
 
@@ -1229,6 +1384,7 @@
                 <input type="number" id="rent-br1" value="800" min="0" step="50">
               </div>
             </div>
+            <div id="br1-cost-hint" style="display:none; font-size:10.5px; color:var(--text-xs); margin:-3px 0 5px 22px; line-height:1.5;"></div>
             <div class="bedroom-row">
               <input type="checkbox" id="cb-br2">
               <label class="br-label muted" for="cb-br2">Bedroom 2</label>
@@ -1237,6 +1393,7 @@
                 <input type="number" id="rent-br2" value="700" min="0" step="50" disabled>
               </div>
             </div>
+            <div id="br2-cost-hint" style="display:none; font-size:10.5px; color:var(--text-xs); margin:-3px 0 5px 22px; line-height:1.5;"></div>
             <div class="bedroom-row">
               <input type="checkbox" id="cb-br3">
               <label class="br-label muted" for="cb-br3">Bedroom 3</label>
@@ -1245,6 +1402,7 @@
                 <input type="number" id="rent-br3" value="600" min="0" step="50" disabled>
               </div>
             </div>
+            <div id="br3-cost-hint" style="display:none; font-size:10.5px; color:var(--text-xs); margin:-3px 0 5px 22px; line-height:1.5;"></div>
           </div>
           <div class="field-note" style="margin-top:8px; margin-bottom:12px;">Minneapolis median room rental: ~$600–$900/mo · Renting 2+ rooms may require city rental license — verify at minneapolismn.gov</div>
         </div>
@@ -1267,35 +1425,36 @@
           <label for="monthly-tax">Property Tax</label>
           <div class="input-wrap has-prefix">
             <span class="input-prefix">$</span>
-            <input type="number" id="monthly-tax" value="292" min="0" step="10">
+            <input type="number" id="monthly-tax" value="292" min="0" step="10" data-auto="true">
           </div>
-          <div class="field-note" id="tax-note">Hennepin Co. eff. rate ~1.17–1.19%/yr · Owner-occupied split homestead saves ~$200–400/yr</div>
+          <div class="field-note" id="tax-note">Hennepin Co. eff. rate ~1.17–1.19%/yr · Owner-occupied split homestead saves ~$200–400/yr · Auto-calculated from purchase price — override any time</div>
         </div>
 
         <div class="field">
           <label for="monthly-insurance">Homeowners Insurance</label>
           <div class="input-wrap has-prefix">
             <span class="input-prefix">$</span>
-            <input type="number" id="monthly-insurance" value="120" min="0" step="10">
+            <input type="number" id="monthly-insurance" value="120" min="0" step="10" data-auto="true">
           </div>
+          <div class="field-note">Auto-calculated at ~0.6%/yr of purchase price · Minneapolis avg $100–$200/mo — higher for older homes or multi-unit · Override any time</div>
         </div>
 
         <div class="field">
-          <label for="monthly-pmi">PMI <span id="pmi-badge" style="font-size:10.5px; font-weight:400; color:var(--text-muted);">· auto-calculated</span></label>
+          <label for="monthly-pmi">Mortgage Insurance <span id="pmi-badge" style="font-size:10.5px; font-weight:400; color:var(--text-muted);">· auto-calculated</span></label>
           <div class="input-wrap has-prefix">
             <span class="input-prefix">$</span>
-            <input type="number" id="monthly-pmi" value="0" min="0" step="5" placeholder="auto">
+            <input type="number" id="monthly-pmi" value="0" min="0" step="5">
           </div>
-          <div class="field-note" id="pmi-note">PMI applies when down payment &lt; 20% on conventional loans · Typically 0.5–1.5% of loan/yr · Leave at 0 to auto-calculate (uses 0.85%/yr) · FHA loans have MIP regardless of down payment</div>
+          <div class="field-note" id="pmi-note">Auto-populates at 1% of the loan amount per year when your down payment is below 20% on a conventional loan · Typical range: 0.5–1.5% depending on credit score and lender · Override by entering your own amount · Federal Housing Administration loans require Mortgage Insurance Premiums regardless of down payment</div>
         </div>
 
         <div class="field">
           <label for="monthly-maint">Maintenance Budget</label>
           <div class="input-wrap has-prefix">
             <span class="input-prefix">$</span>
-            <input type="number" id="monthly-maint" value="200" min="0" step="25">
+            <input type="number" id="monthly-maint" value="200" min="0" step="25" data-auto="true">
           </div>
-          <div class="field-note">Rule of thumb: 1% of purchase price per year ÷ 12</div>
+          <div class="field-note">1% of purchase price per year ÷ 12 · Auto-calculated from purchase price — override any time</div>
         </div>
 
         <div class="field">
@@ -1315,35 +1474,73 @@
               <label style="flex:1; font-size:12.5px; color:var(--text-muted);" for="util-water">Water</label>
               <div class="input-wrap has-prefix" style="width:110px;"><span class="input-prefix">$</span><input type="number" id="util-water" value="45" min="0" step="5"></div>
             </div>
-            <div style="font-size:10.5px; color:var(--text-xs); line-height:1.4; margin-top:-3px;">Minneapolis Water Works avg ~$40–$55/mo for duplex</div>
+            <div style="font-size:10.5px; color:var(--text-xs); line-height:1.4; margin-top:-3px;" id="util-water-hint">Minneapolis Water Works avg ~$40–$55/mo for duplex · scales with occupants in house mode</div>
             <div style="display:flex; align-items:center; gap:8px;">
               <label style="flex:1; font-size:12.5px; color:var(--text-muted);" for="util-sewer">Sewer &amp; Trash</label>
               <div class="input-wrap has-prefix" style="width:110px;"><span class="input-prefix">$</span><input type="number" id="util-sewer" value="35" min="0" step="5"></div>
             </div>
-            <div style="font-size:10.5px; color:var(--text-xs); line-height:1.4; margin-top:-3px;">Minneapolis sewer + solid waste avg ~$30–$40/mo</div>
+            <div style="font-size:10.5px; color:var(--text-xs); line-height:1.4; margin-top:-3px;">Total monthly bill — split equally among all occupants · Minneapolis avg ~$30–$40/mo</div>
             <div style="display:flex; align-items:center; gap:8px;">
               <label style="flex:1; font-size:12.5px; color:var(--text-muted);" for="util-gas">Gas / Heat</label>
               <div class="input-wrap has-prefix" style="width:110px;"><span class="input-prefix">$</span><input type="number" id="util-gas" value="90" min="0" step="5"></div>
             </div>
-            <div style="font-size:10.5px; color:var(--text-xs); line-height:1.4; margin-top:-3px;">Xcel Energy avg ~$70–$120/mo Minneapolis · higher Nov–Mar</div>
+            <div style="font-size:10.5px; color:var(--text-xs); line-height:1.4; margin-top:-3px;" id="util-gas-hint">Xcel Energy avg ~$70–$120/mo Minneapolis · higher Nov–Mar · scales with occupants in house mode</div>
             <div style="display:flex; align-items:center; gap:8px;">
               <label style="flex:1; font-size:12.5px; color:var(--text-muted);" for="util-electric">Electricity</label>
               <div class="input-wrap has-prefix" style="width:110px;"><span class="input-prefix">$</span><input type="number" id="util-electric" value="60" min="0" step="5"></div>
             </div>
-            <div style="font-size:10.5px; color:var(--text-xs); line-height:1.4; margin-top:-3px;">Xcel Energy avg ~$50–$75/mo per unit</div>
+            <div style="font-size:10.5px; color:var(--text-xs); line-height:1.4; margin-top:-3px;" id="util-electric-hint">Xcel Energy avg ~$50–$75/mo per unit · scales with occupants in house mode</div>
             <div style="display:flex; align-items:center; gap:8px;">
               <label style="flex:1; font-size:12.5px; color:var(--text-muted);" for="util-internet">Internet</label>
               <div class="input-wrap has-prefix" style="width:110px;"><span class="input-prefix">$</span><input type="number" id="util-internet" value="65" min="0" step="5"></div>
             </div>
-            <div style="font-size:10.5px; color:var(--text-xs); line-height:1.4; margin-top:-3px;">Comcast/Xfinity or CenturyLink avg ~$55–$75/mo</div>
+            <div style="font-size:10.5px; color:var(--text-xs); line-height:1.4; margin-top:-3px;">Total monthly bill — split equally among all occupants · Comcast/Xfinity or CenturyLink avg ~$55–$75/mo</div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <label style="flex:1; font-size:12.5px; color:var(--text-muted);" for="util-hoa">HOA / Condo fees</label>
+              <div class="input-wrap has-prefix" style="width:110px;"><span class="input-prefix">$</span><input type="number" id="util-hoa" value="0" min="0" step="25"></div>
+            </div>
+            <div style="font-size:10.5px; color:var(--text-xs); line-height:1.4; margin-top:-3px;">Enter $0 if no HOA · Minneapolis condos typically $200–$600/mo · Duplexes rarely have HOAs</div>
           </div>
           <div id="util-house-note" style="display:none; margin-top:8px; font-size:11px; color:var(--text-muted); background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:6px 9px; line-height:1.4;"></div>
         </div>
 
         <div class="field" style="padding-bottom:18px;">
-          <div style="display:flex; justify-content:space-between; font-size:12.5px; color:var(--text-muted); margin-top:2px;">
-            <span>Total Utilities</span>
-            <span id="util-total" style="font-weight:600; color:var(--text);">—</span>
+          <div style="display:flex; justify-content:space-between; align-items:baseline; font-size:12.5px; color:var(--text-muted); margin-top:2px;">
+            <span>Total Utilities &amp; HOA</span>
+            <span style="display:flex; gap:12px; align-items:baseline;">
+              <span id="util-total" style="font-weight:600; color:var(--text);">—</span>
+              <span id="util-total-annual" style="font-size:10.5px; color:var(--text-xs);">—/yr</span>
+            </span>
+          </div>
+          <div id="util-perperson-row" style="display:none; justify-content:space-between; align-items:baseline; font-size:11px; color:var(--text-muted); margin-top:4px;">
+            <span id="util-perperson-label">Your share (1 of 2 people)</span>
+            <span style="display:flex; gap:12px; align-items:baseline;">
+              <span id="util-total-perperson" style="font-weight:600; color:var(--text);">—</span>
+              <span id="util-total-perperson-annual" style="font-size:10.5px; color:var(--text-xs);">—/yr</span>
+            </span>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Projection Assumptions -->
+      <fieldset>
+        <legend>Projection Assumptions</legend>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <div class="field" style="flex:1; min-width:130px; padding-bottom:0;">
+            <label for="rent-growth-rate">Annual Rent Growth</label>
+            <div class="input-wrap has-suffix">
+              <input type="number" id="rent-growth-rate" value="2.5" min="0" max="15" step="0.25">
+              <span class="input-suffix">%</span>
+            </div>
+            <div class="field-note">Minneapolis rents grew ~2–4%/yr historically · 2.5% default</div>
+          </div>
+          <div class="field" style="flex:1; min-width:130px; padding-bottom:0;">
+            <label for="expense-growth-rate">Annual Expense Growth</label>
+            <div class="input-wrap has-suffix">
+              <input type="number" id="expense-growth-rate" value="3.0" min="0" max="15" step="0.25">
+              <span class="input-suffix">%</span>
+            </div>
+            <div class="field-note">Property tax, insurance, maintenance, utilities · 3% default (historical US avg)</div>
           </div>
         </div>
       </fieldset>
@@ -1398,8 +1595,11 @@
               <span class="lv" id="o-cash-remain">—</span>
             </div>
           </div>
+          <div id="cash-formula-row" style="display:none; font-size:11px; color:var(--text-muted); background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:7px 10px; margin:6px 0 8px; line-height:1.6;">
+            <span id="cash-formula-text"></span>
+          </div>
           <div class="reserve-row">
-            <span class="reserve-lbl">Reserve target met?</span>
+            <span class="reserve-lbl">Reserve target: <span id="o-reserve-target-display" style="font-weight:600; color:var(--text);">—</span></span>
             <span class="badge badge-neutral" id="o-reserve-badge">—</span>
           </div>
         </div>
@@ -1423,11 +1623,11 @@
               <span class="lv" id="o-ins">—</span>
             </div>
             <div class="line-item" id="row-pmi" style="display:none;">
-              <span class="ll">PMI</span>
+              <span class="ll" id="o-pmi-label">Mortgage Insurance</span>
               <span class="lv" id="o-pmi">—</span>
             </div>
             <div class="line-item subtotal">
-              <span class="ll strong">Total PITI</span>
+              <span class="ll strong">Principal, Interest, Tax &amp; Insurance</span>
               <span class="lv" id="o-piti">—</span>
             </div>
             <div class="line-item">
@@ -1446,6 +1646,20 @@
               <span class="ll strong">Total Monthly Costs</span>
               <span class="lv" id="o-total-costs">—</span>
             </div>
+            <div class="line-item" id="row-per-person" style="display:none; flex-direction:column; align-items:stretch; gap:3px;">
+              <div style="display:flex; justify-content:space-between; align-items:baseline;">
+                <span class="ll" style="color:var(--text-muted);" id="per-person-costs-label">Equal share (owner + 1 roommate)</span>
+                <span class="lv" id="o-per-person-costs" style="color:var(--text-muted);">—</span>
+              </div>
+              <div id="owner-cost-sub" style="font-size:10.5px; color:var(--text-xs); line-height:1.6;"></div>
+            </div>
+            <div class="line-item tax-savings-row" id="row-tax-savings" style="display:none; flex-direction:column; align-items:stretch; gap:5px;">
+              <div style="display:flex; justify-content:space-between; align-items:baseline;">
+                <span class="ll" style="color:var(--text-muted);">Year 1 mortgage interest (deductible)</span>
+                <span class="lv" id="o-annual-interest" style="color:var(--text-muted);">—</span>
+              </div>
+              <div id="tax-savings-note" style="font-size:10.5px; color:var(--text-xs); line-height:1.5;"></div>
+            </div>
             <div class="line-item" style="padding-top:6px;">
               <span class="ll" style="color:var(--text-muted);">Break-even rent needed</span>
               <span class="lv" id="o-breakeven" style="color:var(--text-muted);">—</span>
@@ -1463,6 +1677,7 @@
                 </div>
                 <span class="ra-occ" id="ra-occ-label">/mo</span>
               </div>
+              <div id="eff-rent-formula-hint" style="font-size:10.5px; color:var(--text-xs); line-height:1.6; margin-top:2px;"></div>
             </div>
           </div>
 
@@ -1474,68 +1689,454 @@
         </div>
       </div>
 
+      <!-- Card: Amortization Schedule -->
+      <div class="out-card">
+        <div class="card-header amort-header-toggle" onclick="toggleAmort()" style="text-align:center; cursor:pointer;">
+          Amortization Schedule
+          <div id="amort-toggle-label" style="font-size:11px; font-weight:400; color:var(--text-muted); margin-top:2px;">▶ Show year-by-year breakdown</div>
+        </div>
+        <div id="amort-body" style="display:none;">
+          <div style="overflow-x:auto;">
+            <table class="amort-table">
+              <thead>
+                <tr>
+                  <th style="text-align:left;">Year</th>
+                  <th>Beginning Balance</th>
+                  <th>Principal Paid</th>
+                  <th>Interest Paid</th>
+                  <th>Ending Balance</th>
+                  <th>Cumulative Interest</th>
+                </tr>
+              </thead>
+              <tbody id="amort-tbody">
+                <tr><td colspan="6" style="text-align:center; padding:16px; color:var(--text-muted); font-family:inherit;">Enter purchase price and interest rate above</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="font-size:10.5px; color:var(--text-xs); padding:8px 14px 14px; line-height:1.5;">
+            Fixed-rate mortgage only · Does not include mortgage insurance, taxes, or other costs · Cumulative Interest shows total interest paid from month 1 through end of that year
+          </div>
+        </div>
+      </div>
+
       <!-- Card: Appreciation & Returns -->
       <div class="out-card">
         <div class="card-header">Appreciation &amp; Returns</div>
         <div class="card-body">
-          <div class="line-items">
-            <div class="line-item">
-              <span class="ll">Gross Rent Multiplier (GRM)</span>
-              <span class="lv" id="o-grm">—</span>
+
+          <!-- A: Monthly Cash Flow Waterfall -->
+          <div class="cf-section-header">Monthly Cash Flow</div>
+          <div class="cf-waterfall">
+            <div class="cf-row">
+              <span class="cf-lbl">Gross Rent</span>
+              <span class="cf-val" id="cf-gross">—</span>
             </div>
-            <div class="line-item">
-              <span class="ll">Est. 5-yr value <span style="font-size:10.5px;">(3% ann.)</span></span>
-              <span class="lv" id="o-appr-3">—</span>
+            <div class="cf-row cf-indent">
+              <span class="cf-lbl">− Vacancy</span>
+              <span class="cf-val muted" id="cf-vacancy">—</span>
             </div>
+            <div class="cf-row cf-subtotal">
+              <span class="cf-lbl">= Effective Gross Income</span>
+              <span class="cf-val" id="cf-egi">—</span>
+            </div>
+            <div class="cf-row cf-indent">
+              <span class="cf-lbl">− Principal, Interest, Tax &amp; Insurance</span>
+              <span class="cf-val muted" id="cf-piti">—</span>
+            </div>
+            <div class="cf-row cf-indent">
+              <span class="cf-lbl">− Maintenance</span>
+              <span class="cf-val muted" id="cf-maint-cf">—</span>
+            </div>
+            <div class="cf-row cf-indent">
+              <span class="cf-lbl">− Utilities &amp; HOA</span>
+              <span class="cf-val muted" id="cf-utils">—</span>
+            </div>
+            <div class="cf-row cf-indent" id="cf-row-pm" style="display:none;">
+              <span class="cf-lbl">− Property Mgmt</span>
+              <span class="cf-val muted" id="cf-pm-cf">—</span>
+            </div>
+            <div class="cf-row cf-net">
+              <span class="cf-lbl">= Net Monthly Cash Flow</span>
+              <span class="cf-val" id="cf-net">—</span>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px; padding:8px 12px; background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius-sm);">
+            <span style="font-size:12px; color:var(--text-muted); flex:1;">Show values for mortgage year:</span>
+            <button onclick="adjustTrueCashYear(-1)" style="width:26px; height:26px; border:1px solid var(--border); border-radius:5px; background:var(--surface); color:var(--text); font-size:15px; cursor:pointer; line-height:1;">−</button>
+            <span id="true-cash-year-display" style="font-size:14px; font-weight:700; color:var(--accent); min-width:52px; text-align:center;">Year 1</span>
+            <button onclick="adjustTrueCashYear(1)" style="width:26px; height:26px; border:1px solid var(--border); border-radius:5px; background:var(--surface); color:var(--text); font-size:15px; cursor:pointer; line-height:1;">+</button>
+          </div>
+          <div class="cf-split-row">
+            <div class="cf-split-item">
+              <span class="cf-split-lbl">True cash cost (non-equity)</span>
+              <span class="cf-split-val" id="o-true-cash-cost">—</span>
+              <span style="font-size:10px; color:var(--text-xs); display:block; margin-top:5px; line-height:1.5;">The portion of your monthly spending that does not build ownership. Includes the interest portion of your mortgage payment, property tax, insurance, mortgage insurance, utilities, maintenance, and property management. This money leaves your hands permanently — it is the true cost of occupying and operating the property.</span>
+            </div>
+            <div class="cf-split-item">
+              <span class="cf-split-lbl">Monthly equity savings</span>
+              <span class="cf-split-val green" id="o-principal-savings">—</span>
+              <span style="font-size:10px; color:var(--text-xs); display:block; margin-top:5px; line-height:1.5;">The principal portion of your mortgage payment — the slice of each payment that directly reduces your loan balance and increases your ownership stake. Unlike rent or interest, this money stays with you as built equity. Early in a mortgage the principal share is small; it grows every month as your balance shrinks.</span>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:10px; margin-bottom:4px; flex-wrap:wrap;">
+            <div style="flex:1; min-width:130px; padding:10px 12px; background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius-sm);">
+              <div style="font-size:10.5px; color:var(--text-muted); margin-bottom:3px;">Total Return at Year 5</div>
+              <div style="font-size:16px; font-weight:700; color:var(--accent);" id="o-total-return-5">—</div>
+              <div style="font-size:10px; color:var(--text-xs); margin-top:4px; line-height:1.5;">Equity + cumulative cash flow.<br><strong>Minneapolis benchmark:</strong> Owner-occupied duplexes purchased 2015–2020 saw $60k–$130k total position at year 5 on a $250–350k purchase (3–5% avg annual appreciation + principal paydown, partially offset by negative early cash flow). Comparable to a well-diversified equity portfolio over the same horizon.</div>
+            </div>
+            <div style="flex:1; min-width:130px; padding:10px 12px; background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius-sm);">
+              <div style="font-size:10.5px; color:var(--text-muted); margin-bottom:3px;">Total Return at Year 10</div>
+              <div style="font-size:16px; font-weight:700; color:var(--accent);" id="o-total-return-10">—</div>
+              <div style="font-size:10px; color:var(--text-xs); margin-top:4px; line-height:1.5;">Equity + cumulative cash flow.<br><strong>Minneapolis benchmark:</strong> Minneapolis median home values roughly doubled from 2012–2022. Owner-occupants who held a duplex for 10 years through that period often saw $150k–$280k in total equity gain on a $250–350k purchase — before accounting for cash flow offset by rental income. Historical US real estate long-run annualized total return: ~8–10% including income.</div>
+            </div>
+          </div>
+
+          <!-- B: Investment Metrics -->
+          <div class="cf-section-header" style="margin-top:16px;">Investment Metrics</div>
+          <div class="metrics-row">
+            <div class="metric-box">
+              <div class="metric-val" id="o-cap-rate">—</div>
+              <div class="metric-lbl">Cap Rate</div>
+              <div class="metric-hint">Excludes mortgage payment</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-val" id="o-coc">—</div>
+              <div class="metric-lbl">Cash-on-Cash Return</div>
+              <div class="metric-hint">Annual return on cash invested</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-val" id="o-grm">—</div>
+              <div class="metric-lbl">Gross Rent Multiplier</div>
+              <div class="metric-hint">Purchase price ÷ annual rent</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-val" id="o-dscr">—</div>
+              <div class="metric-lbl">DSCR</div>
+              <div class="metric-hint">NOI ÷ annual debt service · &gt;1.25 = strong</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-val" id="o-irr">—</div>
+              <div class="metric-lbl">10-yr IRR</div>
+              <div class="metric-hint">Total return rate incl. sale proceeds</div>
+            </div>
+          </div>
+
+          <div style="text-align:right; margin-top:6px;">
+            <button onclick="toggleMetricExplain()" id="btn-metric-explain" style="font-size:11px; color:var(--accent); background:none; border:none; cursor:pointer; font-family:inherit; padding:2px 0;">What do these metrics mean? ▼</button>
+          </div>
+          <div id="metric-explain-body" style="display:none; margin-top:10px;">
+
+            <div style="margin-bottom:14px;">
+              <div style="font-size:11.5px; font-weight:700; color:var(--text); margin-bottom:4px;">Cap Rate — What the property earns on its own</div>
+              <div style="font-size:11.5px; color:var(--text-muted); line-height:1.6;">
+                Cap Rate = Net Operating Income ÷ Purchase Price. Net Operating Income is your rent income after vacancy minus all operating expenses (tax, insurance, maintenance, utilities, management) — but <em>not</em> the mortgage. This makes it financing-neutral, so you can compare any two properties regardless of how they're purchased.<br>
+                <strong>Why it matters:</strong> Higher cap rate = more income per dollar of property value. It tells you the "yield" of the asset itself.<br>
+                <strong>Minneapolis duplex benchmarks (2024–2025):</strong><br>
+                <span style="color:#16a34a;">● 5–7%+</span> — Healthy yield for Minneapolis; strong cash flow potential<br>
+                <span style="color:#ca8a04;">● 4–5%</span> — Fair; common in high-demand neighborhoods (Uptown, North Loop, Longfellow)<br>
+                <span style="color:#dc2626;">● Below 4%</span> — Thin yield; you're buying primarily for appreciation, not income
+              </div>
+            </div>
+
+            <div style="margin-bottom:14px;">
+              <div style="font-size:11.5px; font-weight:700; color:var(--text); margin-bottom:4px;">Cash-on-Cash Return — Your actual return on dollars invested</div>
+              <div style="font-size:11.5px; color:var(--text-muted); line-height:1.6;">
+                Cash-on-Cash = Annual Net Cash Flow ÷ Total Cash Invested. Total cash invested includes your down payment, closing costs, and any upfront repairs. Net cash flow is what remains after <em>all</em> monthly costs including the mortgage.<br>
+                <strong>Why it matters:</strong> This is the most honest measure of how your actual dollars are performing right now. Negative means the property costs you money each month; positive means it pays you. As an owner-occupant, you can think of it relative to what you'd otherwise spend on rent.<br>
+                <strong>Minneapolis owner-occupant benchmarks:</strong><br>
+                <span style="color:#16a34a;">● 5–8%+</span> — Strong; property is generating meaningful income beyond your costs<br>
+                <span style="color:#ca8a04;">● 0–5%</span> — Acceptable; you're near break-even, building equity while living affordably<br>
+                <span style="color:#dc2626;">● Negative</span> — Cash-flow negative; common with 2024–2025 rates. You're subsidizing the property monthly, but may still build significant wealth through equity and appreciation
+              </div>
+            </div>
+
+            <div style="margin-bottom:14px;">
+              <div style="font-size:11.5px; font-weight:700; color:var(--text); margin-bottom:4px;">Gross Rent Multiplier — A quick value screen</div>
+              <div style="font-size:11.5px; color:var(--text-muted); line-height:1.6;">
+                GRM = Purchase Price ÷ Annual Gross Rent. It tells you how many years of full rent it would take to pay for the property. It ignores expenses and financing, so it's less precise than cap rate — but it's a fast way to filter properties before doing deep math.<br>
+                <strong>Why it matters:</strong> Lower GRM = better value relative to rental income. A GRM of 12 means the property costs 12× its annual rent; 20 means it costs 20×. Useful for quickly comparing multiple listings.<br>
+                <strong>Minneapolis duplex benchmarks (2024–2025):</strong><br>
+                <span style="color:#16a34a;">● Below 12</span> — Strong value; rent income is high relative to price<br>
+                <span style="color:#ca8a04;">● 12–16</span> — Fair; typical for Minneapolis duplexes in most neighborhoods<br>
+                <span style="color:#dc2626;">● Above 16</span> — Expensive relative to income; common in highly appreciating areas or during high-price periods
+              </div>
+            </div>
+
+            <div style="margin-bottom:14px;">
+              <div style="font-size:11.5px; font-weight:700; color:var(--text); margin-bottom:4px;">DSCR — Can the rental income cover the mortgage?</div>
+              <div style="font-size:11.5px; color:var(--text-muted); line-height:1.6;">
+                DSCR = Net Operating Income ÷ Annual Debt Service (mortgage payments). Think of it as: "for every $1 of mortgage payment, how many dollars does the rental income generate?" A DSCR of 1.25 means the property earns $1.25 in net operating income for every $1 it owes on the mortgage.<br>
+                <strong>Why it matters:</strong> This is the number lenders use to decide if an investment property can support its own loan. Even as an owner-occupant, a strong DSCR means your tenant is essentially covering your mortgage — you're just living for free. A DSCR below 1.0 means the rental income alone can't cover the mortgage; you're subsidizing the shortfall from your own pocket.<br>
+                <strong>Benchmarks:</strong><br>
+                <span style="color:#16a34a;">● 1.25 or higher</span> — Strong; rental income more than covers the debt. Most lenders require this for investment loans<br>
+                <span style="color:#ca8a04;">● 1.0–1.24</span> — Marginal; rental income covers the debt but with little cushion. Vacancy or a repair can flip it negative<br>
+                <span style="color:#dc2626;">● Below 1.0</span> — Property can't service its own debt from rent alone. Common in high-rate environments for owner-occupants who are offsetting with their own income
+              </div>
+            </div>
+
+            <div>
+              <div style="font-size:11.5px; font-weight:700; color:var(--text); margin-bottom:4px;">IRR — Your true annualized return on this investment</div>
+              <div style="font-size:11.5px; color:var(--text-muted); line-height:1.6;">
+                IRR (Internal Rate of Return) is the annualized return that makes the total value of all your cash flows — money in, money out, and the eventual sale proceeds — equal to zero. In plain terms: if you put cash in today, receive or pay monthly over 10 years, and then sell, what single annual interest rate would explain all of that? That's your IRR.<br>
+                <strong>Why it matters:</strong> IRR is the most complete measure of investment performance because it accounts for the <em>timing</em> of every dollar. A property with great cash flow but low appreciation might have a lower IRR than one with modest cash flow but strong equity growth. It lets you compare real estate against other investments (stocks, bonds, paying off debt) on equal footing — using a single percentage.<br>
+                <strong>Minneapolis duplex benchmarks (10-year horizon):</strong><br>
+                <span style="color:#16a34a;">● 12%+</span> — Excellent; outpacing most stock market averages on a risk-adjusted basis<br>
+                <span style="color:#ca8a04;">● 8–12%</span> — Solid; competitive with equity market long-term averages<br>
+                <span style="color:#dc2626;">● Below 8%</span> — Thin; consider whether the illiquidity and management burden is worth it vs. simpler investments
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Depreciation Tax Shield (duplex only) -->
+          <div id="depreciation-section" style="display:none; margin-top:14px; padding:12px 14px; background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius-sm);">
+            <div style="font-size:12px; font-weight:600; color:var(--text); margin-bottom:6px;">📉 Depreciation Tax Shield <span style="font-size:10.5px; font-weight:400; color:var(--text-muted);">(Duplex rental unit — Schedule E)</span></div>
+            <div class="line-item" style="padding:4px 0;">
+              <span class="ll" style="color:var(--text-muted);">Annual depreciation deduction</span>
+              <span class="lv" id="o-annual-dep">—</span>
+            </div>
+            <div class="line-item" style="padding:4px 0;">
+              <span class="ll" style="color:var(--text-muted);">Est. tax savings at 22% bracket</span>
+              <span class="lv green" id="o-dep-22">—</span>
+            </div>
+            <div class="line-item" style="padding:4px 0; border-bottom:none;">
+              <span class="ll" style="color:var(--text-muted);">Est. tax savings at 24% bracket</span>
+              <span class="lv green" id="o-dep-24">—</span>
+            </div>
+            <div style="font-size:10.5px; color:var(--text-muted); margin-top:10px; line-height:1.6;">
+              <strong>What is depreciation?</strong> The IRS lets rental property owners deduct a portion of the building's value each year as a "wear and tear" expense — even though the building isn't actually losing value (and may be gaining it). This deduction reduces your taxable rental income on paper, which means you can owe less in taxes on money you actually received.<br><br>
+              <strong>Why is it valuable?</strong> It's essentially a government subsidy for owning rental property. If your rental unit generates $12,000/year in rent and you have an $8,000 depreciation deduction, you only pay income tax on $4,000 — despite having $12,000 in your bank account. At a 22% bracket, that's roughly $1,760/year you keep instead of sending to the IRS. Over 10 years, that's $17,600+ in tax savings from depreciation alone.<br><br>
+              <strong>The catch:</strong> When you sell, the IRS "recaptures" the depreciation you claimed and taxes it at up to 25% — separate from your capital gains rate. This is called <em>depreciation recapture</em>. It reduces (but rarely eliminates) the benefit. A 1031 exchange can defer both taxes indefinitely if you roll proceeds into another investment property.<br><br>
+              <em>Calculation: (Purchase Price × 80% building share × 50% rental unit share) ÷ 27.5 years. Land value is excluded — it's not depreciable. Consult a CPA to optimize Schedule E and confirm your specific numbers.</em>
+            </div>
+          </div>
+
+          <!-- C: Appreciation & Equity -->
+          <div class="cf-section-header" style="margin-top:16px;">Appreciation &amp; Equity</div>
+          <div style="margin-bottom:12px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:7px;">
+              <label style="font-size:12px; color:var(--text-muted);">Annual appreciation rate</label>
+              <span style="font-size:15px; font-weight:800; font-family:'SF Mono','Fira Code',Menlo,monospace; color:var(--accent);" id="appr-rate-display">3.0%</span>
+            </div>
+            <input type="range" class="appr-slider" id="appr-rate-slider" min="0" max="8" step="0.5" value="3">
+            <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--text-xs); margin-top:4px;">
+              <span>0%</span><span>Minneapolis historical avg ~3–4%</span><span>8%</span>
+            </div>
+          </div>
+          <div class="line-items" style="margin-top:0;">
             <div class="line-item">
-              <span class="ll">Est. 5-yr value <span style="font-size:10.5px;">(5% ann.)</span></span>
-              <span class="lv" id="o-appr-5">—</span>
+              <span class="ll">Estimated 5-year value <span style="font-size:10.5px;" id="appr-rate-label">(3.0% annual)</span></span>
+              <span class="lv" id="o-appr-selected">—</span>
             </div>
             <div class="line-item" style="border-bottom:none;">
-              <span class="ll">Est. 5-yr equity built</span>
+              <span class="ll">Estimated 5-year equity built</span>
               <span class="lv" id="o-equity-5">—</span>
             </div>
           </div>
 
-          <div style="margin-top:12px; font-size:10.5px; font-weight:700; letter-spacing:0.6px; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;">vs. Renting + Investing Your Down Payment</div>
-          <table class="roi-table">
-            <thead>
-              <tr>
-                <th>Scenario</th>
-                <th>5-yr terminal value</th>
-                <th>5-yr cost</th>
-                <th>Net gain</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>🏘 House-hack</td>
-                <td class="roi-num" id="roi-house-val">—</td>
-                <td class="roi-num" id="roi-house-cost">—</td>
-                <td class="roi-num" id="roi-house-net">—</td>
-              </tr>
-              <tr>
-                <td>📈 S&amp;P 500 (10%/yr)</td>
-                <td class="roi-num" id="roi-sp-val">—</td>
-                <td class="roi-num" id="roi-sp-cost">—</td>
-                <td class="roi-num" id="roi-sp-net">—</td>
-              </tr>
-              <tr>
-                <td>🏦 CDs (4.5%/yr)</td>
-                <td class="roi-num" id="roi-cd-val">—</td>
-                <td class="roi-num" id="roi-cd-cost">—</td>
-                <td class="roi-num" id="roi-cd-net">—</td>
-              </tr>
-              <tr>
-                <td>📄 Bonds (3.5%/yr)</td>
-                <td class="roi-num" id="roi-bond-val">—</td>
-                <td class="roi-num" id="roi-bond-cost">—</td>
-                <td class="roi-num" id="roi-bond-net">—</td>
-              </tr>
-            </tbody>
-          </table>
-          <div id="roi-verdict" class="roi-verdict" style="display:none;"></div>
-          <div id="roi-assumptions" style="font-size:10.5px; color:var(--text-xs); margin-top:6px; line-height:1.5;">Assumes current rent $1,200/mo · Down payment deployed at purchase · Monthly cost difference reinvested at scenario rate</div>
+          <!-- E: 10-Year Projection -->
+          <div class="cf-section-header" style="margin-top:16px;">10-Year Projection <span style="font-size:10px; font-weight:400; text-transform:none; letter-spacing:0; color:var(--text-xs);">(<span id="proj-appr-label">3.0%</span> appreciation · <span id="proj-rent-growth-label">2.5%</span> rent growth · <span id="proj-expense-growth-label">3.0%</span> expense growth)</span></div>
+          <div style="overflow-x:auto;">
+            <table class="proj-table">
+              <thead>
+                <tr>
+                  <th style="text-align:left;">Yr</th>
+                  <th>Value</th>
+                  <th>Loan Bal</th>
+                  <th>Equity</th>
+                  <th>Annual Cash Flow</th>
+                  <th>Cumulative Cash Flow</th>
+                </tr>
+              </thead>
+              <tbody id="proj-tbody">
+                <tr><td colspan="6" style="text-align:center; color:var(--text-muted); padding:14px; font-family:inherit;">Enter purchase price and rate above</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="font-size:10.5px; color:var(--text-xs); margin-top:5px; line-height:1.5;">Pre-tax · Expenses held flat · Green row = first year cumulative CF turns positive</div>
+
+        </div>
+      </div>
+
+      <!-- Card: Sale Cost & Break-Even Analysis -->
+      <div class="out-card" id="sell-card">
+        <div class="card-header">Sale Cost &amp; Break-Even Analysis</div>
+        <div class="card-body">
+
+          <div style="font-size:12px; color:var(--text-muted); margin-bottom:14px; line-height:1.6;">
+            Selling a Minneapolis home typically costs 5–8% of the sale price between commissions, deed tax, the required Truth in Sale of Housing inspection, and closing fees. Enter your expected costs below to see your net proceeds and the first year you'd recoup your total investment.
+          </div>
+
+          <!-- Selling cost inputs -->
+          <div style="display:flex; flex-wrap:wrap; gap:12px; margin-bottom:16px; padding:12px; background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius-sm);">
+            <div style="flex:1; min-width:130px;">
+              <label style="font-size:11.5px; color:var(--text-muted); display:block; margin-bottom:5px;">Agent commissions (total both sides)</label>
+              <div class="input-wrap has-suffix">
+                <input type="number" id="sell-commission-pct" value="5.5" min="0" max="15" step="0.25" style="padding-right:28px;">
+                <span class="input-suffix">%</span>
+              </div>
+              <div style="font-size:10px; color:var(--text-xs); margin-top:3px; line-height:1.4;">Post-settlement avg ~2–2.75% per side · seller typically pays both</div>
+            </div>
+            <div style="flex:1; min-width:130px;">
+              <label style="font-size:11.5px; color:var(--text-muted); display:block; margin-bottom:5px;">TISH + other closing costs</label>
+              <div class="input-wrap has-prefix">
+                <span class="input-prefix">$</span>
+                <input type="number" id="sell-misc" value="1500" min="0" step="100">
+              </div>
+              <div style="font-size:10px; color:var(--text-xs); margin-top:3px; line-height:1.4;">Truth in Sale of Housing inspection ~$275 · attorney &amp; title ~$500–$1,200</div>
+            </div>
+          </div>
+
+          <!-- Major capital expense reserves -->
+          <div class="cf-section-header">Major Capital Expenses — Estimated Costs &amp; Annual Reserves</div>
+          <div style="font-size:11.5px; color:var(--text-muted); margin-bottom:10px; line-height:1.5;">
+            These big-ticket items are auto-estimated from your purchase price (a proxy for home size). Amounts are editable. Annual reserve = cost ÷ typical lifespan — consider setting this aside monthly so you're not caught off-guard.
+          </div>
+          <div style="font-size:10.5px; color:var(--text-xs); margin-bottom:8px; line-height:1.5;">
+            <strong>Current Age</strong> — enter how old each item is today. Reserve adjusts to remaining life. <strong>Include in Sale?</strong> — check items you expect to replace during ownership; their cost is added to your "Total Invested" in the break-even table.
+          </div>
+          <div style="overflow-x:auto; margin-bottom:6px;">
+            <table style="width:100%; border-collapse:collapse; font-size:12px;">
+              <thead>
+                <tr style="border-bottom:1px solid var(--border);">
+                  <th style="text-align:center; padding:5px 4px; color:var(--text-muted); font-weight:500; white-space:nowrap;" title="Check to include this expense in your break-even sale calculation">In Sale?</th>
+                  <th style="text-align:left; padding:5px 6px; color:var(--text-muted); font-weight:500;">Item</th>
+                  <th style="text-align:right; padding:5px 6px; color:var(--text-muted); font-weight:500;">Est. Cost</th>
+                  <th style="text-align:right; padding:5px 4px; color:var(--text-muted); font-weight:500;">Lifespan</th>
+                  <th style="text-align:right; padding:5px 4px; color:var(--text-muted); font-weight:500; white-space:nowrap;">Current Age</th>
+                  <th style="text-align:right; padding:5px 6px; color:var(--text-muted); font-weight:500;">Annual Reserve</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid var(--border);">
+                  <td style="padding:6px 4px; text-align:center;"><input type="checkbox" id="capex-roof-sell" title="Include roof in break-even calculation"></td>
+                  <td style="padding:6px 6px;">Roof replacement</td>
+                  <td style="padding:6px 6px; text-align:right;"><div class="input-wrap has-prefix" style="width:130px; margin-left:auto;"><span class="input-prefix">$</span><input type="number" id="capex-roof" value="12000" min="0" step="500" data-auto="true" data-lifespan="25" style="padding:3px 6px 3px 22px; height:28px; font-size:12px;"></div></td>
+                  <td style="padding:6px 4px; text-align:right; color:var(--text-muted); white-space:nowrap;">25 yr</td>
+                  <td style="padding:6px 4px; text-align:right;"><input type="number" id="capex-roof-age" min="0" max="25" step="1" placeholder="0" style="width:52px; text-align:right; padding:3px 5px; height:28px; font-size:12px; border:1px solid var(--border); border-radius:5px; background:var(--surface); color:var(--text);"></td>
+                  <td style="padding:6px 6px; text-align:right; font-family:'SF Mono','Fira Code',Menlo,monospace; color:var(--accent); white-space:nowrap;" id="capex-roof-reserve">—</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--border);">
+                  <td style="padding:6px 4px; text-align:center;"><input type="checkbox" id="capex-hvac-sell" title="Include HVAC in break-even calculation"></td>
+                  <td style="padding:6px 6px;">HVAC system (furnace + A/C)</td>
+                  <td style="padding:6px 6px; text-align:right;"><div class="input-wrap has-prefix" style="width:130px; margin-left:auto;"><span class="input-prefix">$</span><input type="number" id="capex-hvac" value="7500" min="0" step="250" data-auto="true" data-lifespan="18" style="padding:3px 6px 3px 22px; height:28px; font-size:12px;"></div></td>
+                  <td style="padding:6px 4px; text-align:right; color:var(--text-muted); white-space:nowrap;">18 yr</td>
+                  <td style="padding:6px 4px; text-align:right;"><input type="number" id="capex-hvac-age" min="0" max="18" step="1" placeholder="0" style="width:52px; text-align:right; padding:3px 5px; height:28px; font-size:12px; border:1px solid var(--border); border-radius:5px; background:var(--surface); color:var(--text);"></td>
+                  <td style="padding:6px 6px; text-align:right; font-family:'SF Mono','Fira Code',Menlo,monospace; color:var(--accent); white-space:nowrap;" id="capex-hvac-reserve">—</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--border);">
+                  <td style="padding:6px 4px; text-align:center;"><input type="checkbox" id="capex-wh-sell" title="Include water heater in break-even calculation"></td>
+                  <td style="padding:6px 6px;">Water heater</td>
+                  <td style="padding:6px 6px; text-align:right;"><div class="input-wrap has-prefix" style="width:130px; margin-left:auto;"><span class="input-prefix">$</span><input type="number" id="capex-wh" value="1600" min="0" step="100" data-auto="true" data-lifespan="12" style="padding:3px 6px 3px 22px; height:28px; font-size:12px;"></div></td>
+                  <td style="padding:6px 4px; text-align:right; color:var(--text-muted); white-space:nowrap;">12 yr</td>
+                  <td style="padding:6px 4px; text-align:right;"><input type="number" id="capex-wh-age" min="0" max="12" step="1" placeholder="0" style="width:52px; text-align:right; padding:3px 5px; height:28px; font-size:12px; border:1px solid var(--border); border-radius:5px; background:var(--surface); color:var(--text);"></td>
+                  <td style="padding:6px 6px; text-align:right; font-family:'SF Mono','Fira Code',Menlo,monospace; color:var(--accent); white-space:nowrap;" id="capex-wh-reserve">—</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--border);">
+                  <td style="padding:6px 4px; text-align:center;"><input type="checkbox" id="capex-floor-sell" title="Include flooring in break-even calculation"></td>
+                  <td style="padding:6px 6px;">Flooring (full replacement)</td>
+                  <td style="padding:6px 6px; text-align:right;"><div class="input-wrap has-prefix" style="width:130px; margin-left:auto;"><span class="input-prefix">$</span><input type="number" id="capex-floor" value="9000" min="0" step="250" data-auto="true" data-lifespan="15" style="padding:3px 6px 3px 22px; height:28px; font-size:12px;"></div></td>
+                  <td style="padding:6px 4px; text-align:right; color:var(--text-muted); white-space:nowrap;">15 yr</td>
+                  <td style="padding:6px 4px; text-align:right;"><input type="number" id="capex-floor-age" min="0" max="15" step="1" placeholder="0" style="width:52px; text-align:right; padding:3px 5px; height:28px; font-size:12px; border:1px solid var(--border); border-radius:5px; background:var(--surface); color:var(--text);"></td>
+                  <td style="padding:6px 6px; text-align:right; font-family:'SF Mono','Fira Code',Menlo,monospace; color:var(--accent); white-space:nowrap;" id="capex-floor-reserve">—</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--border);">
+                  <td style="padding:6px 4px; text-align:center;"><input type="checkbox" id="capex-paint-sell" title="Include paint in break-even calculation"></td>
+                  <td style="padding:6px 6px;">Interior paint (full repaint)</td>
+                  <td style="padding:6px 6px; text-align:right;"><div class="input-wrap has-prefix" style="width:130px; margin-left:auto;"><span class="input-prefix">$</span><input type="number" id="capex-paint" value="4500" min="0" step="250" data-auto="true" data-lifespan="7" style="padding:3px 6px 3px 22px; height:28px; font-size:12px;"></div></td>
+                  <td style="padding:6px 4px; text-align:right; color:var(--text-muted); white-space:nowrap;">7 yr</td>
+                  <td style="padding:6px 4px; text-align:right;"><input type="number" id="capex-paint-age" min="0" max="7" step="1" placeholder="0" style="width:52px; text-align:right; padding:3px 5px; height:28px; font-size:12px; border:1px solid var(--border); border-radius:5px; background:var(--surface); color:var(--text);"></td>
+                  <td style="padding:6px 6px; text-align:right; font-family:'SF Mono','Fira Code',Menlo,monospace; color:var(--accent); white-space:nowrap;" id="capex-paint-reserve">—</td>
+                </tr>
+                <tr>
+                  <td style="padding:6px 4px; text-align:center;"><input type="checkbox" id="capex-appl-sell" title="Include appliances in break-even calculation"></td>
+                  <td style="padding:6px 6px;">Kitchen appliances (full set)</td>
+                  <td style="padding:6px 6px; text-align:right;"><div class="input-wrap has-prefix" style="width:130px; margin-left:auto;"><span class="input-prefix">$</span><input type="number" id="capex-appl" value="4500" min="0" step="250" data-auto="true" data-lifespan="12" style="padding:3px 6px 3px 22px; height:28px; font-size:12px;"></div></td>
+                  <td style="padding:6px 4px; text-align:right; color:var(--text-muted); white-space:nowrap;">12 yr</td>
+                  <td style="padding:6px 4px; text-align:right;"><input type="number" id="capex-appl-age" min="0" max="12" step="1" placeholder="0" style="width:52px; text-align:right; padding:3px 5px; height:28px; font-size:12px; border:1px solid var(--border); border-radius:5px; background:var(--surface); color:var(--text);"></td>
+                  <td style="padding:6px 6px; text-align:right; font-family:'SF Mono','Fira Code',Menlo,monospace; color:var(--accent); white-space:nowrap;" id="capex-appl-reserve">—</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr style="border-top:2px solid var(--border);">
+                  <td></td>
+                  <td style="padding:7px 6px; font-weight:600;">Total capital expense reserve</td>
+                  <td style="padding:7px 6px; text-align:right; font-weight:600;" id="capex-total-cost">—</td>
+                  <td></td>
+                  <td></td>
+                  <td style="padding:7px 6px; text-align:right; font-weight:700; color:var(--accent);" id="capex-total-reserve">—/yr</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <div style="font-size:10.5px; color:var(--text-xs); margin-bottom:16px; line-height:1.5;">
+            Estimates use purchase price as a size proxy · Minneapolis 2024–2025 median contractor costs · Roof: $8–$14/sq ft · HVAC: $6,000–$12,000 · Flooring: $5–$10/sq ft installed · Paint: $2–$4/sq ft · Water heater: $1,200–$2,500 · Appliances: $3,500–$6,000 full set
+          </div>
+
+          <!-- Selling costs breakdown at 5-year estimated value -->
+          <div class="cf-section-header">Estimated Selling Costs at Year 5</div>
+          <div class="line-items" style="margin-top:0;">
+            <div class="line-item">
+              <span class="ll">Estimated sale value (5 yr at <span id="sell-appr-label">3.0%</span>)</span>
+              <span class="lv" id="sell-val-5">—</span>
+            </div>
+            <div class="line-item">
+              <span class="ll">Agent commissions (<span id="sell-comm-label">5.5%</span>)</span>
+              <span class="lv" id="sell-comm-cost-5" style="color:var(--red);">—</span>
+            </div>
+            <div class="line-item">
+              <span class="ll">Minnesota Deed Tax (0.33% of sale price)</span>
+              <span class="lv" id="sell-deed-5" style="color:var(--red);">—</span>
+            </div>
+            <div class="line-item">
+              <span class="ll">TISH inspection + other closing</span>
+              <span class="lv" id="sell-misc-display-5" style="color:var(--red);">—</span>
+            </div>
+            <div class="line-item" style="border-bottom:none;">
+              <span class="ll strong">Net proceeds after selling</span>
+              <span class="lv strong" id="sell-net-5">—</span>
+            </div>
+          </div>
+
+          <!-- Selling costs that are often overlooked -->
+          <div style="font-size:11px; color:var(--text-muted); background:var(--yellow-bg); border:1px solid var(--yellow-border); border-radius:var(--radius-sm); padding:8px 11px; margin:10px 0 16px; line-height:1.6;">
+            <strong style="color:var(--yellow);">Costs to verify with your agent:</strong>
+            Staging &amp; pre-sale repairs (variable) · Pro-rated property taxes owed at closing · Mortgage payoff penalty (check your loan terms) · Moving costs ($1,500–$5,000+) · Capital gains tax if you've owned less than 2 years or profit exceeds $250K (single) / $500K (married) — consult a tax advisor
+          </div>
+
+          <!-- Break-even badge -->
+          <div class="cf-section-header" style="margin-top:4px;">When Will I Break Even If I Sell?</div>
+          <div style="font-size:12px; color:var(--text-muted); margin-bottom:10px; line-height:1.5;">
+            The first year where your net sale proceeds (after paying off the loan and all selling costs) would exceed everything you've ever put in — initial cash to close plus any months where costs exceeded rental income.
+          </div>
+          <div style="display:flex; align-items:center; gap:16px; margin-bottom:14px; padding:14px 16px; background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius-sm);">
+            <span style="font-size:13px; color:var(--text-muted); flex:1;">You break even if you sell in:</span>
+            <span class="badge badge-neutral" id="sell-breakeven-badge" style="font-size:18px; font-weight:700; padding:7px 18px; letter-spacing:0.01em;">—</span>
+          </div>
+
+          <!-- Year-by-year sell table -->
+          <div style="overflow-x:auto;">
+            <table class="proj-table" id="sell-table">
+              <thead>
+                <tr>
+                  <th style="text-align:left;">Yr</th>
+                  <th>Est. Value</th>
+                  <th>Sell Costs</th>
+                  <th>Net Proceeds</th>
+                  <th>Total Invested</th>
+                  <th>Surplus / Gap</th>
+                </tr>
+              </thead>
+              <tbody id="sell-tbody">
+                <tr><td colspan="6" style="text-align:center; color:var(--text-muted); padding:14px; font-family:inherit;">Fill in <strong>Purchase Price</strong> and <strong>Interest Rate</strong> in the Purchase Details section (top of left panel) to calculate</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="font-size:10.5px; color:var(--text-xs); margin-top:6px; line-height:1.5;">
+            Pre-tax estimate · "Total Invested" = initial cash to close + any cumulative monthly out-of-pocket costs where your expenses exceeded rental income · Green rows = break-even or better · Minnesota has no state capital gains exemption separate from the federal exclusion
+          </div>
+
         </div>
       </div>
 
@@ -1554,114 +2155,359 @@
           <span class="arrow">▼</span>
         </summary>
 
-        <div class="mpls-grid">
+        <!-- ── City — Minneapolis ── -->
+        <details class="mpls-sub-details" open>
+          <summary class="mpls-sub-summary">
+            <span class="sub-icon">🏙️</span>
+            <span class="sub-label">City — Minneapolis</span>
+            <span class="sub-hook">Down payment assistance · rental rules · TISH</span>
+            <span class="sub-arrow">▼</span>
+          </summary>
+          <div class="mpls-sub-body">
+            <div class="mpls-grid">
 
-          <div class="mpls-card">
-            <details>
-              <summary>
-                <span class="mc-icon">🏡</span>
-                <div class="mc-text">
-                  <div class="mc-title">Homestead Exemption</div>
-                  <div class="mc-hook">Lower tax rate for owner-occupied duplex units</div>
-                </div>
-                <span class="mc-arrow">▼</span>
-              </summary>
-              <div class="mc-body">
-                <p>When you occupy one unit of a duplex, the owner-occupied portion qualifies for the <strong>1.00% homestead class rate</strong> (first $500K of value). The rental unit is assessed at the higher <strong>1.25% non-homestead rate</strong>.</p>
-                <p>This split can save $200–$400+ per year. File a Homestead Application with <strong>Hennepin County Assessor by December 31</strong> to receive the benefit the following tax year. Call 612-348-3046 for help.</p>
+              <div class="mpls-card">
+                <details>
+                  <summary>
+                    <span class="mc-icon">🏙️</span>
+                    <div class="mc-text">
+                      <div class="mc-title">Minneapolis Homes Access DPA</div>
+                      <div class="mc-hook">Up to $20,000 for Minneapolis primary residences</div>
+                    </div>
+                    <span class="mc-arrow">▼</span>
+                  </summary>
+                  <div class="mc-body">
+                    <p>The <strong>Minneapolis Homes: Access</strong> program offers up to $20,000 in down payment assistance for buyers purchasing a primary residence within Minneapolis city limits.</p>
+                    <p>Income limits and application requirements apply. Contact Minneapolis Community Planning and Economic Development or visit <a href="https://minneapolismn.gov/residents/housing/homebuyer-resources/" target="_blank" rel="noopener">minneapolismn.gov — Homebuyer Resources ↗</a> for current details and to confirm duplex eligibility.</p>
+                  </div>
+                </details>
               </div>
-            </details>
-          </div>
 
-          <div class="mpls-card">
-            <details>
-              <summary>
-                <span class="mc-icon">💰</span>
-                <div class="mc-text">
-                  <div class="mc-title">MN Housing Start Up Loan</div>
-                  <div class="mc-hook">Up to $18,000 — deferred, 0% interest DPA</div>
-                </div>
-                <span class="mc-arrow">▼</span>
-              </summary>
-              <div class="mc-body">
-                <p>Minnesota Housing's <strong>Start Up program</strong> offers a deferred second mortgage of up to $18,000 for down payment and closing costs. The loan is interest-free and repayment is deferred until sale, refinance, or the home is no longer a primary residence.</p>
-                <p><strong>Limits:</strong> Max purchase price <strong>$310,000</strong> in the Twin Cities metro · Min credit score 640 · Income limits apply · Requires a homebuyer education course. See mnhousing.gov.</p>
+              <div class="mpls-card">
+                <details>
+                  <summary>
+                    <span class="mc-icon">📋</span>
+                    <div class="mc-text">
+                      <div class="mc-title">Rental License Exemption</div>
+                      <div class="mc-hook">Owner-occupants generally exempt from licensing</div>
+                    </div>
+                    <span class="mc-arrow">▼</span>
+                  </summary>
+                  <div class="mc-body">
+                    <p>Minneapolis requires a rental license for landlords who <em>don't</em> live on the property. <strong>If you occupy one unit as your primary residence</strong>, you are generally exempt — a meaningful operational simplification.</p>
+                    <p>If you ever vacate and rent both units, a license is required (~$450 at ownership change + annual renewal by March 1). New 2025 rules: mandatory disclosures before lease signing and 30-day pre-eviction notice. See <a href="https://minneapolismn.gov/businesses/start/rental-housing/rental-licensing/" target="_blank" rel="noopener">minneapolismn.gov — Rental Licensing ↗</a>.</p>
+                  </div>
+                </details>
               </div>
-            </details>
-          </div>
 
-          <div class="mpls-card">
-            <details>
-              <summary>
-                <span class="mc-icon">🏙️</span>
-                <div class="mc-text">
-                  <div class="mc-title">Minneapolis Homes Access DPA</div>
-                  <div class="mc-hook">Up to $20,000 for Minneapolis primary residences</div>
-                </div>
-                <span class="mc-arrow">▼</span>
-              </summary>
-              <div class="mc-body">
-                <p>The <strong>Minneapolis Homes: Access</strong> program offers up to $20,000 in down payment assistance for buyers purchasing a primary residence within Minneapolis city limits.</p>
-                <p>Income limits and application requirements apply. Contact Minneapolis CPED or visit minneapolismn.gov/housing for current details and to confirm duplex eligibility.</p>
+              <div class="mpls-card">
+                <details>
+                  <summary>
+                    <span class="mc-icon">📈</span>
+                    <div class="mc-text">
+                      <div class="mc-title">Rent Stabilization Status</div>
+                      <div class="mc-hook">No rent control currently in effect (as of 2026)</div>
+                    </div>
+                    <span class="mc-arrow">▼</span>
+                  </summary>
+                  <div class="mc-body">
+                    <p>Minneapolis voters approved a charter amendment in 2021 giving the City Council authority to regulate rents, but <strong>no ordinance has been enacted as of early 2026</strong>. A proposal capping annual increases at ~3% has been discussed but not passed.</p>
+                    <p>Note: St. Paul has a separate 3% annual cap — Minneapolis does not. You can currently raise rent at lease renewal. Monitor <a href="https://minneapolismn.gov/residents/housing/" target="_blank" rel="noopener">minneapolismn.gov/residents/housing ↗</a> for updates.</p>
+                  </div>
+                </details>
               </div>
-            </details>
-          </div>
 
-          <div class="mpls-card">
-            <details>
-              <summary>
-                <span class="mc-icon">🌱</span>
-                <div class="mc-text">
-                  <div class="mc-title">First-Generation Homebuyer Loan</div>
-                  <div class="mc-hook">Up to $35,000 — partially forgivable over 20 years</div>
-                </div>
-                <span class="mc-arrow">▼</span>
-              </summary>
-              <div class="mc-body">
-                <p>MN Housing's <strong>First Generation Homebuyer Loan</strong> provides up to $35,000 for buyers whose parents never owned a home (or lost one to foreclosure). Must be paired with a Start Up first mortgage.</p>
-                <p><strong>Forgiveness:</strong> 50% forgiven after 10 years of owner-occupancy; remaining 50% after 20 years. Deferred, 0% interest. Limited slots — first-come, first-served. See mnhousing.gov.</p>
+              <div class="mpls-card">
+                <details>
+                  <summary>
+                    <span class="mc-icon">📑</span>
+                    <div class="mc-text">
+                      <div class="mc-title">TISH — Truth in Sale of Housing</div>
+                      <div class="mc-hook">Required Minneapolis disclosure report at closing</div>
+                    </div>
+                    <span class="mc-arrow">▼</span>
+                  </summary>
+                  <div class="mc-body">
+                    <p>Minneapolis requires a <strong>Truth in Sale of Housing (TISH) disclosure report</strong> for all one- and two-family residential properties sold within city limits. The seller pays for a licensed evaluator to inspect the property and document code deficiencies.</p>
+                    <p>TISH is <em>not</em> a full home inspection but highlights known defects. Cost to seller: typically <strong>$200–$400</strong>. As a buyer, you should still get your own independent inspection. Required before listing — must be available at showings. See <a href="https://minneapolismn.gov/residents/housing/tish/" target="_blank" rel="noopener">minneapolismn.gov/residents/housing/tish ↗</a>.</p>
+                  </div>
+                </details>
               </div>
-            </details>
-          </div>
 
-          <div class="mpls-card">
-            <details>
-              <summary>
-                <span class="mc-icon">📋</span>
-                <div class="mc-text">
-                  <div class="mc-title">Rental License Exemption</div>
-                  <div class="mc-hook">Owner-occupants generally exempt from licensing</div>
-                </div>
-                <span class="mc-arrow">▼</span>
-              </summary>
-              <div class="mc-body">
-                <p>Minneapolis requires a rental license for landlords who <em>don't</em> live on the property. <strong>If you occupy one unit as your primary residence</strong>, you are generally exempt — a meaningful operational simplification.</p>
-                <p>If you ever vacate and rent both units, a license is required (~$450 at ownership change + annual renewal by March 1). New 2025 rules: mandatory disclosures before lease signing and 30-day pre-eviction notice.</p>
+            </div>
+          </div>
+        </details>
+
+        <!-- ── County — Hennepin ── -->
+        <details class="mpls-sub-details">
+          <summary class="mpls-sub-summary">
+            <span class="sub-icon">🏛️</span>
+            <span class="sub-label">County — Hennepin</span>
+            <span class="sub-hook">Homestead · HERO energy loans · Fix-Up Fund · sustainability</span>
+            <span class="sub-arrow">▼</span>
+          </summary>
+          <div class="mpls-sub-body">
+            <div class="mpls-grid">
+
+              <div class="mpls-card">
+                <details>
+                  <summary>
+                    <span class="mc-icon">🏡</span>
+                    <div class="mc-text">
+                      <div class="mc-title">Homestead Exemption</div>
+                      <div class="mc-hook">Lower tax rate for owner-occupied duplex units</div>
+                    </div>
+                    <span class="mc-arrow">▼</span>
+                  </summary>
+                  <div class="mc-body">
+                    <p>When you occupy one unit of a duplex, the owner-occupied portion qualifies for the <strong>1.00% homestead class rate</strong> (first $500K of value). The rental unit is assessed at the higher <strong>1.25% non-homestead rate</strong>.</p>
+                    <p>This split can save $200–$400+ per year. File a Homestead Application with <strong>Hennepin County Assessor by December 31</strong> to receive the benefit the following tax year. Call 612-348-3046 for help or visit <a href="https://www.hennepin.us/residents/property/property-tax-homestead" target="_blank" rel="noopener">hennepin.us — Homestead ↗</a>.</p>
+                  </div>
+                </details>
               </div>
-            </details>
-          </div>
 
-          <div class="mpls-card">
-            <details>
-              <summary>
-                <span class="mc-icon">📈</span>
-                <div class="mc-text">
-                  <div class="mc-title">Rent Stabilization Status</div>
-                  <div class="mc-hook">No rent control currently in effect (as of 2026)</div>
-                </div>
-                <span class="mc-arrow">▼</span>
-              </summary>
-              <div class="mc-body">
-                <p>Minneapolis voters approved a charter amendment in 2021 giving the City Council authority to regulate rents, but <strong>no ordinance has been enacted as of early 2026</strong>. A proposal capping annual increases at ~3% has been discussed but not passed.</p>
-                <p>Note: St. Paul has a separate 3% annual cap — Minneapolis does not. You can currently raise rent at lease renewal. Monitor minneapolismn.gov/housing for updates.</p>
+              <div class="mpls-card">
+                <details>
+                  <summary>
+                    <span class="mc-icon">⚡</span>
+                    <div class="mc-text">
+                      <div class="mc-title">HERO — Home Energy Rebates &amp; Loans</div>
+                      <div class="mc-hook">Low-interest financing for energy upgrades</div>
+                    </div>
+                    <span class="mc-arrow">▼</span>
+                  </summary>
+                  <div class="mc-body">
+                    <p>Hennepin County's <strong>Home Energy Rebates Online (HERO)</strong> program partners with CEE (Center for Energy and Environment) to offer below-market loans for energy efficiency upgrades — insulation, windows, furnace/boiler replacement, heat pumps, and more.</p>
+                    <p>Loan amounts up to <strong>$35,000</strong> at rates as low as 1.99% (income-qualified). Multi-family owner-occupied properties (including duplexes) are eligible. Some upgrades also qualify for federal IRA tax credits (25C/25D) on top of county financing.</p>
+                    <p>Apply through CEE: <a href="https://www.mncee.org/home-energy-loan" target="_blank" rel="noopener">mncee.org/home-energy-loan ↗</a> · Hennepin County Energy info: <a href="https://www.hennepin.us/residents/energy-environment/home-energy" target="_blank" rel="noopener">hennepin.us/residents/energy-environment ↗</a></p>
+                  </div>
+                </details>
               </div>
-            </details>
-          </div>
 
-        </div><!-- /mpls-grid -->
+              <div class="mpls-card">
+                <details>
+                  <summary>
+                    <span class="mc-icon">🔧</span>
+                    <div class="mc-text">
+                      <div class="mc-title">Hennepin County Fix-Up Fund</div>
+                      <div class="mc-hook">Rehab loans for home repair &amp; accessibility</div>
+                    </div>
+                    <span class="mc-arrow">▼</span>
+                  </summary>
+                  <div class="mc-body">
+                    <p>The <strong>Fix-Up Fund</strong> (administered by MN Housing/CEE) provides fixed-rate home improvement loans to moderate-income homeowners in Hennepin County. Eligible projects include roof/furnace replacement, electrical and plumbing upgrades, and accessibility modifications.</p>
+                    <p><strong>Loan amounts:</strong> Up to $50,000 · Rates below market (varies by income) · Owner-occupied 1–4 unit properties eligible, including duplexes. Income limits apply. Contact CEE at 612-335-5858 or see <a href="https://www.mncee.org/fix-up-fund" target="_blank" rel="noopener">mncee.org/fix-up-fund ↗</a>.</p>
+                  </div>
+                </details>
+              </div>
+
+              <div class="mpls-card">
+                <details>
+                  <summary>
+                    <span class="mc-icon">🏠</span>
+                    <div class="mc-text">
+                      <div class="mc-title">Property Tax Deferral &amp; Tax Portal</div>
+                      <div class="mc-hook">Senior deferral · look up proposed tax by parcel</div>
+                    </div>
+                    <span class="mc-arrow">▼</span>
+                  </summary>
+                  <div class="mc-body">
+                    <p>Hennepin County offers a <strong>Senior Citizen Property Tax Deferral</strong> program allowing homeowners 65+ with income under $96,000 to defer a portion of property taxes (at 3% annual interest). While primarily for retirees, it's worth knowing if buying an owner-occupied duplex long-term.</p>
+                    <p><strong>Effective rates:</strong> Hennepin County effective property tax rate runs ~1.17–1.19% of market value annually. Owner-occupied duplexes benefit from split homestead classification. Check your proposed tax at <a href="https://www16.co.hennepin.mn.us/pins/welcome.jsp" target="_blank" rel="noopener">Hennepin County Property Tax Portal ↗</a> using the parcel number.</p>
+                    <p>Senior deferral: <a href="https://www.hennepin.us/residents/property/senior-property-tax-deferral" target="_blank" rel="noopener">hennepin.us/residents/property/senior-property-tax-deferral ↗</a></p>
+                  </div>
+                </details>
+              </div>
+
+              <div class="mpls-card">
+                <details>
+                  <summary>
+                    <span class="mc-icon">🌿</span>
+                    <div class="mc-text">
+                      <div class="mc-title">Sustainability &amp; Energy Rebates</div>
+                      <div class="mc-hook">EV charger, solar, weatherization, heat pumps</div>
+                    </div>
+                    <span class="mc-arrow">▼</span>
+                  </summary>
+                  <div class="mc-body">
+                    <p>Hennepin County's sustainability programs include rebates and technical assistance for:</p>
+                    <ul style="margin:6px 0 6px 18px; line-height:1.8;">
+                      <li><strong>Solar installations</strong> — Xcel Energy Solar Rewards + federal 30% ITC</li>
+                      <li><strong>EV charging stations</strong> — Xcel Energy Make Ready program (up to $500/charger)</li>
+                      <li><strong>Weatherization</strong> — free or low-cost services for income-qualified households</li>
+                      <li><strong>Heat pump water heaters</strong> — $400–$750 rebates (Xcel/CenterPoint)</li>
+                    </ul>
+                    <p>See <a href="https://www.hennepin.us/residents/energy-environment/home-energy" target="_blank" rel="noopener">hennepin.us energy programs ↗</a> and <a href="https://www.xcelenergy.com/savings_and_rebates" target="_blank" rel="noopener">xcelenergy.com/savings_and_rebates ↗</a>.</p>
+                  </div>
+                </details>
+              </div>
+
+            </div>
+          </div>
+        </details>
+
+        <!-- ── State — Minnesota ── -->
+        <details class="mpls-sub-details">
+          <summary class="mpls-sub-summary">
+            <span class="sub-icon">🌾</span>
+            <span class="sub-label">State — Minnesota</span>
+            <span class="sub-hook">MN Housing DPA loans · deed tax · MRT</span>
+            <span class="sub-arrow">▼</span>
+          </summary>
+          <div class="mpls-sub-body">
+            <div class="mpls-grid">
+
+              <div class="mpls-card">
+                <details>
+                  <summary>
+                    <span class="mc-icon">💰</span>
+                    <div class="mc-text">
+                      <div class="mc-title">MN Housing Start Up Loan</div>
+                      <div class="mc-hook">Up to $18,000 — deferred, 0% interest DPA</div>
+                    </div>
+                    <span class="mc-arrow">▼</span>
+                  </summary>
+                  <div class="mc-body">
+                    <p>Minnesota Housing's <strong>Start Up program</strong> offers a deferred second mortgage of up to $18,000 for down payment and closing costs. The loan is interest-free and repayment is deferred until sale, refinance, or the home is no longer a primary residence.</p>
+                    <p><strong>Limits:</strong> Max purchase price <strong>$310,000</strong> in the Twin Cities metro · Minimum credit score 640 · Income limits apply · Requires a homebuyer education course. Apply through an approved lender — see <a href="https://www.mnhousing.gov/homeownership/start-up.html" target="_blank" rel="noopener">mnhousing.gov — Start Up ↗</a>.</p>
+                    <p style="background:var(--yellow-bg); border:1px solid var(--yellow-border); border-radius:var(--radius-sm); padding:7px 10px; font-size:11px; color:#92400e; margin-top:8px;">⚠ <strong>Verify before applying:</strong> Purchase price and income limits are updated annually. Confirm current figures at mnhousing.gov before making an offer.</p>
+                  </div>
+                </details>
+              </div>
+
+              <div class="mpls-card">
+                <details>
+                  <summary>
+                    <span class="mc-icon">🌱</span>
+                    <div class="mc-text">
+                      <div class="mc-title">First-Generation Homebuyer Loan</div>
+                      <div class="mc-hook">Up to $35,000 — partially forgivable over 20 years</div>
+                    </div>
+                    <span class="mc-arrow">▼</span>
+                  </summary>
+                  <div class="mc-body">
+                    <p>MN Housing's <strong>First Generation Homebuyer Loan</strong> provides up to $35,000 for buyers whose parents never owned a home (or lost one to foreclosure). Must be paired with a Start Up first mortgage.</p>
+                    <p><strong>Forgiveness:</strong> 50% forgiven after 10 years of owner-occupancy; remaining 50% after 20 years. Deferred, 0% interest. Limited slots — first-come, first-served. See <a href="https://www.mnhousing.gov/homeownership/first-generation-homebuyer-loan.html" target="_blank" rel="noopener">mnhousing.gov — First Generation Homebuyer Loan ↗</a>.</p>
+                    <p style="background:var(--yellow-bg); border:1px solid var(--yellow-border); border-radius:var(--radius-sm); padding:7px 10px; font-size:11px; color:#92400e; margin-top:8px;">⚠ <strong>Verify before applying:</strong> This program is funded annually and <strong>periodically pauses mid-year when funds run out</strong>. Apply early in the calendar year for the best chance of securing funds.</p>
+                  </div>
+                </details>
+              </div>
+
+              <div class="mpls-card">
+                <details>
+                  <summary>
+                    <span class="mc-icon">📊</span>
+                    <div class="mc-text">
+                      <div class="mc-title">Minnesota Deed Tax &amp; MRT</div>
+                      <div class="mc-hook">State closing cost taxes to budget for</div>
+                    </div>
+                    <span class="mc-arrow">▼</span>
+                  </summary>
+                  <div class="mc-body">
+                    <p>Two MN-specific closing costs to budget for:</p>
+                    <ul style="margin:6px 0 6px 18px; line-height:1.8;">
+                      <li><strong>Mortgage Registry Tax (MRT):</strong> 0.23% of loan amount — paid by the buyer. On a $240,000 loan = $552.</li>
+                      <li><strong>State Deed Tax:</strong> 0.33% of sale price — paid by the seller at closing. On a $300,000 sale = $990.</li>
+                    </ul>
+                    <p>MRT is included in this calculator's closing cost estimate. Deed Tax is reflected in the Sell Card's selling cost breakdown. See <a href="https://www.revenue.state.mn.us/mortgage-registry-and-deed-taxes" target="_blank" rel="noopener">revenue.state.mn.us — MRT &amp; Deed Tax ↗</a>.</p>
+                  </div>
+                </details>
+              </div>
+
+            </div>
+          </div>
+        </details>
+
+        <!-- ── Federal ── -->
+        <details class="mpls-sub-details">
+          <summary class="mpls-sub-summary">
+            <span class="sub-icon">🇺🇸</span>
+            <span class="sub-label">Federal</span>
+            <span class="sub-hook">FHA loans · mortgage interest deduction · IRA energy credits</span>
+            <span class="sub-arrow">▼</span>
+          </summary>
+          <div class="mpls-sub-body">
+            <div class="mpls-grid">
+
+              <div class="mpls-card">
+                <details>
+                  <summary>
+                    <span class="mc-icon">🏦</span>
+                    <div class="mc-text">
+                      <div class="mc-title">FHA Loan — 3.5% Down Option</div>
+                      <div class="mc-hook">Lower barrier to entry with mortgage insurance tradeoff</div>
+                    </div>
+                    <span class="mc-arrow">▼</span>
+                  </summary>
+                  <div class="mc-body">
+                    <p>FHA loans (Federal Housing Administration) allow as little as <strong>3.5% down</strong> with a credit score of 580+. Owner-occupied duplexes are eligible — you can use the rental unit's expected income to help qualify.</p>
+                    <p><strong>Trade-offs:</strong> Requires both an upfront MIP (1.75% of loan, rolled in or paid at closing) and annual MIP (~0.55–0.85%/yr) for the life of the loan if you put less than 10% down. Conventional PMI cancels at 20% equity; FHA MIP does not.</p>
+                    <p><strong>2025 FHA loan limits (Hennepin County):</strong> $524,225 for 1-unit · $671,200 for 2-unit (duplex). See <a href="https://www.hud.gov/program_offices/housing/sfh/lender/origination/mortgage_limits" target="_blank" rel="noopener">hud.gov — FHA Loan Limits ↗</a>.</p>
+                  </div>
+                </details>
+              </div>
+
+              <div class="mpls-card">
+                <details>
+                  <summary>
+                    <span class="mc-icon">💸</span>
+                    <div class="mc-text">
+                      <div class="mc-title">Mortgage Interest Deduction</div>
+                      <div class="mc-hook">Deduct mortgage interest if you itemize</div>
+                    </div>
+                    <span class="mc-arrow">▼</span>
+                  </summary>
+                  <div class="mc-body">
+                    <p>If you itemize federal deductions, the interest portion of your mortgage payment may be deductible. For an owner-occupied duplex, you can deduct the interest attributable to your unit; the rental unit's share is a business expense on Schedule E.</p>
+                    <p><strong>Standard deduction for 2025:</strong> $15,000 (single) / $30,000 (married filing jointly). You only benefit from itemizing if total deductions exceed this. Many first-time buyers do not itemize. The monthly breakdown card above estimates your potential tax savings. Consult a CPA for your specific situation.</p>
+                  </div>
+                </details>
+              </div>
+
+              <div class="mpls-card">
+                <details>
+                  <summary>
+                    <span class="mc-icon">⚡</span>
+                    <div class="mc-text">
+                      <div class="mc-title">IRA Energy Tax Credits (25C &amp; 25D)</div>
+                      <div class="mc-hook">Up to 30% federal credit for energy upgrades</div>
+                    </div>
+                    <span class="mc-arrow">▼</span>
+                  </summary>
+                  <div class="mc-body">
+                    <p>The Inflation Reduction Act (IRA) created substantial federal tax credits for energy-efficient home improvements:</p>
+                    <ul style="margin:6px 0 6px 18px; line-height:1.8;">
+                      <li><strong>§25C Energy Efficient Home Improvement Credit:</strong> 30% of cost, up to $3,200/yr for insulation, heat pumps, windows, doors, electrical panels</li>
+                      <li><strong>§25D Residential Clean Energy Credit:</strong> 30% of cost (no annual cap) for solar panels, battery storage, geothermal heat pumps</li>
+                    </ul>
+                    <p>Credits apply to your primary residence only (not the rental unit). Stackable with Xcel/CenterPoint utility rebates and Hennepin County loans. See <a href="https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit" target="_blank" rel="noopener">IRS.gov — Energy Credits ↗</a>.</p>
+                  </div>
+                </details>
+              </div>
+
+              <div class="mpls-card">
+                <details>
+                  <summary>
+                    <span class="mc-icon">🏠</span>
+                    <div class="mc-text">
+                      <div class="mc-title">Capital Gains Exclusion (§121)</div>
+                      <div class="mc-hook">Exclude up to $250K / $500K of profit at sale</div>
+                    </div>
+                    <span class="mc-arrow">▼</span>
+                  </summary>
+                  <div class="mc-body">
+                    <p>If you've owned and lived in the home as your primary residence for <strong>at least 2 of the last 5 years</strong> before selling, you can exclude up to <strong>$250,000</strong> of capital gain (single) or <strong>$500,000</strong> (married filing jointly) from federal tax.</p>
+                    <p>For an owner-occupied duplex, the exclusion applies to your owner-occupied portion. The rental unit's gain is generally taxable (depreciation recapture at 25% + capital gains rate). This is a major tax benefit of the owner-occupant strategy. Consult a CPA before selling. See <a href="https://www.irs.gov/taxtopics/tc701" target="_blank" rel="noopener">IRS Topic 701 — Home Sale Exclusion ↗</a>.</p>
+                  </div>
+                </details>
+              </div>
+
+            </div>
+          </div>
+        </details>
 
         <div class="mpls-disclaimer">
-          Program details, income limits, and rates change frequently. Verify current eligibility at mnhousing.gov and minneapolismn.gov before applying. This calculator is for educational purposes only and does not constitute financial, tax, or legal advice.
+          Program details, income limits, and rates change frequently. Verify current eligibility at <a href="https://www.mnhousing.gov" target="_blank" rel="noopener">mnhousing.gov ↗</a>, <a href="https://minneapolismn.gov/residents/housing/" target="_blank" rel="noopener">minneapolismn.gov ↗</a>, and <a href="https://www.hennepin.us" target="_blank" rel="noopener">hennepin.us ↗</a> before applying. This calculator is for educational purposes only and does not constitute financial, tax, or legal advice.
         </div>
       </details>
     </div>
@@ -1737,6 +2583,10 @@
   var activeTerm = 30;
   var activeMode = 'duplex'; // 'duplex' | 'house'
   var activeLoanType = 'conventional'; // 'conventional' | 'fha'
+  var agentSellerPays = true; // true = seller covers, false = buyer pays
+  var apprRate = 3.0; // annual appreciation % used for 5-yr and 10-yr projections
+  var dpMode = '$'; // '$' = enter dollar amount | '%' = enter percentage of price
+  var trueCashYear = 1; // which mortgage year to show for true cash cost / equity savings
 
   // ─────────────────────────────────────────────────────────────
   // Formatting
@@ -1770,25 +2620,61 @@
       rentScenario = monthlyRent;
     } else {
       monthlyRent = num('monthly-rent');
+      // In per-unit mode, sync Unit 1 input to the main rent field
+      if (duplexRentMode === 'perunit' && el('monthly-rent-u1')) {
+        el('monthly-rent').value = el('monthly-rent-u1').value;
+        monthlyRent = parseFloat(el('monthly-rent').value) || 0;
+      }
+      // Add owner-unit bedroom rents (duplex mode)
+      ['d-br1','d-br2'].forEach(function(br) {
+        var cb = document.getElementById('cb-' + br);
+        if (cb && cb.checked) monthlyRent += num('rent-' + br);
+      });
       var scenarioEl = document.getElementById('rent-scenario');
       var scenarioRaw = parseFloat(scenarioEl.value);
       rentScenario = (!scenarioEl.value || isNaN(scenarioRaw)) ? monthlyRent : scenarioRaw;
     }
 
     // Upfront: exclude duplex-specific rows in house mode
-    var ucIds = ['uc-education','uc-inspection','uc-radon','uc-sewer','uc-mold','uc-tish','uc-prepaid','uc-moving','uc-repairs'];
-    if (activeMode === 'duplex') ucIds = ucIds.concat(['uc-rental-license','uc-city-repairs']);
+    var ucIds = ['uc-education','uc-inspection','uc-radon','uc-sewer','uc-mold','uc-prepaid','uc-moving','uc-repairs'];
+    if (activeMode === 'duplex') ucIds = ucIds.concat(['uc-rental-license']);
     var otherUpfront = ucIds.reduce(function(s,id){return s+num(id);},0);
+
+    // Number of occupants: owner (1) + checked bedrooms
+    var numOccupants = 1;
+    if (activeMode === 'house') {
+      ['br1','br2','br3'].forEach(function(br) {
+        var cb = document.getElementById('cb-' + br);
+        if (cb && cb.checked) numOccupants++;
+      });
+    } else {
+      ['d-br1','d-br2'].forEach(function(br) {
+        var cb = document.getElementById('cb-' + br);
+        if (cb && cb.checked) numOccupants++;
+      });
+    }
+
+    // Down payment: compute dollar amount based on mode
+    var ppForDp = parseFloat((document.getElementById('purchase-price') || {}).value) || 0;
+    var downPayment;
+    if (dpMode === '%') {
+      var dpPctInput = parseFloat((document.getElementById('down-payment-pct') || {}).value) || 0;
+      downPayment = Math.round(ppForDp * dpPctInput / 100);
+      // Keep hidden dollar field synced so calculate() reads the right value
+      if (document.getElementById('down-payment')) document.getElementById('down-payment').value = downPayment;
+    } else {
+      downPayment = num('down-payment');
+    }
 
     return {
       purchasePrice:    num('purchase-price'),
-      downPayment:      num('down-payment'),
+      downPayment:      downPayment,
       loanTerm:         activeTerm,
       interestRate:     num('interest-rate'),
       ccAppraisal:      num('cc-appraisal'),
       ccTitle:          num('cc-title'),
       ccLender:         num('cc-lender'),
-      buyerAgentPct:    num('buyer-agent-pct'),
+      buyerAgentPct:    agentSellerPays ? 0 : num('buyer-agent-pct'),
       otherUpfront:     otherUpfront,
       totalCash:        num('total-cash'),
       cashUsed:         num('cash-used'),
@@ -1799,6 +2685,8 @@
       utilGas:          num('util-gas'),
       utilElectric:     num('util-electric'),
       utilInternet:     num('util-internet'),
+      utilHoa:          num('util-hoa'),
+      numOccupants:     numOccupants,
       monthlyRent:      monthlyRent,
       rentScenario:     rentScenario,
       vacancyRate:      num('vacancy-rate'),
@@ -1806,6 +2694,10 @@
       monthlyIns:       num('monthly-insurance'),
       monthlyMaint:     num('monthly-maint'),
       pmPct:            num('monthly-pm-pct'),
+      sellCommPct:      (function(){ var e = document.getElementById('sell-commission-pct'); return e ? (parseFloat(e.value) || 5.5) : 5.5; })(),
+      sellMisc:         num('sell-misc'),
+      rentGrowthRate:   (function(){ var e = document.getElementById('rent-growth-rate'); return e ? (parseFloat(e.value) || 2.5) : 2.5; })(),
+      expenseGrowthRate:(function(){ var e = document.getElementById('expense-growth-rate'); return e ? (parseFloat(e.value) || 3.0) : 3.0; })(),
     };
   }
 
@@ -1853,11 +2745,19 @@
     } else {
       pmiApplies = downPct < 20 && loanAmount > 0;
       monthlyPmi = v.monthlyPmiManual > 0 ? v.monthlyPmiManual
-                 : pmiApplies ? Math.round(loanAmount * 0.0085 / 12) : 0;
+                 : pmiApplies ? Math.round(loanAmount * 0.01 / 12) : 0;
     }
 
-    // Utilities
-    var monthlyUtils = v.utilWater + v.utilSewer + v.utilGas + v.utilElectric + v.utilInternet;
+    // Utilities: water/gas/electric scale with number of occupants; sewer/internet split equally; HOA is fixed
+    var numOcc = Math.max(1, v.numOccupants);
+    var scalingUtils    = (v.utilWater + v.utilGas + v.utilElectric) * numOcc;
+    var sharedUtils     = v.utilSewer + v.utilInternet;
+    var totalPropUtils  = scalingUtils + sharedUtils + v.utilHoa;   // full property cost, used for NOI
+    // Owner pays their personal share only — sewer/internet split equally
+    var monthlyUtils    = (v.utilWater + v.utilGas + v.utilElectric)
+                        + sharedUtils / numOcc
+                        + v.utilHoa;
+    var perPersonUtils = v.numOccupants > 1 ? Math.round(monthlyUtils / v.numOccupants) : 0;
 
     // Property management cost
     var pmCost = v.monthlyRent * (v.pmPct / 100);
@@ -1879,6 +2779,7 @@
     var pp    = v.purchasePrice;
     var appr3 = pp > 0 ? Math.round(pp * Math.pow(1.03, 5)) : 0;
     var appr5 = pp > 0 ? Math.round(pp * Math.pow(1.05, 5)) : 0;
+    var apprSelected = pp > 0 ? Math.round(pp * Math.pow(1 + apprRate / 100, 5)) : 0;
 
     // Equity after 5 years = appreciation gain + principal paid down
     var principalPaid5 = 0;
@@ -1888,11 +2789,12 @@
       var bal5 = loanAmount * (f2 - f5) / (f2 - 1);
       principalPaid5 = loanAmount - bal5;
     }
-    var equity5at3 = pp > 0 ? Math.round((appr3 - pp) + principalPaid5) : 0;
+    var equity5at3     = pp > 0 ? Math.round((appr3 - pp) + principalPaid5) : 0;
+    var equity5Selected = pp > 0 ? Math.round((apprSelected - pp) + principalPaid5) : 0;
 
     // ── 5-year ROI comparison ──
     var downPmt      = v.downPayment;
-    var currentRent  = 1200;
+    var currentRent  = v.monthlyRent > 0 ? v.monthlyRent : 1200;
     var months       = 60;
 
     // House-hack terminal value = net equity after 5yr at 3% appreciation
@@ -1932,16 +2834,186 @@
       }
     }
 
+    // ── Cash flow waterfall ──
+    // Compute average monthly interest & principal for the selected mortgage year
+    var tcYr = trueCashYear;
+    var avgInterestMo, avgPrincipalMo;
+    if (loanAmount > 0 && r > 0 && pi > 0) {
+      var nLoan = v.loanTerm * 12;
+      var fTotal = Math.pow(1 + r, nLoan);
+      var fPrev  = Math.pow(1 + r, 12 * (tcYr - 1));
+      var fCurr  = Math.pow(1 + r, Math.min(12 * tcYr, nLoan));
+      var balPrev = loanAmount * (fTotal - fPrev) / (fTotal - 1);
+      var balCurr = loanAmount * (fTotal - fCurr) / (fTotal - 1);
+      var annPrinYr = balPrev - balCurr;
+      avgPrincipalMo = Math.round(annPrinYr / 12);
+      avgInterestMo  = Math.round(pi - avgPrincipalMo);
+    } else {
+      avgInterestMo  = 0;
+      avgPrincipalMo = 0;
+    }
+    // Keep Year-1 values for backward compatibility where needed
+    var interestMonth1  = loanAmount > 0 && r > 0 ? loanAmount * r : 0;
+    var principalMonth1 = pi > 0 ? Math.round(pi - interestMonth1) : 0;
+    var trueCashCost = Math.round(avgInterestMo + v.monthlyTax + v.monthlyIns + monthlyPmi + monthlyUtils + v.monthlyMaint + pmCost);
+    var netMonthlyCF = Math.round(effRent - totalMonthlyCosts);
+
+    // ── Investment metrics ──
+    // NOI excludes mortgage; uses gross rent × occupancy minus operating expenses
+    var noi = pp > 0 && v.monthlyRent > 0 ? Math.round(
+      (v.monthlyRent * 12 * (1 - v.vacancyRate / 100)) -
+      ((v.monthlyTax + v.monthlyIns + v.monthlyMaint + totalPropUtils + pmCost) * 12)
+    ) : 0;
+    var capRate = pp > 0 ? (noi / pp * 100) : 0;
+    var annualNetCF = netMonthlyCF * 12;
+    var totalCashIn = v.downPayment + closingDollar + agentFeeDollar + v.otherUpfront;
+    var coc = totalCashIn > 0 ? (annualNetCF / totalCashIn * 100) : 0;
+
+    // DSCR (Debt Service Coverage Ratio)
+    var annualDebtService = pi * 12;
+    var dscr = annualDebtService > 0 && noi > 0 ? noi / annualDebtService : 0;
+
+    // Depreciation (duplex mode only — rental unit)
+    // IRS: 27.5yr straight-line on building value (excl. land ~20%) for rental portion (~50% of duplex)
+    var annualDepreciation = (activeMode === 'duplex' && pp > 0) ? Math.round(pp * 0.80 * 0.50 / 27.5) : 0;
+    var depTaxShield22 = Math.round(annualDepreciation * 0.22);
+    var depTaxShield24 = Math.round(annualDepreciation * 0.24);
+
+    // IRR — over 10-year horizon with Year 10 sale proceeds as terminal value
+    var sell10 = null;
+
+    // ── 10-year projection ──
+    var projection = [];
+    if (hasData && pp > 0) {
+      var cumCF = 0;
+      for (var yr = 1; yr <= 10; yr++) {
+        var propValYr = Math.round(pp * Math.pow(1 + apprRate / 100, yr));
+        var m60 = yr * 12;
+        var f_m = Math.pow(1 + r, m60);
+        var balYr = 0;
+        if (loanAmount > 0 && r > 0) {
+          balYr = Math.max(0, Math.round(loanAmount * f_m - pi * (f_m - 1) / r));
+        } else if (loanAmount > 0) {
+          balYr = Math.max(0, Math.round(loanAmount - pi * m60));
+        }
+        var equityYr = propValYr - balYr;
+        var rentYr = v.monthlyRent * Math.pow(1 + v.rentGrowthRate / 100, yr - 1) * 12 * (1 - v.vacancyRate / 100);
+        // PI is a fixed-rate payment — it never grows. Only operating costs (tax, insurance, maint, utils, PM) grow.
+        var piFixed = pi * 12;
+        var varMonthlyBase = totalMonthlyCosts - pi;
+        var costsYr = Math.round(piFixed + varMonthlyBase * Math.pow(1 + v.expenseGrowthRate / 100, yr - 1) * 12);
+        var cfYr = Math.round(rentYr - costsYr);
+        var prevCumCF = cumCF;
+        cumCF += cfYr;
+        projection.push({
+          yr: yr,
+          propValYr: propValYr,
+          balYr: balYr,
+          equityYr: equityYr,
+          cfYr: cfYr,
+          cumCF: Math.round(cumCF),
+          highlight: prevCumCF < 0 && cumCF >= 0
+        });
+      }
+    }
+
+    // ── Selling cost & break-even analysis ──
+    var sellComm   = v.sellCommPct / 100;
+    var sellMisc   = v.sellMisc > 0 ? v.sellMisc : 1500;
+    var sellAnalysis = [];
+    var breakEvenSaleYear = 0;
+
+    // Pre-compute which checked capex items need replacement by each year
+    var capexSellLifespans = {
+      'capex-roof':25,'capex-hvac':18,'capex-wh':12,'capex-floor':15,'capex-paint':7,'capex-appl':12
+    };
+    var capexSellByYear = {};
+    for (var preYr = 1; preYr <= 10; preYr++) {
+      var cumCapex = 0;
+      Object.keys(capexSellLifespans).forEach(function(id) {
+        var cb = el(id + '-sell');
+        if (!(cb && cb.checked)) return;
+        var fld = el(id);
+        var cost = fld ? (parseFloat(fld.value) || 0) : 0;
+        var ageFld = el(id + '-age');
+        var age = ageFld ? (parseFloat(ageFld.value) || 0) : 0;
+        var remaining = Math.max(0, capexSellLifespans[id] - age);
+        if (remaining <= preYr) cumCapex += cost;
+      });
+      capexSellByYear[preYr] = cumCapex;
+    }
+
+    projection.forEach(function(row) {
+      // Selling costs: agent commissions + MN Deed Tax (0.33%) + TISH/misc
+      var sellCosts = Math.round(row.propValYr * (sellComm + 0.0033) + sellMisc);
+      // Net proceeds = sale value − loan balance − selling costs
+      var netProceeds = row.propValYr - row.balYr - sellCosts;
+      // Total ever invested = initial cash to close + any out-of-pocket monthly losses + checked capex items
+      var totalInvested = Math.round(totalCashToClose + Math.max(0, -row.cumCF) + (capexSellByYear[row.yr] || 0));
+      var surplus = Math.round(netProceeds - totalInvested);
+      if (!breakEvenSaleYear && surplus >= 0) breakEvenSaleYear = row.yr;
+      sellAnalysis.push({
+        yr: row.yr,
+        propValYr: row.propValYr,
+        sellCosts: sellCosts,
+        netProceeds: Math.round(netProceeds),
+        totalInvested: totalInvested,
+        surplus: surplus
+      });
+    });
+
+    var sell5 = sellAnalysis.find(function(r){ return r.yr === 5; }) || null;
+    sell10 = sellAnalysis.find(function(r){ return r.yr === 10; }) || null;
+
+    // Build IRR cash flow array: year 0 = -totalCashToClose, years 1-10 = annual CF + terminal value at yr 10
+    var irr = null;
+    if (hasData && totalCashToClose > 0 && projection.length === 10) {
+      var irrCFs = [-totalCashToClose];
+      projection.forEach(function(row) {
+        var cf = row.cfYr;
+        if (row.yr === 10 && sell10) cf += sell10.netProceeds;
+        irrCFs.push(cf);
+      });
+      function calcIRR(cfs) {
+        function npv(rate) {
+          return cfs.reduce(function(s, cf, i) { return s + cf / Math.pow(1 + rate, i); }, 0);
+        }
+        var lo = -0.5, hi = 5.0;
+        if (npv(lo) * npv(hi) > 0) return null;
+        for (var it = 0; it < 200; it++) {
+          var mid = (lo + hi) / 2;
+          if (npv(mid) > 0) lo = mid; else hi = mid;
+          if (hi - lo < 0.00005) break;
+        }
+        return (lo + hi) / 2 * 100;
+      }
+      irr = calcIRR(irrCFs);
+    }
+
+    // Total return at year 5 and 10 (equity + cumulative cash flow)
+    var proj5 = projection.find(function(r){ return r.yr === 5; }) || null;
+    var proj10 = projection.find(function(r){ return r.yr === 10; }) || null;
+    var totalReturn5  = proj5  ? (proj5.equityYr  + proj5.cumCF)  : 0;
+    var totalReturn10 = proj10 ? (proj10.equityYr + proj10.cumCF) : 0;
+
     return {
       v, loanAmount, downPct, closingDollar, closingPct, mrt, agentFeeDollar,
       totalCashToClose, cashRemaining, reserveMet,
       pi, monthlyPmi, pmiApplies, fhaMip, fhaUpfrontMip,
-      monthlyUtils, totalPITI, totalMonthlyCosts, effRent,
+      monthlyUtils, scalingUtils, sharedUtils, totalPropUtils, perPersonUtils,
+      totalPITI, totalMonthlyCosts, effRent,
       netCost, breakEven, hasData, pmCost, grm,
-      appr3, appr5, equity5at3, principalPaid5,
+      appr3, appr5, apprSelected, equity5at3, equity5Selected, principalPaid5,
       houseVal, houseCost, houseNet, spVal, spCost, spNet,
       cdVal, cdNet, bondVal, bondNet, roiVerdict,
-      currentRent, monthlyDiff
+      currentRent, monthlyDiff,
+      interestMonth1, principalMonth1, avgPrincipalMo, avgInterestMo, trueCashCost, netMonthlyCF,
+      noi, capRate, annualNetCF, totalCashIn, coc,
+      dscr, annualDepreciation, depTaxShield22, depTaxShield24, irr,
+      totalReturn5, totalReturn10, sell10,
+      rentGrowthRate: v.rentGrowthRate, expenseGrowthRate: v.expenseGrowthRate,
+      projection,
+      sellAnalysis, breakEvenSaleYear, sell5
     };
   }
 
@@ -1952,10 +3024,47 @@
   function setText(id, val) { var e = el(id); if (e) e.textContent = val; }
 
   function updateUI() {
+    // Auto-populate property tax and maintenance from purchase price (unless user has overridden)
+    // Also skip auto-populate if the user is actively focused on the field (prevents overwriting while typing)
+    var ppRaw = parseFloat((el('purchase-price') || {}).value) || 0;
+    var taxField   = el('monthly-tax');
+    var maintField = el('monthly-maint');
+    var insField   = el('monthly-insurance');
+    var activeEl   = document.activeElement;
+    if (taxField && taxField.dataset.auto !== 'false' && activeEl !== taxField && ppRaw > 0) {
+      taxField.value = Math.round(ppRaw * 0.0117 / 12);
+    }
+    if (maintField && maintField.dataset.auto !== 'false' && activeEl !== maintField && ppRaw > 0) {
+      maintField.value = Math.round(ppRaw * 0.01 / 12);
+    }
+    if (insField && insField.dataset.auto !== 'false' && activeEl !== insField && ppRaw > 0) {
+      insField.value = Math.round(ppRaw * 0.006 / 12);
+    }
+
+    // Auto-populate capex fields from purchase price
+    var capexDefs = [
+      { id:'capex-roof',  pct:0.040, flat:0   },
+      { id:'capex-hvac',  pct:0.025, flat:0   },
+      { id:'capex-wh',    pct:0.003, flat:700 },
+      { id:'capex-floor', pct:0.030, flat:0   },
+      { id:'capex-paint', pct:0.015, flat:0   },
+      { id:'capex-appl',  pct:0.015, flat:0   },
+    ];
+    capexDefs.forEach(function(def) {
+      var fld = el(def.id);
+      if (fld && fld.dataset.auto !== 'false' && activeEl !== fld && ppRaw > 0) {
+        fld.value = Math.round(ppRaw * def.pct + def.flat);
+      }
+    });
+
     var c = calculate();
 
-    // Down payment %
-    el('dp-pct').textContent = c.downPct.toFixed(1) + '%';
+    // Down payment display — shows % in $ mode, shows $ amount in % mode
+    if (dpMode === '%') {
+      el('dp-pct').textContent = c.v.downPayment > 0 ? fc(c.v.downPayment) : '—';
+    } else {
+      el('dp-pct').textContent = c.downPct.toFixed(1) + '%';
+    }
 
     // Financing summary
     setText('o-purchase-price', c.v.purchasePrice > 0 ? fc(c.v.purchasePrice) : '—');
@@ -1976,6 +3085,26 @@
     setText('upfront-total-val', fc(c.v.otherUpfront));
     setText('o-cash-close',      fc(c.totalCashToClose));
     setText('o-cash-remain',     c.hasData ? fc(c.cashRemaining) : '—');
+
+    // Cash reconciliation formula
+    var cfRow = el('cash-formula-row');
+    var cfText = el('cash-formula-text');
+    if (cfRow && cfText) {
+      var cashUsedVal = c.v.cashUsed;
+      if (cashUsedVal > 0 && c.hasData) {
+        cfRow.style.display = '';
+        var components = [fc(c.v.downPayment) + ' down payment'];
+        if (c.closingDollar > 0) components.push(fc(Math.round(c.closingDollar)) + ' closing costs');
+        if (c.agentFeeDollar > 0) components.push(fc(Math.round(c.agentFeeDollar)) + ' buyer agent fee');
+        if (c.v.otherUpfront > 0) components.push(fc(c.v.otherUpfront) + ' other upfront');
+        cfText.textContent = 'Cash to use: ' + fc(cashUsedVal) + '  −  Total to close: ' + fc(c.totalCashToClose) + ' (' + components.join(' + ') + ')  =  ' + fc(c.cashRemaining) + ' remaining';
+      } else {
+        cfRow.style.display = 'none';
+      }
+    }
+
+    // Reserve target display
+    setText('o-reserve-target-display', c.v.cashReserve > 0 ? fc(c.v.cashReserve) : '$0');
 
     // Reserve badge
     var rb = el('o-reserve-badge');
@@ -1998,18 +3127,18 @@
     setText('o-tax', fc(c.v.monthlyTax));
     setText('o-ins', fc(c.v.monthlyIns));
 
-    // PMI / MIP row
+    // Mortgage Insurance row
     el('row-pmi').style.display = c.monthlyPmi > 0 ? '' : 'none';
-    var pmiLabel = activeLoanType === 'fha' ? 'MIP' : 'PMI';
-    if (el('row-pmi')) el('row-pmi').querySelector('.ll').textContent = pmiLabel;
-    setText('o-pmi', c.monthlyPmi > 0 ? fc(c.monthlyPmi) + (c.pmiApplies && c.v.monthlyPmiManual === 0 ? ' (auto)' : '') : '—');
+    var pmiLabel = activeLoanType === 'fha' ? 'Mortgage Insurance Premium' : 'Private Mortgage Insurance';
+    if (el('o-pmi-label')) el('o-pmi-label').textContent = pmiLabel;
+    setText('o-pmi', c.monthlyPmi > 0 ? fc(c.monthlyPmi) : fc(0));
 
-    // PMI/MIP badge in input
+    // Mortgage insurance badge in input
     if (el('pmi-badge')) {
       if (activeLoanType === 'fha') {
-        el('pmi-badge').textContent = c.loanAmount > 0 ? '· FHA MIP applies always' : '· not applicable';
+        el('pmi-badge').textContent = c.loanAmount > 0 ? '· Mortgage Insurance Premium applies to all Federal Housing Administration loans' : '· not applicable';
       } else {
-        el('pmi-badge').textContent = c.pmiApplies ? '· applies — down payment under 20%' : '· not applicable (≥20% down)';
+        el('pmi-badge').textContent = c.pmiApplies ? '· applies — down payment is under 20%' : '· not applicable (20% or more down)';
       }
     }
 
@@ -2020,58 +3149,242 @@
     el('row-pm').style.display = c.pmCost > 0 ? '' : 'none';
     setText('o-pm', c.pmCost > 0 ? fc(c.pmCost) + '/mo' : '—');
 
-    // Utilities
-    var utilTotal = c.v.utilWater + c.v.utilSewer + c.v.utilGas + c.v.utilElectric + c.v.utilInternet;
+    // Utilities (use monthlyUtils from calculate which includes HOA)
+    var utilTotal = c.monthlyUtils;
     setText('o-utilities', utilTotal > 0 ? fc(utilTotal) : '—');
     el('row-utilities').style.display = utilTotal > 0 ? '' : 'none';
     if (el('util-total')) setText('util-total', utilTotal > 0 ? fc(utilTotal) + '/mo' : '—');
+    if (el('util-total-annual')) setText('util-total-annual', utilTotal > 0 ? fc(utilTotal * 12) + '/yr' : '—/yr');
+    // Per-person utilities (shown when numOccupants > 1)
+    var numOcc = c.v.numOccupants || 1;
+    var ppRow = el('util-perperson-row');
+    if (ppRow) {
+      if (numOcc > 1 && utilTotal > 0) {
+        ppRow.style.display = 'flex';
+        setText('util-perperson-label', 'Your share (1 of ' + numOcc + ' people)');
+        setText('util-total-perperson', fc(Math.round(utilTotal / numOcc)) + '/mo');
+        setText('util-total-perperson-annual', fc(Math.round(utilTotal / numOcc * 12)) + '/yr');
+      } else {
+        ppRow.style.display = 'none';
+      }
+    }
     setText('o-total-costs', c.hasData ? fc(c.totalMonthlyCosts) : '—');
+
+    // Per-person monthly costs row (shown when numOccupants > 1)
+    var ppCostRow = el('row-per-person');
+    if (ppCostRow) {
+      if (numOcc > 1 && c.hasData) {
+        ppCostRow.style.display = '';
+        var numRoommates = numOcc - 1;
+        setText('per-person-costs-label', 'Equal share (' + numOcc + ' people — you + ' + numRoommates + ' roommate' + (numRoommates > 1 ? 's' : '') + ')');
+        setText('o-per-person-costs', fc(Math.round(c.totalMonthlyCosts / numOcc)) + '/mo');
+        // Owner's actual cost: total costs minus all rent income (what owner truly pays)
+        var ownerSubEl = el('owner-cost-sub');
+        if (ownerSubEl) {
+          var rentCollected = c.effRent;  // effective rent (after vacancy)
+          var ownerActual = Math.round(c.totalMonthlyCosts - rentCollected);
+          var ownerLine = ownerActual <= 0
+            ? 'Owner actual cost: <strong style="color:var(--green);">' + fc(Math.abs(ownerActual)) + '/mo net income</strong> (rent more than covers all costs)'
+            : 'Owner actual cost after rent offset: <strong>' + fc(ownerActual) + '/mo</strong> · Roommate' + (numRoommates > 1 ? 's contribute' : ' contributes') + ' <strong>' + fc(rentCollected) + '/mo</strong> toward the ' + fc(c.totalMonthlyCosts) + '/mo total';
+          ownerSubEl.innerHTML = ownerLine;
+        }
+      } else {
+        ppCostRow.style.display = 'none';
+      }
+    }
+
+    // Room cost hints — show rent + per-person utility share for each checked bedroom
+    var utilPerPerson = numOcc > 1 ? Math.round(utilTotal / numOcc) : Math.round(utilTotal);
+    function updateRoomHint(hintId, cbId, rentId) {
+      var hintEl = el(hintId);
+      if (!hintEl) return;
+      var cb = el(cbId);
+      if (cb && cb.checked) {
+        var rentAmt = parseFloat((el(rentId) || {}).value) || 0;
+        var totalRenterCost = rentAmt + utilPerPerson;
+        hintEl.style.display = '';
+        hintEl.textContent = 'Rent: ' + fc(rentAmt) + '  +  Utilities share: ' + fc(utilPerPerson) + '/mo  =  ' + fc(totalRenterCost) + '/mo  (' + fc(totalRenterCost * 12) + '/yr) for this tenant';
+      } else {
+        hintEl.style.display = 'none';
+      }
+    }
+    // House mode bedrooms
+    updateRoomHint('br1-cost-hint', 'cb-br1', 'rent-br1');
+    updateRoomHint('br2-cost-hint', 'cb-br2', 'rent-br2');
+    updateRoomHint('br3-cost-hint', 'cb-br3', 'rent-br3');
+    // Duplex owner-unit rooms
+    updateRoomHint('d-br1-cost-hint', 'cb-d-br1', 'rent-d-br1');
+    updateRoomHint('d-br2-cost-hint', 'cb-d-br2', 'rent-d-br2');
+
+    // Per-unit mode: update Unit 2 total
+    if (el('u2-rent-total') && activeMode === 'duplex') {
+      var u2Total = 0;
+      ['d-br1','d-br2'].forEach(function(br) {
+        var cb = el('cb-' + br);
+        if (cb && cb.checked) u2Total += parseFloat((el('rent-' + br) || {}).value) || 0;
+      });
+      el('u2-rent-total').textContent = fc(u2Total) + '/mo';
+    }
+
+    // Capex reserves (age-adjusted)
+    var capexItems = [
+      { id:'capex-roof',  lifespan:25, reserveId:'capex-roof-reserve',  ageId:'capex-roof-age'  },
+      { id:'capex-hvac',  lifespan:18, reserveId:'capex-hvac-reserve',  ageId:'capex-hvac-age'  },
+      { id:'capex-wh',    lifespan:12, reserveId:'capex-wh-reserve',    ageId:'capex-wh-age'    },
+      { id:'capex-floor', lifespan:15, reserveId:'capex-floor-reserve', ageId:'capex-floor-age' },
+      { id:'capex-paint', lifespan:7,  reserveId:'capex-paint-reserve', ageId:'capex-paint-age' },
+      { id:'capex-appl',  lifespan:12, reserveId:'capex-appl-reserve',  ageId:'capex-appl-age'  },
+    ];
+    var capexTotalCost = 0, capexTotalAnnual = 0;
+    capexItems.forEach(function(item) {
+      var cost = parseFloat((el(item.id) || {}).value) || 0;
+      var age  = parseFloat((el(item.ageId) || {}).value) || 0;
+      var remaining = Math.max(0, item.lifespan - age);
+      var reserveEl = el(item.reserveId);
+      var annualReserve = 0;
+      if (cost > 0) {
+        if (remaining <= 0) {
+          if (reserveEl) { reserveEl.textContent = 'Replace now'; reserveEl.style.color = 'var(--red)'; }
+        } else {
+          annualReserve = Math.round(cost / remaining);
+          if (reserveEl) { reserveEl.textContent = fc(annualReserve) + '/yr'; reserveEl.style.color = ''; }
+        }
+      } else {
+        if (reserveEl) { reserveEl.textContent = '—'; reserveEl.style.color = ''; }
+      }
+      capexTotalCost   += cost;
+      capexTotalAnnual += annualReserve;
+    });
+    setText('capex-total-cost',    capexTotalCost   > 0 ? fc(capexTotalCost)   : '—');
+    setText('capex-total-reserve', capexTotalAnnual > 0 ? fc(capexTotalAnnual) + '/yr  (' + fc(Math.round(capexTotalAnnual / 12)) + '/mo)' : '—/yr');
+
+    // ── Cash flow waterfall ──
+    if (c.hasData) {
+      setText('cf-gross',    c.v.monthlyRent > 0 ? fc(c.v.monthlyRent) : '—');
+      setText('cf-vacancy',  c.v.monthlyRent > 0 ? '−' + fc(Math.round(c.v.monthlyRent * c.v.vacancyRate / 100)) : '—');
+      setText('cf-egi',      c.v.monthlyRent > 0 ? fc(Math.round(c.effRent)) : '—');
+      setText('cf-piti',     fc(c.totalPITI));
+      setText('cf-maint-cf', fc(c.v.monthlyMaint));
+      setText('cf-utils',    utilTotal > 0 ? fc(utilTotal) : '—');
+      setText('cf-pm-cf',    c.pmCost > 0 ? fc(Math.round(c.pmCost)) : '—');
+      el('cf-row-pm').style.display = c.pmCost > 0 ? '' : 'none';
+      var cfNetEl = el('cf-net');
+      if (cfNetEl) {
+        cfNetEl.textContent = (c.netMonthlyCF >= 0 ? '+' : '') + fc(c.netMonthlyCF);
+        cfNetEl.className = 'cf-val ' + (c.netMonthlyCF >= 0 ? 'green' : 'red');
+      }
+      setText('o-true-cash-cost',    fc(c.trueCashCost) + '/mo');
+      setText('o-principal-savings', c.avgPrincipalMo > 0 ? fc(c.avgPrincipalMo) + '/mo' : '—');
+      var maxTcYr = c.v.loanTerm || 30;
+      if (el('true-cash-year-display')) el('true-cash-year-display').textContent = 'Year ' + Math.min(trueCashYear, maxTcYr);
+    }
+
+    // ── Investment metrics ──
+    if (c.hasData && c.v.purchasePrice > 0) {
+      setText('o-cap-rate', c.capRate !== 0 ? c.capRate.toFixed(1) + '%' : '—');
+      setText('o-coc',      c.coc.toFixed(1) + '%');
+      // DSCR
+      var dscrEl = el('o-dscr');
+      if (dscrEl) {
+        if (c.dscr > 0) {
+          dscrEl.textContent = c.dscr.toFixed(2);
+          dscrEl.style.color = c.dscr >= 1.25 ? 'var(--green)' : c.dscr >= 1.0 ? 'var(--yellow)' : 'var(--red)';
+        } else {
+          dscrEl.textContent = '—';
+          dscrEl.style.color = '';
+        }
+      }
+      // IRR
+      var irrEl = el('o-irr');
+      if (irrEl) {
+        if (c.irr !== null && c.irr !== undefined) {
+          irrEl.textContent = c.irr.toFixed(1) + '%';
+          irrEl.style.color = c.irr >= 10 ? 'var(--green)' : c.irr >= 5 ? 'var(--yellow)' : c.irr >= 0 ? '' : 'var(--red)';
+        } else {
+          irrEl.textContent = '—';
+          irrEl.style.color = '';
+        }
+      }
+    } else {
+      setText('o-cap-rate', '—');
+      setText('o-coc', '—');
+      setText('o-dscr', '—');
+      setText('o-irr', '—');
+    }
+
+    // Total return
+    if (c.hasData && c.v.purchasePrice > 0) {
+      setText('o-total-return-5',  c.totalReturn5  ? fc(c.totalReturn5)  : '—');
+      setText('o-total-return-10', c.totalReturn10 ? fc(c.totalReturn10) : '—');
+    } else {
+      setText('o-total-return-5',  '—');
+      setText('o-total-return-10', '—');
+    }
+
+    // Depreciation section (duplex only)
+    var depSection = el('depreciation-section');
+    if (depSection) {
+      if (activeMode === 'duplex' && c.hasData && c.annualDepreciation > 0) {
+        depSection.style.display = '';
+        setText('o-annual-dep', fc(c.annualDepreciation) + '/yr (' + fc(Math.round(c.annualDepreciation / 12)) + '/mo)');
+        setText('o-dep-22', fc(c.depTaxShield22) + '/yr');
+        setText('o-dep-24', fc(c.depTaxShield24) + '/yr');
+      } else {
+        depSection.style.display = 'none';
+      }
+    }
+
+    // ── 10-year projection table ──
+    var projTbody = el('proj-tbody');
+    if (projTbody) {
+      if (c.projection && c.projection.length > 0) {
+        projTbody.innerHTML = c.projection.map(function(row) {
+          var tr = row.highlight ? ' class="proj-highlight"' : '';
+          var cfCls = row.cfYr  >= 0 ? 'proj-pos' : 'proj-neg';
+          var cumCls = row.cumCF >= 0 ? 'proj-pos' : 'proj-neg';
+          return '<tr' + tr + '>' +
+            '<td>Yr&nbsp;' + row.yr + '</td>' +
+            '<td>' + fc(row.propValYr) + '</td>' +
+            '<td>' + fc(row.balYr) + '</td>' +
+            '<td>' + fc(row.equityYr) + '</td>' +
+            '<td class="' + cfCls  + '">' + (row.cfYr  >= 0 ? '+' : '') + fc(row.cfYr)  + '</td>' +
+            '<td class="' + cumCls + '">' + (row.cumCF >= 0 ? '+' : '') + fc(row.cumCF) + '</td>' +
+            '</tr>';
+        }).join('');
+      } else {
+        projTbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--text-muted); padding:14px; font-family:inherit;">Enter purchase price and rate above</td></tr>';
+      }
+    }
 
     // Loan type note
     if (el('loan-type-note')) {
       if (activeLoanType === 'fha') {
-        el('loan-type-note').innerHTML = '<strong>FHA:</strong> MIP required regardless of down payment. Upfront MIP: 1.75% of loan (≈ ' + fc(c.fhaUpfrontMip) + '). Monthly MIP: ' + fc(c.fhaMip) + '/mo. MIP lasts life of loan if &lt;10% down. Min 3.5% down.';
+        el('loan-type-note').innerHTML = '<strong>Federal Housing Administration loan — </strong><em>Pros:</em> Only 3.5% down required; more lenient credit standards (minimum score ~580–620); easier to qualify with limited credit history. <em>Cons:</em> Mortgage Insurance Premiums are required for the entire life of the loan if you put less than 10% down; includes an upfront premium of 1.75% of the loan amount (currently ≈ ' + fc(c.fhaUpfrontMip) + ') plus ' + fc(c.fhaMip) + '/month in ongoing premiums — this adds up significantly over time. Best choice if you need a low down payment or have imperfect credit.';
       } else {
-        el('loan-type-note').innerHTML = '<strong>Conventional:</strong> PMI required if &lt;20% down; cancels when you reach 20% equity. Min 5% down (3% some programs). No upfront MIP.';
+        el('loan-type-note').innerHTML = '<strong>Conventional loan — </strong><em>Pros:</em> Private Mortgage Insurance cancels automatically once you reach 20% equity; no upfront insurance premium; lower long-term cost if your credit score is strong (720 or above). <em>Cons:</em> Minimum 5% down (3% on select programs); stricter credit qualification; you pay Private Mortgage Insurance each month until reaching 20% equity. Best choice if you have strong credit and a meaningful down payment.';
       }
     }
 
     // Appreciation card
     setText('o-grm', c.grm > 0 ? c.grm.toFixed(1) + 'x' + (c.grm < 12 ? ' 🟢 strong' : c.grm < 16 ? ' 🟡 fair' : ' 🔴 high') : '—');
-    setText('o-appr-3',   c.v.purchasePrice > 0 ? fc(c.appr3) : '—');
-    setText('o-appr-5',   c.v.purchasePrice > 0 ? fc(c.appr5) : '—');
-    setText('o-equity-5', c.v.purchasePrice > 0 ? fc(c.equity5at3) + ' (at 3%/yr)' : '—');
+    setText('o-appr-selected', c.v.purchasePrice > 0 ? fc(c.apprSelected) : '—');
+    setText('o-equity-5',      c.v.purchasePrice > 0 ? fc(c.equity5Selected) + ' (at ' + apprRate.toFixed(1) + '%/yr)' : '—');
+    // Keep appr-rate-label and proj-appr-label in sync with current slider value
+    if (el('appr-rate-label'))  el('appr-rate-label').textContent  = '(' + apprRate.toFixed(1) + '% annual)';
+    if (el('proj-appr-label'))  el('proj-appr-label').textContent  = apprRate.toFixed(1) + '%';
+    if (el('appr-rate-display')) el('appr-rate-display').textContent = apprRate.toFixed(1) + '%';
+    if (el('proj-rent-growth-label')) el('proj-rent-growth-label').textContent = c.rentGrowthRate !== undefined ? c.rentGrowthRate.toFixed(1) + '%' : '2.5%';
+    if (el('proj-expense-growth-label')) el('proj-expense-growth-label').textContent = c.expenseGrowthRate !== undefined ? c.expenseGrowthRate.toFixed(1) + '%' : '3.0%';
 
-    // ROI comparison table
-    if (c.hasData && c.v.purchasePrice > 0) {
-      setText('roi-house-val',  fc(c.houseVal));
-      setText('roi-house-cost', fc(c.houseCost));
-      setText('roi-house-net',  fc(c.houseNet));
-      setText('roi-sp-val',     fc(c.spVal));
-      setText('roi-sp-cost',    fc(c.spCost));
-      setText('roi-sp-net',     fc(c.spNet));
-      setText('roi-cd-val',     fc(c.cdVal));
-      setText('roi-cd-cost',    fc(c.spCost));
-      setText('roi-cd-net',     fc(c.cdNet));
-      setText('roi-bond-val',   fc(c.bondVal));
-      setText('roi-bond-cost',  fc(c.spCost));
-      setText('roi-bond-net',   fc(c.bondNet));
-    }
-
-    // ROI verdict
-    var verdictEl = el('roi-verdict');
-    if (verdictEl && c.roiVerdict) {
-      verdictEl.style.display = '';
-      verdictEl.className = 'roi-verdict ' + c.roiVerdict + '-bg';
-      if (c.roiVerdict === 'green') {
-        verdictEl.textContent = 'House-hacking wins. Your 5-year equity gain of ' + fc(c.houseNet) + ' outperforms even S&P returns of ' + fc(c.spNet) + ', while providing stable housing and building equity on a leveraged asset.';
-      } else if (c.roiVerdict === 'yellow') {
-        verdictEl.textContent = 'House-hacking is competitive. Your equity gain (' + fc(c.houseNet) + ') is close to S&P returns (' + fc(c.spNet) + '). The real advantage is leverage — equity builds on the full ' + fc(c.v.purchasePrice) + ' asset, not just your ' + fc(c.v.downPayment) + ' investment. Plus housing stability.';
-      } else {
-        verdictEl.textContent = 'Investing may outperform this deal at current numbers. S&P returns of ' + fc(c.spNet) + ' outpace your projected equity of ' + fc(c.houseNet) + '. Consider increasing rent, reducing purchase price, or a larger down payment.';
+    // ── PMI auto-populate ──
+    var pmiInput = el('monthly-pmi');
+    if (pmiInput && c.hasData) {
+      if (c.pmiApplies && !pmiInput.dataset.userModified) {
+        pmiInput.value = Math.round(c.loanAmount * 0.01 / 12);
+      } else if (!c.pmiApplies) {
+        pmiInput.value = '0';
+        delete pmiInput.dataset.userModified;
       }
-    } else if (verdictEl) {
-      verdictEl.style.display = 'none';
     }
 
     setText('o-rent', c.v.rentScenario > 0 ? '−' + fc(c.effRent) : '—');
@@ -2084,6 +3397,23 @@
     // Rent adjuster occupancy label
     var occ = (100 - c.v.vacancyRate).toFixed(0);
     el('ra-occ-label').textContent = '/mo · ' + occ + '% occ. = ' + (c.v.rentScenario > 0 ? fc(c.effRent) + ' net' : '—');
+
+    // Effective rent formula hint
+    var effHint = el('eff-rent-formula-hint');
+    if (effHint && activeMode === 'duplex') {
+      var rentUsed = c.v.rentScenario > 0 ? c.v.rentScenario : c.v.monthlyRent;
+      if (rentUsed > 0 && c.hasData) {
+        var vacPct = c.v.vacancyRate;
+        effHint.innerHTML = '<strong>Formula:</strong> Effective Rent = Gross Rent × (1 − Vacancy%) = ' +
+          fc(rentUsed) + ' × (1 − ' + vacPct.toFixed(0) + '%) = <strong>' + fc(c.effRent) + '/mo</strong> · ' +
+          'Vacancy accounts for turnover between tenants (typically 1–2 months/yr in Minneapolis)';
+        effHint.style.display = '';
+      } else {
+        effHint.style.display = 'none';
+      }
+    } else if (effHint) {
+      effHint.style.display = 'none';
+    }
 
     // Sync rent-scenario placeholder with main rent input when blank (duplex only)
     if (activeMode === 'duplex') {
@@ -2118,8 +3448,156 @@
     // Break-even
     setText('o-breakeven', c.hasData ? fc(c.breakEven) + '/mo' : '—');
 
+    // ── Tax savings estimate ──
+    if (c.hasData && c.loanAmount > 0) {
+      var annIntYr1 = Math.round(c.interestMonth1 * 12);
+      var savingsAt22 = Math.round(annIntYr1 * 0.22);
+      var savingsAt24 = Math.round(annIntYr1 * 0.24);
+      setText('o-annual-interest', fc(annIntYr1) + '/yr');
+      setText('tax-savings-note',
+        'If you itemize federal deductions, this interest may be deductible — worth approximately ' +
+        fc(savingsAt22) + ' at a 22% bracket or ' + fc(savingsAt24) + ' at 24%. ' +
+        'However, you only benefit from itemizing if your total deductions exceed the standard deduction ' +
+        '($14,600 single / $29,200 married filing jointly for 2024). ' +
+        'Many first-time buyers do not itemize. Consult a tax professional for your situation.'
+      );
+      el('row-tax-savings').style.display = '';
+    } else {
+      el('row-tax-savings').style.display = 'none';
+    }
+
+    // ── Sell card: year-5 summary ──
+    if (el('sell-appr-label'))  el('sell-appr-label').textContent  = apprRate.toFixed(1) + '%';
+    if (el('sell-comm-label'))  el('sell-comm-label').textContent  = (c.hasData ? c.v.sellCommPct.toFixed(1) : '5.5') + '%';
+    if (c.hasData && c.sell5) {
+      var s5 = c.sell5;
+      // Year-5 deed tax = 0.33% of sale value
+      var deed5 = Math.round(s5.propValYr * 0.0033);
+      // Commission cost = total sell costs − deed tax − misc
+      var commCost5 = Math.round(s5.propValYr * (c.v.sellCommPct / 100));
+      var misc5 = c.v.sellMisc > 0 ? c.v.sellMisc : 1500;
+      setText('sell-val-5',          fc(s5.propValYr));
+      setText('sell-comm-cost-5',    '−' + fc(commCost5));
+      setText('sell-deed-5',         '−' + fc(deed5));
+      setText('sell-misc-display-5', '−' + fc(misc5));
+      var net5Style = s5.netProceeds >= 0 ? 'color:var(--green)' : 'color:var(--red)';
+      var net5El = el('sell-net-5');
+      if (net5El) { net5El.textContent = fc(s5.netProceeds); net5El.setAttribute('style', 'font-weight:700; ' + net5Style); }
+    } else {
+      ['sell-val-5','sell-comm-cost-5','sell-deed-5','sell-misc-display-5','sell-net-5'].forEach(function(id){ setText(id,'—'); });
+    }
+
+    // Break-even badge
+    var beBadge = el('sell-breakeven-badge');
+    if (beBadge && c.hasData) {
+      if (c.breakEvenSaleYear > 0) {
+        beBadge.textContent = 'Year ' + c.breakEvenSaleYear;
+        beBadge.className = 'badge ' + (c.breakEvenSaleYear <= 5 ? 'badge-green' : c.breakEvenSaleYear <= 8 ? 'badge-yellow' : 'badge-red');
+        beBadge.title = 'If you sell in year ' + c.breakEvenSaleYear + ' or later, your net proceeds will exceed your total investment';
+      } else {
+        beBadge.textContent = '> 10 yrs';
+        beBadge.className = 'badge badge-red';
+        beBadge.title = 'Based on current inputs, you would not break even within 10 years';
+      }
+    } else if (beBadge) {
+      beBadge.textContent = '—';
+      beBadge.className = 'badge badge-neutral';
+    }
+
+    // Year-by-year sell table
+    var sellTbody = el('sell-tbody');
+    if (sellTbody && c.hasData && c.sellAnalysis && c.sellAnalysis.length) {
+      var sellRows = c.sellAnalysis.map(function(row) {
+        var isBE = row.surplus >= 0;
+        var rowStyle = isBE ? ' style="background:var(--green-bg);"' : '';
+        var surplusColor = isBE ? 'color:var(--green)' : 'color:var(--red)';
+        return '<tr' + rowStyle + '>' +
+          '<td>Yr ' + row.yr + '</td>' +
+          '<td>' + fc(row.propValYr) + '</td>' +
+          '<td style="color:var(--red);">−' + fc(row.sellCosts) + '</td>' +
+          '<td>' + fc(row.netProceeds) + '</td>' +
+          '<td>' + fc(row.totalInvested) + '</td>' +
+          '<td style="' + surplusColor + '; font-weight:600;">' + (isBE ? '+' : '') + fc(row.surplus) + '</td>' +
+          '</tr>';
+      });
+      sellTbody.innerHTML = sellRows.join('');
+    } else if (sellTbody && !c.hasData) {
+      sellTbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--text-muted); padding:14px; font-family:inherit;">Fill in <strong>Purchase Price</strong> and <strong>Interest Rate</strong> in the Purchase Details section (top of left panel) to calculate</td></tr>';
+    }
+
+    // ── Amortization schedule ──
+    var amortTbody = el('amort-tbody');
+    if (amortTbody && c.hasData && c.loanAmount > 0 && c.pi > 0) {
+      var aBal = c.loanAmount;
+      var aRate = (c.v.interestRate / 100) / 12;
+      var cumInt = 0;
+      var amortRows = [];
+      for (var aYr = 1; aYr <= c.v.loanTerm; aYr++) {
+        var begBal = aBal;
+        var annPrin = 0, annInt = 0;
+        for (var mo = 0; mo < 12; mo++) {
+          var intPmt = aBal * aRate;
+          var prinPmt = c.pi - intPmt;
+          annInt  += intPmt;
+          annPrin += prinPmt;
+          aBal = Math.max(0, aBal - prinPmt);
+        }
+        cumInt += annInt;
+        amortRows.push(
+          '<tr>' +
+          '<td>Year ' + aYr + '</td>' +
+          '<td>' + fc(Math.round(begBal))  + '</td>' +
+          '<td>' + fc(Math.round(annPrin))  + '</td>' +
+          '<td>' + fc(Math.round(annInt))   + '</td>' +
+          '<td>' + fc(Math.round(aBal))     + '</td>' +
+          '<td>' + fc(Math.round(cumInt))   + '</td>' +
+          '</tr>'
+        );
+      }
+      amortTbody.innerHTML = amortRows.join('');
+    } else if (amortTbody && !c.hasData) {
+      amortTbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:16px; color:var(--text-muted); font-family:inherit;">Enter purchase price and interest rate above</td></tr>';
+    }
+
     // Update compare count
     updateCompareCount();
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // True cash cost year adjuster
+  // ─────────────────────────────────────────────────────────────
+  function adjustTrueCashYear(delta) {
+    var maxYr = activeTerm;
+    trueCashYear = Math.max(1, Math.min(maxYr, trueCashYear + delta));
+    setCookie('mpce_true_cash_year', trueCashYear);
+    updateUI();
+  }
+
+  // Duplex rent mode toggle
+  // ─────────────────────────────────────────────────────────────
+  var duplexRentMode = 'combined';
+  function setDuplexRentMode(mode) {
+    duplexRentMode = mode;
+    el('btn-duplex-rent-combined').classList.toggle('active', mode === 'combined');
+    el('btn-duplex-rent-perunit').classList.toggle('active', mode === 'perunit');
+    el('duplex-rent-combined').style.display  = mode === 'combined' ? '' : 'none';
+    el('duplex-rent-perunit').style.display   = mode === 'perunit'  ? '' : 'none';
+    if (mode === 'perunit' && el('monthly-rent-u1') && el('monthly-rent')) {
+      el('monthly-rent-u1').value = el('monthly-rent').value;
+    }
+    updateUI();
+  }
+
+  // Down payment mode toggle
+  // ─────────────────────────────────────────────────────────────
+  function setDpMode(mode) {
+    dpMode = mode;
+    el('btn-dp-dollar').classList.toggle('active', mode === '$');
+    el('btn-dp-pct-btn').classList.toggle('active', mode === '%');
+    el('dp-dollar-wrap').style.display = mode === '$' ? '' : 'none';
+    el('dp-pct-wrap').style.display    = mode === '%' ? '' : 'none';
+    setCookie('mpce_dp_mode', mode);
+    updateUI();
   }
 
   // ─────────────────────────────────────────────────────────────
@@ -2133,26 +3611,46 @@
     el('rent-mode-house').style.display  = mode === 'house'  ? '' : 'none';
     el('duplex-upfront-section').style.display = mode === 'duplex' ? '' : 'none';
     el('tax-note').textContent = mode === 'duplex'
-      ? 'Hennepin Co. eff. rate ~1.17–1.19%/yr · Owner-occupied split homestead saves ~$200–400/yr'
-      : 'Hennepin Co. eff. rate ~1.17–1.19%/yr · Full homestead rate 1.00% on all owner-occupied SFH';
+      ? 'Hennepin Co. eff. rate ~1.17–1.19%/yr · Owner-occupied split homestead saves ~$200–400/yr · Auto-calculated from purchase price — override any time'
+      : 'Hennepin Co. eff. rate ~1.17–1.19%/yr · Full homestead rate 1.00% on all owner-occupied SFH · Auto-calculated from purchase price — override any time';
+    if (el('cc-appraisal-hint')) {
+      el('cc-appraisal-hint').textContent = mode === 'duplex'
+        ? 'Avg Minneapolis duplex appraisal ~$600–$700'
+        : 'Avg Minneapolis single-family home appraisal ~$400–$550';
+    }
+    var apprField = el('cc-appraisal');
+    if (apprField && !apprField.dataset.userModified) {
+      apprField.value = mode === 'duplex' ? 650 : 450;
+    }
+    if (el('uc-inspection-hint')) {
+      el('uc-inspection-hint').textContent = mode === 'duplex'
+        ? '$400–$600 for a duplex in Minneapolis'
+        : '$350–$500 for a single-family home in Minneapolis · larger homes may run higher';
+    }
     if (el('util-note')) el('util-note').textContent = mode === 'duplex'
       ? 'Duplex: owner typically covers water/trash for both units; tenant pays their own gas, electric, internet. Adjust to match your lease structure.'
-      : 'Single-family: owner pays all utilities for the whole house. Enter your total expected monthly utility costs.';
+      : 'Single-family: enter your expected monthly utility costs. Water, gas, and electricity inputs represent cost per person — total scales automatically as you add roommates.';
 
-    // House mode utility note
+    // Utility sub-hints: water/gas/electric are per-person in house mode
+    if (el('util-water-hint')) {
+      el('util-water-hint').textContent = mode === 'house'
+        ? 'Enter cost per person · Minneapolis Water Works avg ~$20–$30/person/mo · total = this × number of occupants'
+        : 'Minneapolis Water Works avg ~$40–$55/mo for duplex';
+    }
+    if (el('util-gas-hint')) {
+      el('util-gas-hint').textContent = mode === 'house'
+        ? 'Enter cost per person · Xcel Energy avg ~$35–$60/person/mo Minneapolis · higher Nov–Mar · total = this × number of occupants'
+        : 'Xcel Energy avg ~$70–$120/mo Minneapolis · higher Nov–Mar';
+    }
+    if (el('util-electric-hint')) {
+      el('util-electric-hint').textContent = mode === 'house'
+        ? 'Enter cost per person · Xcel Energy avg ~$25–$40/person/mo · total = this × number of occupants'
+        : 'Xcel Energy avg ~$50–$75/mo per unit';
+    }
+
+    // House mode utility note (now handled by per-person row; hide old note)
     if (el('util-house-note')) {
-      if (mode === 'house') {
-        var checkedBeds = 0;
-        ['br1','br2','br3'].forEach(function(br) {
-          var cb = document.getElementById('cb-' + br);
-          if (cb && cb.checked) checkedBeds++;
-        });
-        var totalBeds = checkedBeds + 1; // owner occupies 1 bedroom
-        el('util-house-note').style.display = '';
-        el('util-house-note').textContent = 'Estimated for ' + totalBeds + '-bedroom house. Owner pays 1/' + totalBeds + ' share (1 bedroom). Adjust if your roommate agreement differs.';
-      } else {
-        el('util-house-note').style.display = 'none';
-      }
+      el('util-house-note').style.display = 'none';
     }
 
     updateUI();
@@ -2215,6 +3713,34 @@
     renderCompareTable();
     updateCompareCount();
   }
+  function setAgentPayer(payer) {
+    agentSellerPays = (payer === 'seller');
+    el('btn-agent-seller').classList.toggle('active', agentSellerPays);
+    el('btn-agent-buyer').classList.toggle('active', !agentSellerPays);
+    el('agent-pct-wrap').style.display = agentSellerPays ? 'none' : '';
+    el('agent-note').textContent = agentSellerPays
+      ? 'Seller is covering your buyer agent\'s commission — not included in your costs. Post-NAR settlement (Aug 2024): seller coverage is negotiable but remains common practice in Minneapolis.'
+      : 'You are paying your agent directly. Typical buyer agent commission: 2–3% of the purchase price. Enter 0 if you negotiate no commission or represent yourself.';
+    setCookie('mpce_agent_payer', payer);
+    updateUI();
+  }
+
+  function toggleMetricExplain() {
+    var body = el('metric-explain-body');
+    var btn  = el('btn-metric-explain');
+    var open = body.style.display !== 'none';
+    body.style.display = open ? 'none' : 'block';
+    btn.textContent = open ? 'What do these metrics mean? ▼' : 'Hide explanations ▲';
+  }
+
+  function toggleAmort() {
+    var body = el('amort-body');
+    var lbl  = el('amort-toggle-label');
+    var open = body.style.display !== 'none';
+    body.style.display = open ? 'none' : '';
+    lbl.textContent = open ? '▶ Show year-by-year breakdown' : '▲ Hide breakdown';
+  }
+
   function toggleCompare() {
     var sec = el('compare-section');
     var showing = sec.style.display !== 'none';
@@ -2282,8 +3808,20 @@
     el('btn-duplex').addEventListener('click', function () { switchMode('duplex'); });
     el('btn-house').addEventListener('click',  function () { switchMode('house'); });
 
-    // Bedroom checkboxes: enable/disable input and recalc
+    // Bedroom checkboxes (house mode): enable/disable input and recalc
     ['br1','br2','br3'].forEach(function(br) {
+      var cb = document.getElementById('cb-' + br);
+      var inp = document.getElementById('rent-' + br);
+      var lbl = cb ? cb.closest('.bedroom-row').querySelector('.br-label') : null;
+      if (cb) cb.addEventListener('change', function() {
+        inp.disabled = !cb.checked;
+        if (lbl) lbl.classList.toggle('muted', !cb.checked);
+        updateUI();
+      });
+    });
+
+    // Duplex owner-unit bedroom checkboxes: enable/disable input and recalc
+    ['d-br1','d-br2'].forEach(function(br) {
       var cb = document.getElementById('cb-' + br);
       var inp = document.getElementById('rent-' + br);
       var lbl = cb ? cb.closest('.bedroom-row').querySelector('.br-label') : null;
@@ -2341,6 +3879,15 @@
       });
     });
 
+    // Appreciation rate slider
+    var apprSlider = el('appr-rate-slider');
+    if (apprSlider) {
+      apprSlider.addEventListener('input', function () {
+        apprRate = parseFloat(this.value);
+        updateUI();
+      });
+    }
+
     // Manually editing rate clears active preset highlight and saves cookie
     el('interest-rate').addEventListener('input', function () {
       document.querySelectorAll('.preset-btn').forEach(function (b) { b.classList.remove('active'); });
@@ -2348,28 +3895,131 @@
     });
 
     // Save buyer agent commission to cookie on change
-    el('buyer-agent-pct').addEventListener('input', function () {
-      setCookie('mpce_agent', this.value);
+    var agentPctEl = el('buyer-agent-pct');
+    if (agentPctEl) {
+      agentPctEl.addEventListener('input', function () {
+        setCookie('mpce_agent', this.value);
+        updateUI();
+      });
+    }
+
+    // Appraisal: mark as user-modified so mode switch doesn't reset it
+    var apprFieldEl = el('cc-appraisal');
+    if (apprFieldEl) {
+      apprFieldEl.addEventListener('input', function() {
+        this.dataset.userModified = '1';
+      });
+    }
+
+    // Insurance + capex: mark as user-overridden when manually edited; restore auto on clear
+    ['monthly-insurance','capex-roof','capex-hvac','capex-floor','capex-paint','capex-wh','capex-appl'].forEach(function(id) {
+      var fld = el(id);
+      if (!fld) return;
+      fld.addEventListener('input', function() {
+        this.dataset.auto = (!this.value || this.value === '') ? 'true' : 'false';
+      });
     });
+
+    // Capex age inputs and sell checkboxes → trigger recalc
+    ['capex-roof-age','capex-hvac-age','capex-wh-age','capex-floor-age','capex-paint-age','capex-appl-age'].forEach(function(id) {
+      var fld = el(id);
+      if (fld) fld.addEventListener('input', updateUI);
+    });
+    ['capex-roof-sell','capex-hvac-sell','capex-wh-sell','capex-floor-sell','capex-paint-sell','capex-appl-sell'].forEach(function(id) {
+      var fld = el(id);
+      if (fld) fld.addEventListener('change', updateUI);
+    });
+
+    // Projection assumption inputs → trigger recalc
+    ['rent-growth-rate','expense-growth-rate'].forEach(function(id) {
+      var fld = el(id);
+      if (fld) fld.addEventListener('input', updateUI);
+    });
+
+    // Tax & maintenance: mark as user-overridden when manually edited; restore auto on clear
+    ['monthly-tax','monthly-maint'].forEach(function(id) {
+      var fld = el(id);
+      if (!fld) return;
+      fld.addEventListener('input', function() {
+        // If user clears the field, re-enable auto; otherwise lock to manual
+        if (!this.value || this.value === '') {
+          this.dataset.auto = 'true';
+        } else {
+          this.dataset.auto = 'false';
+        }
+      });
+    });
+
+    // PMI: mark as user-modified when manually edited
+    var pmiManualEl = el('monthly-pmi');
+    if (pmiManualEl) {
+      pmiManualEl.addEventListener('input', function () {
+        if (this.value && parseFloat(this.value) > 0) {
+          this.dataset.userModified = '1';
+        } else {
+          delete this.dataset.userModified;
+        }
+      });
+    }
 
     // Cookie-saved fields
     var cookieFieldIds = [
+      'purchase-price','interest-rate',
       'total-cash','cash-used','cash-reserve',
-      'uc-education','uc-inspection','uc-radon','uc-sewer','uc-mold','uc-tish',
-      'uc-prepaid','uc-rental-license','uc-city-repairs','uc-moving','uc-repairs',
+      'uc-education','uc-inspection','uc-radon','uc-sewer','uc-mold',
+      'uc-prepaid','uc-rental-license','uc-moving','uc-repairs',
+      'util-water','util-sewer','util-gas','util-electric','util-internet','util-hoa',
       'monthly-rent','monthly-tax','monthly-insurance','monthly-maint',
-      'vacancy-rate'
+      'vacancy-rate',
+      'sell-commission-pct','sell-misc',
+      'rent-growth-rate','expense-growth-rate',
+      'capex-roof-age','capex-hvac-age','capex-wh-age','capex-floor-age','capex-paint-age','capex-appl-age',
+      'monthly-pm-pct',
     ];
     cookieFieldIds.forEach(function(id) {
       var input = el(id);
       if (!input) return;
       var cookieName = 'mpce_' + id.replace(/-/g,'_');
       var saved = getCookie(cookieName);
-      if (saved !== null) input.value = saved;
+      if (saved !== null) {
+        input.value = saved;
+        // If a saved override exists for auto-calculated fields, mark as user override
+        if (id === 'monthly-tax' || id === 'monthly-maint' || id === 'monthly-insurance') {
+          input.dataset.auto = 'false';
+        }
+      }
       input.addEventListener('input', function() {
         setCookie(cookieName, this.value);
       });
     });
+
+    // Save/restore down payment (both modes)
+    ['down-payment','down-payment-pct'].forEach(function(id) {
+      var input = el(id);
+      if (!input) return;
+      var cookieName = 'mpce_' + id.replace(/-/g,'_');
+      var saved = getCookie(cookieName);
+      if (saved !== null) input.value = saved;
+      input.addEventListener('input', function() { setCookie(cookieName, this.value); });
+    });
+
+    // Save/restore capex sell checkboxes
+    ['capex-roof-sell','capex-hvac-sell','capex-wh-sell','capex-floor-sell','capex-paint-sell','capex-appl-sell'].forEach(function(id) {
+      var cb = el(id);
+      if (!cb) return;
+      var cookieName = 'mpce_' + id.replace(/-/g,'_');
+      var saved = getCookie(cookieName);
+      if (saved === 'true') cb.checked = true;
+      cb.addEventListener('change', function() { setCookie(cookieName, this.checked ? 'true' : 'false'); });
+    });
+
+    // Save/restore dpMode
+    var savedDpMode = getCookie('mpce_dp_mode');
+    if (savedDpMode === '$' || savedDpMode === '%') setDpMode(savedDpMode);
+
+    // Save trueCashYear
+    var savedTcYear = getCookie('mpce_true_cash_year');
+    if (savedTcYear !== null) { trueCashYear = parseInt(savedTcYear) || 1; }
 
     // When main rent input changes (duplex mode), clear scenario so it mirrors main rent
     el('monthly-rent').addEventListener('input', function () {
@@ -2377,14 +4027,29 @@
       updateUI();
     });
 
+    // Per-unit rent mode: Unit 1 input syncs to main rent
+    if (el('monthly-rent-u1')) {
+      el('monthly-rent-u1').addEventListener('input', function() {
+        if (duplexRentMode === 'perunit') {
+          el('monthly-rent').value = this.value;
+          if (activeMode === 'duplex') el('rent-scenario').value = '';
+        }
+        updateUI();
+      });
+    }
+
     // Restore cookies
     var savedRate = getCookie('mpce_rate');
     var savedAgent = getCookie('mpce_agent');
+    var savedAgentPayer = getCookie('mpce_agent_payer');
     if (savedRate !== null) {
       el('interest-rate').value = savedRate;
       document.querySelectorAll('.preset-btn').forEach(function (b) { b.classList.remove('active'); });
     }
-    if (savedAgent !== null) el('buyer-agent-pct').value = savedAgent;
+    if (savedAgentPayer === 'buyer') {
+      setAgentPayer('buyer');
+      if (savedAgent !== null && el('buyer-agent-pct')) el('buyer-agent-pct').value = savedAgent;
+    }
 
     // Initial render
     updateUI();
